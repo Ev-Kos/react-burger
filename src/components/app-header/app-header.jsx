@@ -16,7 +16,7 @@ const AppHeader = () => {
           </li>
           <li>
             <a href='#' className={link}>
-              <ListIcon type="primary" />
+              <ListIcon type="secondary" />
               Лента заказов
             </a>
           </li>
@@ -26,7 +26,7 @@ const AppHeader = () => {
         </a>
         <div className={headerStyles.header__linkProfile}>
           <a href='#' className={link}>
-            <ProfileIcon type="primary" />
+            <ProfileIcon type="secondary" />
             Личный кабинет
           </a>
         </div>

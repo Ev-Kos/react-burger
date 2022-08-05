@@ -1,0 +1,19 @@
+.card {
+    align-items: center;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 208px;
+    max-width: 272px;
+    justify-content: flex-start;
+    position: relative;
+  }
+
+  .price {
+    display: flex;
+  }
+
+  .diamond {
+    width: 24px;
+    height: 24px;
+  }
