@@ -1,0 +1,55 @@
+.header {
+    align-items: center;
+    background-color: #1c1c21;
+    display: flex;
+    justify-content: center;
+    max-width: 1920px;
+    width: 100%;
+  }
+  
+  .header__nav {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    min-width: 1280px;
+  }
+  
+  .header__linkBox {
+    display: flex;
+    justify-self: flex-start;
+    line-height: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    gap: 8px;
+  }
+  
+  .header__link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #8585AD;
+    justify-self: flex-end;
+  }
+  
+  .linkActive {
+    composes: header__link;
+    color: #F2F2F3;
+  }
+  
+  .header__logo {
+    justify-self: center;
+    align-self: center;
+  }
+
+  .header__linkProfile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: flex-end;
+  }
+  
+
+
+

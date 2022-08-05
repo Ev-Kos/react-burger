@@ -1,0 +1,23 @@
+.app {
+    margin: 0;
+  }
+  
+  .content {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1280px;
+    width: 100%;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 8px;
+    background: #2f2f37;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: #8585ad;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background: #8282da;
+  }
