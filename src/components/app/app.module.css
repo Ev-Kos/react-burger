@@ -4,8 +4,9 @@
   
   .content {
     display: flex;
+    align-self: center;
     justify-content: space-between;
-    max-width: 1280px;
+    max-width: 1359px;
     width: 100%;
   }
   

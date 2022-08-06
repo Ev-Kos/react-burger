@@ -11,7 +11,7 @@ const BurgerIngredients = (props) => {
   const mains = props.data.filter(item => item.type === 'main');
 
   return (
-    <section className={burgerStyles.burgers}>
+    <section className={`${burgerStyles.burgers} mt-10 ml-5`}>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <nav className="mt-5">
         <div className={burgerStyles.burgers__menu}>
@@ -26,7 +26,7 @@ const BurgerIngredients = (props) => {
           </Tab>
         </div>
       </nav>
-      <ul className={burgerStyles.burgers__categories}>
+      <ul className={burgerStyles.burgersScroll}>
         <li id="bun">
           <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
           <ul className={`${burgerStyles.burger} ml-4 mb-10`}>
