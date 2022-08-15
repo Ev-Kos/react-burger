@@ -4,11 +4,11 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/ingredient";
 
 
-const BurgerIngredients = (props) => {
+function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState('bun');
-  const buns = props.data.filter(item => item.type === 'bun');
-  const sauces = props.data.filter(item => item.type === 'sauce');
-  const mains = props.data.filter(item => item.type === 'main');
+  const buns = data.filter(item => item.type === 'bun');
+  const sauces = data.filter(item => item.type === 'sauce');
+  const mains = data.filter(item => item.type === 'main');
 
   return (
     <section className={`${burgerStyles.burgers} mt-10 ml-5`}>

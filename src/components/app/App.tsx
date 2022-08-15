@@ -4,7 +4,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import data from '../../utils/data';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-const App = () => {
+function App() {
     return (
       <>
         <AppHeader/>

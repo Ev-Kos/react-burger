@@ -3,7 +3,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
-const AppHeader = () => {
+function AppHeader() {
   return (
     <header className={`${headerStyles.header} pt-4 pb-3`}>
       <nav className={headerStyles.header__nav}>

@@ -1,10 +1,9 @@
 import constructorStyles from './burger-constructor.module.css';
-import data from '../../utils/data'
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { burgerConstructorPropTypes } from '../../utils/prop-types'
 
-const BurgerConstructor = (props) => {
+function BurgerConstructor({data}) {
     return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`}>
         <ul className={`${constructorStyles.elements} mt-25`}>
@@ -13,13 +12,14 @@ const BurgerConstructor = (props) => {
                     type="top"
                     isLocked={true}
                     text="Краторная булка N-200i (верх)"
-                    price={props.data[0].price}
-                    thumbnail={props.data[0].image_mobile}
+                    price={data[0].price}
+                    thumbnail={data[0].image_mobile}
                 />
             </li>
             <li>
                 <ul className={`${constructorStyles.elementScroll} mr-4`}>
-                {data.map(elem => {
+                {data.filter((elem) => elem.type !== "bun")
+                .map((elem) => {
                 return(
                   <li key={elem._id} className={`${constructorStyles.element} mr-2`}>
                     <DragIcon type="primary" />
@@ -37,8 +37,8 @@ const BurgerConstructor = (props) => {
               type="bottom"
               isLocked={true}
               text="Краторная булка N-200i (низ)"
-              price={props.data[0].price}
-              thumbnail={props.data[0].image_mobile}
+              price={data[0].price}
+              thumbnail={data[0].image_mobile}
             />
           </li>
         </ul>
