@@ -1,5 +1,8 @@
 .container {
-  composes: container from '../order-details/order-details.module.css';
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px;
+  align-items: center;
 }
 
 .image {
@@ -9,25 +12,17 @@
 }
 
 .title {
-  margin: 0 auto 32px;
+  text-align: center;
 }
 
-.grid {
-  list-style: none;
-  margin: 0 auto 59px;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(4, 120px);
-  column-gap: 16px;
-}
-
-.element {
+.list {
   display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-}
-
-.characteristic {
+  justify-content: center;
+  list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+.element:last-child {
+  margin-right: 0;
 }

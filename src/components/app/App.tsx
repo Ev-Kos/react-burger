@@ -3,7 +3,7 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import {request} from '../../utils/api';
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -14,7 +14,6 @@ function App() {
     isLoading: true,
     hasError: false,
   });
-
   const [isOrderDetails, setIsOrderDetails] = useState(false);
   const [isIngredientDetails, setIsIngredientDetails] = useState(false);
   const [ingredient, setIngredient] = useState({});
@@ -59,20 +58,14 @@ function App() {
           <BurgerConstructor data={state.data} openModal={ openOrderDetails }/>
           </>
         )}  
-        { isOrderDetails && 
-        <Modal
-          title={ '' }
-          onClose={ closeModal }
-        >
-          <OrderDetails /> 
-        </Modal> }
-      { isIngredientDetails &&
-        <Modal
-          title={ 'Детали ингредиента' }
-          onClose={ closeModal }
-        >
-          <IngredientDetails data={ ingredient } /> 
-        </Modal> }
+        {isOrderDetails && 
+          <Modal title={ '' } closeModal={ closeModal }>
+            <OrderDetails /> 
+          </Modal> }
+        {isIngredientDetails &&
+          <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
+            <IngredientDetails data={ ingredient } /> 
+          </Modal> }
       </main>
     </>
   );

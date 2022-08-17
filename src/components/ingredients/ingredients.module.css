@@ -1,4 +1,4 @@
-.grid {
+.container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 24px;
@@ -6,7 +6,7 @@
   margin: 24px 16px 40px;
 }
 
-.grid:last-of-type {
+.container:last-of-type {
   padding-bottom: 0;
 }
 

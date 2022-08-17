@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const burgerConstructorPropTypes = PropTypes.shape({
+const types = PropTypes.shape({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,
@@ -14,6 +14,6 @@ const burgerConstructorPropTypes = PropTypes.shape({
     image_large: PropTypes.string.isRequired
   })
   
-  export { burgerConstructorPropTypes }
+  export { types }
   
   
