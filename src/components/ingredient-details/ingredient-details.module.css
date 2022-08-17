@@ -1,0 +1,33 @@
+.container {
+  composes: container from '../order-details/order-details.module.css';
+}
+
+.image {
+  margin: 0 auto 16px;
+  width: 480px;
+  height: 240px;
+}
+
+.title {
+  margin: 0 auto 32px;
+}
+
+.grid {
+  list-style: none;
+  margin: 0 auto 59px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 120px);
+  column-gap: 16px;
+}
+
+.element {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.characteristic {
+  margin: 0;
+  padding: 0;
+}

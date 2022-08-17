@@ -4,7 +4,7 @@ import { burgerConstructorPropTypes } from '../../utils/prop-types';
 
 function Ingredient ({data}) {
   return (
-    <li className={ingredientStyles.element}>
+    <li className={ingredientStyles.element} key={data._id}>
       <img className="ml-4 mr-4" src={data.image} alt={data.name}/>
       <Counter count={1} size="default"/>
       <div className={`${ingredientStyles.price} mt-2 mb-2`}>

@@ -6,9 +6,9 @@ import Ingredient from "../ingredient/ingredient";
 
 function BurgerIngredients({data}) {
   const [current, setCurrent] = React.useState('bun');
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const mains = data.filter(item => item.type === 'main');
+  const buns = data.filter((item) => item.type === 'bun');
+  const sauces = data.filter((item) => item.type === 'sauce');
+  const mains = data.filter((item) => item.type === 'main');
 
   return (
     <section className={`${burgerStyles.burgers} mt-10 ml-5`}>
@@ -30,19 +30,19 @@ function BurgerIngredients({data}) {
         <li id="bun">
           <h2 className="text text_type_main-medium mt-10 mb-6">Булки</h2>
           <ul className={`${burgerStyles.burger} ml-4 mb-10`}>
-            {buns.map(item => <Ingredient key={item._id} data={item}/>)}
+            {buns.map((item) => <Ingredient key={item._id} data={item}/>)}
           </ul>
         </li>
         <li id="sauce">
           <h2 className="text text_type_main-medium mt-11 mb-6">Соусы</h2>
           <ul className={`${burgerStyles.burger} ml-4 mb-10`}>
-            {sauces.map(item => <Ingredient key={item._id} data={item}/>)}
+            {sauces.map((item) => <Ingredient key={item._id} data={item}/>)}
           </ul>
         </li>
         <li id="main">
           <h2 className="text text_type_main-medium mt-11 mb-6">Начинки</h2>
           <ul className={`${burgerStyles.burger} ml-4 mb-10`}>
-            {mains.map(item => <Ingredient key={item._id} data={item}/>)} 
+            {mains.map((item) => <Ingredient key={item._id} data={item}/>)} 
           </ul>
         </li>
       </ul>
