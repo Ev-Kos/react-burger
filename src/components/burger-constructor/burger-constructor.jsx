@@ -3,7 +3,7 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktik
 import PropTypes from 'prop-types';
 import { burgerConstructorPropTypes } from '../../utils/prop-types'
 
-function BurgerConstructor({data}) {
+function BurgerConstructor({data, openModal}) {
     return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`}>
         <ul className={`${constructorStyles.elements} mt-25`}>
@@ -47,7 +47,7 @@ function BurgerConstructor({data}) {
             <span className={constructorStyles.price}>2000</span>
             <CurrencyIcon type="primary" />
         </div>
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" onClick={ openModal }>
             Оформить заказ
           </Button>
         </div>

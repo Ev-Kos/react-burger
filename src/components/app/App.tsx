@@ -4,6 +4,9 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import {request} from '../../utils/api';
 import { useState, useEffect } from 'react';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 function App() {
   const [state, setState] = useState({
@@ -11,6 +14,24 @@ function App() {
     isLoading: true,
     hasError: false,
   });
+
+  const [isOrderDetails, setIsOrderDetails] = useState(false);
+  const [isIngredientDetails, setIsIngredientDetails] = useState(false);
+  const [ingredient, setIngredient] = useState({});
+
+  const openOrderDetails = () => {
+    setIsOrderDetails(true);
+  };
+
+  const openIngredientDetails = (el: {}) => {
+    setIngredient(el);
+    setIsIngredientDetails(true);
+  }
+
+  const closeModal = () => {
+    setIsOrderDetails(false);
+    setIsIngredientDetails(false);
+  };
 
   useEffect(() => {
     const getNewData = () => {
@@ -26,8 +47,6 @@ function App() {
     getNewData();
   }, []);
 
-  
-
   return (
     <>
       <AppHeader/>
@@ -36,10 +55,24 @@ function App() {
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && (
           <>
-          <BurgerIngredients data={state.data} />
-          <BurgerConstructor data={state.data} />
+          <BurgerIngredients data={state.data} openModal={ openIngredientDetails }/>
+          <BurgerConstructor data={state.data} openModal={ openOrderDetails }/>
           </>
         )}  
+        { isOrderDetails && 
+        <Modal
+          title={ '' }
+          onClose={ closeModal }
+        >
+          <OrderDetails /> 
+        </Modal> }
+      { isIngredientDetails &&
+        <Modal
+          title={ 'Детали ингредиента' }
+          onClose={ closeModal }
+        >
+          <IngredientDetails data={ ingredient } /> 
+        </Modal> }
       </main>
     </>
   );

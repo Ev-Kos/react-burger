@@ -1,18 +1,33 @@
-.modal {
-  width: 720px;
-  background-color: #1C1C21;
-  border: 1px solid rgba(76, 76, 255, 0.2);
-  border-radius: 40px;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: fixed;
+  box-sizing: border-box;
+  background-color: #1c1c21;
   top: 50%;
   left: 50%;
+  z-index: 3;
   transform: translate(-50%, -50%);
+  max-width: 720px;
+  border-radius: 32px;
 }
 
-.title {
-  margin: 40px 40px 0;
+.text {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  height: 64px;
+  align-items: center;
+  max-width: 640px;
+  height: 64p;
+}
+
+.button {
+  width: 24px;
+  height: 24px;
+  background: none;
+  opacity: 1;
+  border: none;
+  padding: 0;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
 }

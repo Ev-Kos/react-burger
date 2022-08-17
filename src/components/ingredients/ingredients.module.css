@@ -1,0 +1,40 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 24px 16px 40px;
+}
+
+.grid:last-of-type {
+  padding-bottom: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.image {
+  width: 240px; 
+  height: 120px;
+  margin: 4px auto 4px;   
+}
+
+.price {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+}
+
+.text {
+  width: 272px;
+  height: 48px;
+  text-align: center;
+}
