@@ -2,7 +2,7 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {request} from '../../utils/api';
+import {getIngredients} from '../../utils/api';
 import {useState, useEffect} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -35,9 +35,9 @@ function App() {
   useEffect(() => {
     const getNewData = () => {
       setState({ ...state, hasError: false, isLoading: true });
-      request()
-        .then((obj) =>
-          setState({ ...state, data: obj.data, isLoading: false })
+      getIngredients()
+        .then((data) =>
+          setState({ ...state, data: data.data, isLoading: false })
         )
         .catch((err) => {
           setState({ ...state, hasError: true, isLoading: false });

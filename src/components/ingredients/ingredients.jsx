@@ -1,6 +1,6 @@
 import ingredientStyles from "./ingredients.module.css";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { types } from '../../utils/prop-types';
+import { ingredientType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
 
 
@@ -27,7 +27,9 @@ function Ingredients ({data, type, name, clickInfo}) {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(types).isRequired,
+  data: PropTypes.arrayOf(ingredientType).isRequired,
+  type: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   clickInfo: PropTypes.func.isRequired
 }
 
