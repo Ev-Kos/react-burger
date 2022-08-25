@@ -1,0 +1,33 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  box-sizing: border-box;
+  background-color: #1c1c21;
+  top: 50%;
+  left: 50%;
+  z-index: 3;
+  transform: translate(-50%, -50%);
+  max-width: 720px;
+  border-radius: 32px;
+}
+
+.text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 640px;
+  height: 64p;
+}
+
+.button {
+  width: 24px;
+  height: 24px;
+  background: none;
+  opacity: 1;
+  border: none;
+  padding: 0;
+  transition: opacity 0.3s ease-in;
+  cursor: pointer;
+}
