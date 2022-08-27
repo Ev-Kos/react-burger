@@ -4,6 +4,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from "../ingredients/ingredients";
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
+import { DataContext } from '../../services/context';
+import { useContext } from "react";
+
 
 
 function BurgerIngredients({data, openModal}) {
@@ -35,7 +38,7 @@ function BurgerIngredients({data, openModal}) {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
+  //data: PropTypes.arrayOf(ingredientType).isRequired,
 	openModal: PropTypes.func.isRequired
 }
 

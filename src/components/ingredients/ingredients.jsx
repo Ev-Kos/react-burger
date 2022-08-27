@@ -2,6 +2,8 @@ import ingredientStyles from "./ingredients.module.css";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ingredientType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
+import { IngredientContext, DataContext } from "../../services/context";
+import { useContext } from "react";
 
 
 function Ingredients ({data, type, name, clickInfo}) {
