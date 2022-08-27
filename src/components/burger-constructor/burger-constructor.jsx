@@ -5,7 +5,9 @@ import { ingredientType } from '../../utils/prop-types';
 import { DataContext } from '../../services/context';
 import { useContext } from "react";
 
-function BurgerConstructor({data, openModal}) {
+function BurgerConstructor({openModal}) {
+  const state = useContext(DataContext);
+  const data = state.state.data;
   return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`}>
       <ul className={`${constructorStyles.elements} mt-25`}>

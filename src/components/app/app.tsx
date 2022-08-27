@@ -50,13 +50,14 @@ function App() {
   return (
     <>
       <AppHeader/>
+      <DataContext.Provider value={{ state }}>
       <main className={appStyles.content}>
         {state.isLoading && "Загрузка..."}
         {state.hasError && "Произошла ошибка"}
         {!state.isLoading && !state.hasError && (
           <>
-          <BurgerIngredients data={state.data} openModal={ openIngredientDetails }/>
-          <BurgerConstructor data={state.data} openModal={ openOrderDetails }/>
+          <BurgerIngredients openModal={ openIngredientDetails }/>
+          <BurgerConstructor openModal={ openOrderDetails }/>
           </>
         )}  
         {isOrderDetails && 
@@ -68,6 +69,8 @@ function App() {
             <IngredientDetails data={ ingredient } /> 
           </Modal> }
       </main>
+      </DataContext.Provider>
+     
     </>
   );
 }

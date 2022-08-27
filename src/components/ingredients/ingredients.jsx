@@ -6,7 +6,9 @@ import { IngredientContext, DataContext } from "../../services/context";
 import { useContext } from "react";
 
 
-function Ingredients ({data, type, name, clickInfo}) {
+function Ingredients ({type, name, clickInfo}) {
+  const state = useContext(DataContext);
+  const data = state.state.data;
   
   return (
 		<li>
@@ -29,7 +31,7 @@ function Ingredients ({data, type, name, clickInfo}) {
 }
 
 Ingredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
+  //data: PropTypes.arrayOf(ingredientType).isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   clickInfo: PropTypes.func.isRequired

@@ -9,7 +9,9 @@ import { useContext } from "react";
 
 
 
-function BurgerIngredients({data, openModal}) {
+function BurgerIngredients({openModal}) {
+  const state = useContext(DataContext);
+  const data = state.state.data;
   const [current, setCurrent] = React.useState('bun');
   
   return (
