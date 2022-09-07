@@ -2,28 +2,66 @@ import constructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
-import { DataContext } from '../../services/context';
-import { useContext } from "react";
+import { IngredientContext } from '../../services/context';
+import { useContext, useEffect, useReducer } from "react";
+
+const initialState = {
+  bun: {},
+  toppings: [],
+  totalPrice: 0
+};
 
 function BurgerConstructor({openModal}) {
-  const state = useContext(DataContext);
-  const data = state.state.data;
+  const data = useContext(IngredientContext);
+  const ingredients = data.state.data;
+  
+
+  function reducer (state, action) {
+    const bun = ingredients && ingredients
+      .find((item) => item.type === 'bun');
+    const toppings = ingredients && ingredients
+      .filter((item) => item.type !== 'bun')
+      .slice(0, 2);
+    const totalPrice = state.toppings.length && state.toppings
+      .reduce((total, current) => total + current.price, 0) + state.bun.price * 2;
+    switch (action.type) {
+      case 'collect':
+        return { ...state, toppings, bun };
+      case 'count':
+        return { ...state, totalPrice };
+      default:
+        throw new Error(`Wrong type of action: ${action.type}`);
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    dispatch({ type: 'collect' });
+    dispatch({ type: 'count' });
+  }, [ingredients]);
+
+  const handleOrder = () => {
+    const order = [state.bun, ...state.toppings]
+      .map((item) => item._id);
+    openModal(order);
+  };
+
   return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`}>
       <ul className={`${constructorStyles.elements} mt-25`}>
         <li className={`${constructorStyles.element} mr-8 mb-4`}>
-          <ConstructorElement
+          {state.bun && <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={data[0].price}
-            thumbnail={data[0].image_mobile}
-          />
+            text={`${state.bun.name } (верх)`}
+            price={state.bun.price}
+            thumbnail={state.bun.image_mobile}
+          />}
         </li>
         <li>
           <ul className={`${constructorStyles.elementScroll} mr-4`}>
-            {data.filter((elem) => elem.type !== "bun")
-              .map((elem) => {
+            {state.toppings.map((elem) => {
                 return(
                   <li key={elem._id} className={`${constructorStyles.element} mr-2`}>
                     <DragIcon type="primary" />
@@ -37,13 +75,13 @@ function BurgerConstructor({openModal}) {
           </ul>
         </li>
         <li className={`${constructorStyles.element} mr-8 mt-4`}>
-          <ConstructorElement
+          {state.bun && <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={data[0].price}
-            thumbnail={data[0].image_mobile}
-          />
+            text={`${state.bun.name } (низ)`}
+            price={state.bun.price}
+            thumbnail={state.bun.image_mobile}
+          />}
         </li>
       </ul>
       <div className={`${constructorStyles.order} mr-15 mt-10`}>
@@ -51,7 +89,7 @@ function BurgerConstructor({openModal}) {
           <span className={constructorStyles.price}>2000</span>
           <CurrencyIcon type="primary" />
       </div>
-        <Button type="primary" size="large" onClick={ openModal }>
+        <Button type="primary" size="large" onClick={handleOrder}>
           Оформить заказ
         </Button>
       </div>

@@ -7,7 +7,7 @@ import {useState, useEffect} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import {DataContext, IngredientContext} from '../../services/context';
+import {IngredientContext} from '../../services/context';
 
 function App() {
   const [state, setState] = useState({
@@ -50,7 +50,7 @@ function App() {
   return (
     <>
       <AppHeader/>
-      <DataContext.Provider value={{ state }}>
+      <IngredientContext.Provider value={{ state }}>
       <main className={appStyles.content}>
         {state.isLoading && "Загрузка..."}
         {state.hasError && "Произошла ошибка"}
@@ -69,7 +69,7 @@ function App() {
             <IngredientDetails data={ ingredient } /> 
           </Modal> }
       </main>
-      </DataContext.Provider>
+      </IngredientContext.Provider>
      
     </>
   );
