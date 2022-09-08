@@ -4,11 +4,26 @@ import Ingredients from "../ingredients/ingredients";
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
 import { useState, useRef } from "react";
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
 
 
-function BurgerIngredients({openModal}) {
+function BurgerIngredients() {
   const [current, setCurrent] = useState('bun');
+  const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState({});
+
+  const openIngredientDetails = (el) => {
+    setSelectedIngredient(el);
+    setIsIngredientDetailsOpen(true);
+  }
+
+  const closeModal = () => {
+   
+    setIsIngredientDetailsOpen(false);
+  };
 
   const buns = useRef();
   const sauces = useRef();
@@ -52,17 +67,19 @@ function BurgerIngredients({openModal}) {
         </div>
       </nav>
       <ul className={burgerStyles.burgersScroll}>
-        <Ingredients type='bun' name='Булки' clickInfo={ openModal } ref={buns}/>
-        <Ingredients type='sauce' name='Соусы' clickInfo={ openModal } ref={sauces}/>
-        <Ingredients type='main' name='Начинки' clickInfo={ openModal } ref={mains}/>
+        <Ingredients type='bun' name='Булки' clickInfo={ openIngredientDetails } ref={buns}/>
+        <Ingredients type='sauce' name='Соусы' clickInfo={ openIngredientDetails } ref={sauces}/>
+        <Ingredients type='main' name='Начинки' clickInfo={ openIngredientDetails } ref={mains}/>
       </ul>
+      {isIngredientDetailsOpen &&
+      <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
+        <IngredientDetails data={ selectedIngredient } /> 
+      </Modal> }
     </section>
+    
   )
 }
 
-BurgerIngredients.propTypes = {
-  //data: PropTypes.arrayOf(ingredientType).isRequired,
-	openModal: PropTypes.func.isRequired
-}
+
 
 export default BurgerIngredients

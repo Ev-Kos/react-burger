@@ -16,20 +16,11 @@ function App() {
     hasError: false,
   });
   
-  const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
-  const [selectedIngredient, setSelectedIngredient] = useState({});
+  
   
   
 
-  const openIngredientDetails = (el: {}) => {
-    setSelectedIngredient(el);
-    setIsIngredientDetailsOpen(true);
-  }
-
-  const closeModal = () => {
-   
-    setIsIngredientDetailsOpen(false);
-  };
+  
 
   useEffect(() => {
     const getNewData = () => {
@@ -56,15 +47,12 @@ function App() {
           {state.hasError && "Произошла ошибка"}
           {!state.isLoading && !state.hasError && (
             <>
-            <BurgerIngredients openModal={ openIngredientDetails }/>
+            <BurgerIngredients />
             <BurgerConstructor />
             </>
           )}  
           
-          {isIngredientDetailsOpen &&
-            <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
-              <IngredientDetails data={ selectedIngredient } /> 
-            </Modal> }
+          
         </main>
       </IngredientContext.Provider>
     </>
