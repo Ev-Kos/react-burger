@@ -15,23 +15,23 @@ function App() {
     isLoading: true,
     hasError: false,
   });
-  const [isOrderDetails, setIsOrderDetails] = useState(false);
-  const [isIngredientDetails, setIsIngredientDetails] = useState(false);
-  const [isIngredient, setIsIngredient] = useState({});
-  const [isorderNumber, setIsOrderNumber] = useState(null);
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
+  const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState({});
+  const [orderNumber, setOrderNumber] = useState(null);
 
   const openOrderDetails = () => {
-    setIsOrderDetails(true);
+    setIsOrderDetailsOpen(true);
   };
 
   const openIngredientDetails = (el: {}) => {
-    setIsIngredient(el);
-    setIsIngredientDetails(true);
+    setSelectedIngredient(el);
+    setIsIngredientDetailsOpen(true);
   }
 
   const closeModal = () => {
-    setIsOrderDetails(false);
-    setIsIngredientDetails(false);
+    setIsOrderDetailsOpen(false);
+    setIsIngredientDetailsOpen(false);
   };
 
   useEffect(() => {
@@ -52,7 +52,7 @@ function App() {
     getOrderNumber(order)
       .then((res) => {
         openOrderDetails();
-        setIsOrderNumber(res);
+        setOrderNumber(res);
       })
       .catch((err) => console.log(err));
   };
@@ -70,13 +70,13 @@ function App() {
             <BurgerConstructor openModal={ handleOderNumber }/>
             </>
           )}  
-          {isOrderDetails && 
+          {isOrderDetailsOpen && 
             <Modal title={ '' } closeModal={ closeModal }>
-              <OrderDetails order={ isorderNumber }/> 
+              <OrderDetails orderNumber={ orderNumber }/> 
             </Modal> }
-          {isIngredientDetails &&
+          {isIngredientDetailsOpen &&
             <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
-              <IngredientDetails data={ isIngredient } /> 
+              <IngredientDetails data={ selectedIngredient } /> 
             </Modal> }
         </main>
       </IngredientContext.Provider>
