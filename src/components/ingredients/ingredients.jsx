@@ -1,8 +1,7 @@
-import ingredientStyles from "./ingredients.module.css";
+import ingredientStyles from './ingredients.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { ingredientType } from '../../utils/prop-types';
 import PropTypes from 'prop-types';
-import { IngredientContext } from "../../services/context";
+import { IngredientContext } from '../../services/context';
 import { useContext, forwardRef } from "react";
 
 
@@ -31,7 +30,6 @@ const Ingredients = forwardRef(({ type, name, clickInfo }, ref) => {
 })
 
 Ingredients.propTypes = {
-  //data: PropTypes.arrayOf(ingredientType).isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   clickInfo: PropTypes.func.isRequired

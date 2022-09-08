@@ -1,12 +1,11 @@
 import constructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/prop-types';
 import { IngredientContext } from '../../services/context';
 import { useContext, useEffect, useReducer, useState } from "react";
-import {getIngredients, getOrderNumber} from '../../utils/api';
+import {getOrderNumber} from '../../utils/api';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import {INGREDIENT_TYPES, COLLECT_ACTION, COUNT_ACTION} from '../../utils/constants';
 
 const initialState = {
   bun: {},
@@ -27,15 +26,15 @@ function BurgerConstructor() {
   
   function reducer (state, action) {
     const bun = ingredients && ingredients
-      .find((item) => item.type === 'bun');
+      .find((item) => item.type === INGREDIENT_TYPES.BUN);
     const toppings = ingredients && ingredients
-      .filter((item) => item.type !== 'bun');
+      .filter((item) => item.type !== INGREDIENT_TYPES.BUN);
     const totalPrice = state.toppings.length && state.toppings
       .reduce((total, current) => total + current.price, 0) + state.bun.price * 2;
     switch (action.type) {
-      case 'collect':
+      case COLLECT_ACTION:
         return { ...state, toppings, bun };
-      case 'count':
+      case COUNT_ACTION:
         return { ...state, totalPrice };
       default:
         throw new Error(`Wrong type of action: ${action.type}`);
@@ -45,12 +44,12 @@ function BurgerConstructor() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
-    dispatch({ type: 'collect' });
-    dispatch({ type: 'count' });
+    dispatch({ type: COLLECT_ACTION });
+    dispatch({ type: COUNT_ACTION });
   }, [ingredients]);
 
   const handleOrder = () => {
-    const order = [state.bun, ...state.toppings]
+    const order = [state.bun, state.bun, ...state.toppings]
       .map((item) => item._id);
       makeOrder(order);
   };
@@ -66,7 +65,6 @@ function BurgerConstructor() {
   };
 
   const closeModal = () => {
-   
     setIsOrderDetailsOpen(false);
   };
 
@@ -111,11 +109,11 @@ function BurgerConstructor() {
         <div className={constructorStyles.priceContainer}>
           <span className={constructorStyles.price}>{state.totalPrice}</span>
           <CurrencyIcon type="primary" />
-      </div>
-      {isOrderDetailsOpen && 
+        </div>
+        {isOrderDetailsOpen && 
             <Modal title={ '' } closeModal={ closeModal }>
               <OrderDetails orderNumber={ orderNumber }/> 
-            </Modal> }
+            </Modal>}
         <Button type="primary" size="large" onClick={handleOrder}>
           Оформить заказ
         </Button>

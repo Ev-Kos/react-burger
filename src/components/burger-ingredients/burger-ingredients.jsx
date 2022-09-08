@@ -1,17 +1,15 @@
 import burgerStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import Ingredients from "../ingredients/ingredients";
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/prop-types';
+import Ingredients from '../ingredients/ingredients';
 import { useState, useRef } from "react";
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import {INGREDIENT_TYPES} from '../../utils/constants';
 
 
 
 function BurgerIngredients() {
-  const [current, setCurrent] = useState('bun');
+  const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
   const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
 
@@ -21,7 +19,6 @@ function BurgerIngredients() {
   }
 
   const closeModal = () => {
-   
     setIsIngredientDetailsOpen(false);
   };
 
@@ -32,15 +29,15 @@ function BurgerIngredients() {
   const selectTabs = (value) => {
     setCurrent(value);
     switch (value) {
-      case 'bun': {
+      case INGREDIENT_TYPES.BUN: {
         buns.current.scrollIntoView();
         break;
       }
-      case 'sauce': {
+      case INGREDIENT_TYPES.SAUCE: {
         sauces.current.scrollIntoView();
         break;
       }
-      case 'main': {
+      case INGREDIENT_TYPES.MAIN: {
         mains.current.scrollIntoView();
         break;
       }
@@ -55,13 +52,13 @@ function BurgerIngredients() {
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <nav className="mt-5">
         <div className={burgerStyles.menu}>
-          <Tab value="bun" active={current === 'bun'} onClick={selectTabs}>
+          <Tab value='bun' active={current === INGREDIENT_TYPES.BUN} onClick={selectTabs}>
             Булки
           </Tab>
-          <Tab value="sauce" active={current === 'sauce'} onClick={selectTabs}>
+          <Tab value='sauce' active={current === INGREDIENT_TYPES.SAUCE} onClick={selectTabs}>
             Соусы
           </Tab>
-          <Tab value="main" active={current === 'main'} onClick={selectTabs}>
+          <Tab value='main' active={current === INGREDIENT_TYPES.MAIN} onClick={selectTabs}>
             Начинки
           </Tab>
         </div>
