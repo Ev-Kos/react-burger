@@ -13,14 +13,14 @@ const getIngredients = () => {
     .then((res) => checkResponse(res))
 }
 
-const getOrderNumber = (data) => {
-    return fetch (apiOrderNumber, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ ingredients: data }),
-    })
-  .then((res) => checkResponse(res))
-}
+const getOrderNumber = (data) => fetch(apiOrderNumber, {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({ ingredients: data }),
+})
+  .then(checkResponse)
+  .then((data) => data.order.number)
+  .then (console.log(data))
   
 
 export {getIngredients, getOrderNumber}

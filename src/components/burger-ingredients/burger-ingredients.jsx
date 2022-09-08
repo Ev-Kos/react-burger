@@ -1,40 +1,36 @@
-import React from 'react';
 import burgerStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredients from "../ingredients/ingredients";
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
-import { IngredientContext } from '../../services/context';
-import { useContext, useRef } from "react";
+import { useState, useRef } from "react";
 
 
 
 function BurgerIngredients({openModal}) {
-  const data = useContext(IngredientContext);
-  const ingredients = data.state.data;
-  const [current, setCurrent] = React.useState('bun');
+  const [current, setCurrent] = useState('bun');
 
-  const bun = useRef();
-  const sauce = useRef();
-  const main = useRef();
+  const buns = useRef();
+  const sauces = useRef();
+  const mains = useRef();
 
   const selectTabs = (value) => {
     setCurrent(value);
     switch (value) {
       case 'bun': {
-        bun.current.scrollIntoView({ behavior: 'smooth' });
+        buns.current.scrollIntoView();
         break;
       }
       case 'sauce': {
-        sauce.current.scrollIntoView({ behavior: 'smooth' });
+        sauces.current.scrollIntoView();
         break;
       }
       case 'main': {
-        main.current.scrollIntoView({ behavior: 'smooth' });
+        mains.current.scrollIntoView();
         break;
       }
       default: {
-        bun.current.scrollIntoView({ behavior: 'smooth' });
+        buns.current.scrollIntoView();
       }
     }
   };
@@ -56,9 +52,9 @@ function BurgerIngredients({openModal}) {
         </div>
       </nav>
       <ul className={burgerStyles.burgersScroll}>
-        <Ingredients type='bun' name='Булки' clickInfo={ openModal } ref={bun}/>
-        <Ingredients type='sauce' name='Соусы'  clickInfo={ openModal } ref={sauce}/>
-        <Ingredients type='main' name='Начинки' clickInfo={ openModal } ref={main}/>
+        <Ingredients type='bun' name='Булки' clickInfo={ openModal } ref={buns}/>
+        <Ingredients type='sauce' name='Соусы' clickInfo={ openModal } ref={sauces}/>
+        <Ingredients type='main' name='Начинки' clickInfo={ openModal } ref={mains}/>
       </ul>
     </section>
   )

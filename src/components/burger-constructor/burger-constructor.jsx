@@ -15,13 +15,11 @@ function BurgerConstructor({openModal}) {
   const data = useContext(IngredientContext);
   const ingredients = data.state.data;
   
-
   function reducer (state, action) {
     const bun = ingredients && ingredients
       .find((item) => item.type === 'bun');
     const toppings = ingredients && ingredients
-      .filter((item) => item.type !== 'bun')
-      .slice(0, 2);
+      .filter((item) => item.type !== 'bun');
     const totalPrice = state.toppings.length && state.toppings
       .reduce((total, current) => total + current.price, 0) + state.bun.price * 2;
     switch (action.type) {
@@ -86,7 +84,7 @@ function BurgerConstructor({openModal}) {
       </ul>
       <div className={`${constructorStyles.order} mr-15 mt-10`}>
         <div className={constructorStyles.priceContainer}>
-          <span className={constructorStyles.price}>2000</span>
+          <span className={constructorStyles.price}>{state.totalPrice}</span>
           <CurrencyIcon type="primary" />
       </div>
         <Button type="primary" size="large" onClick={handleOrder}>
@@ -96,7 +94,6 @@ function BurgerConstructor({openModal}) {
     </section>
   )
 }
-
 
 BurgerConstructor.propTypes = {
   //data: PropTypes.arrayOf(ingredientType).isRequired,

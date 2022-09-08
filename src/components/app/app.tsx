@@ -2,7 +2,7 @@ import appStyles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {getIngredients} from '../../utils/api';
+import {getIngredients, getOrderNumber} from '../../utils/api';
 import {useState, useEffect} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -17,14 +17,15 @@ function App() {
   });
   const [isOrderDetails, setIsOrderDetails] = useState(false);
   const [isIngredientDetails, setIsIngredientDetails] = useState(false);
-  const [ingredient, setIngredient] = useState({});
+  const [isIngredient, setIsIngredient] = useState({});
+  const [isorderNumber, setIsOrderNumber] = useState(null);
 
   const openOrderDetails = () => {
     setIsOrderDetails(true);
   };
 
   const openIngredientDetails = (el: {}) => {
-    setIngredient(el);
+    setIsIngredient(el);
     setIsIngredientDetails(true);
   }
 
@@ -47,30 +48,38 @@ function App() {
     getNewData();
   }, []);
 
+  const handleOderNumber = (order: any) => {
+    getOrderNumber(order)
+      .then((res) => {
+        openOrderDetails();
+        setIsOrderNumber(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <AppHeader/>
       <IngredientContext.Provider value={{ state }}>
-      <main className={appStyles.content}>
-        {state.isLoading && "Загрузка..."}
-        {state.hasError && "Произошла ошибка"}
-        {!state.isLoading && !state.hasError && (
-          <>
-          <BurgerIngredients openModal={ openIngredientDetails }/>
-          <BurgerConstructor openModal={ openOrderDetails }/>
-          </>
-        )}  
-        {isOrderDetails && 
-          <Modal title={ '' } closeModal={ closeModal }>
-            <OrderDetails /> 
-          </Modal> }
-        {isIngredientDetails &&
-          <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
-            <IngredientDetails data={ ingredient } /> 
-          </Modal> }
-      </main>
+        <main className={appStyles.content}>
+          {state.isLoading && "Загрузка..."}
+          {state.hasError && "Произошла ошибка"}
+          {!state.isLoading && !state.hasError && (
+            <>
+            <BurgerIngredients openModal={ openIngredientDetails }/>
+            <BurgerConstructor openModal={ handleOderNumber }/>
+            </>
+          )}  
+          {isOrderDetails && 
+            <Modal title={ '' } closeModal={ closeModal }>
+              <OrderDetails order={ isorderNumber }/> 
+            </Modal> }
+          {isIngredientDetails &&
+            <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
+              <IngredientDetails data={ isIngredient } /> 
+            </Modal> }
+        </main>
       </IngredientContext.Provider>
-     
     </>
   );
 }

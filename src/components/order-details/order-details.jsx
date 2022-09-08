@@ -1,10 +1,11 @@
 import doneImage from '../../images/done.jpg';
 import orderDetailsStyles from './order-details.module.css';
+import PropTypes from 'prop-types';
 
-function OrderDetails() {
+function OrderDetails({order}) {
   return (
     <div className={`${orderDetailsStyles.container} pt-4 pr-25 pb-30 pl-25`}>
-      <p className={`text text_type_digits-large mb-8`}>034536</p>
+      <p className={`text text_type_digits-large mb-8`}>{order}</p>
       <p className={`text text_type_main-medium`}>Идентификатор заказа</p>
       <img
         src={doneImage}
@@ -19,6 +20,10 @@ function OrderDetails() {
       </p>
     </div>
   );
+}
+
+OrderDetails.propTypes = {
+  order: PropTypes.number
 }
 
 export default OrderDetails;
