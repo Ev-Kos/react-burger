@@ -15,14 +15,11 @@ function App() {
     isLoading: true,
     hasError: false,
   });
-  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
+  
   const [isIngredientDetailsOpen, setIsIngredientDetailsOpen] = useState(false);
   const [selectedIngredient, setSelectedIngredient] = useState({});
-  const [orderNumber, setOrderNumber] = useState(null);
-
-  const openOrderDetails = () => {
-    setIsOrderDetailsOpen(true);
-  };
+  
+  
 
   const openIngredientDetails = (el: {}) => {
     setSelectedIngredient(el);
@@ -30,7 +27,7 @@ function App() {
   }
 
   const closeModal = () => {
-    setIsOrderDetailsOpen(false);
+   
     setIsIngredientDetailsOpen(false);
   };
 
@@ -48,14 +45,7 @@ function App() {
     getNewData();
   }, []);
 
-  const handleOderNumber = (order: any) => {
-    getOrderNumber(order)
-      .then((res) => {
-        openOrderDetails();
-        setOrderNumber(res);
-      })
-      .catch((err) => console.log(err));
-  };
+  
 
   return (
     <>
@@ -67,13 +57,10 @@ function App() {
           {!state.isLoading && !state.hasError && (
             <>
             <BurgerIngredients openModal={ openIngredientDetails }/>
-            <BurgerConstructor openModal={ handleOderNumber }/>
+            <BurgerConstructor />
             </>
           )}  
-          {isOrderDetailsOpen && 
-            <Modal title={ '' } closeModal={ closeModal }>
-              <OrderDetails orderNumber={ orderNumber }/> 
-            </Modal> }
+          
           {isIngredientDetailsOpen &&
             <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
               <IngredientDetails data={ selectedIngredient } /> 

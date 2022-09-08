@@ -3,7 +3,10 @@ import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktik
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/prop-types';
 import { IngredientContext } from '../../services/context';
-import { useContext, useEffect, useReducer } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
+import {getIngredients, getOrderNumber} from '../../utils/api';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 const initialState = {
   bun: {},
@@ -11,9 +14,16 @@ const initialState = {
   totalPrice: 0
 };
 
-function BurgerConstructor({openModal}) {
+function BurgerConstructor() {
   const data = useContext(IngredientContext);
   const ingredients = data.state.data;
+  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
+  const [orderNumber, setOrderNumber] = useState(null);
+
+
+  const openOrderDetails = () => {
+    setIsOrderDetailsOpen(true);
+  };
   
   function reducer (state, action) {
     const bun = ingredients && ingredients
@@ -42,7 +52,22 @@ function BurgerConstructor({openModal}) {
   const handleOrder = () => {
     const order = [state.bun, ...state.toppings]
       .map((item) => item._id);
-    openModal(order);
+      makeOrder(order);
+  };
+
+  const makeOrder = (order) => {
+    getOrderNumber(order)
+      .then((res) => {
+        openOrderDetails();
+        setOrderNumber(res);
+      })
+      .catch((err) => console.log(err))
+      .catch((err) => alert("Произошла ошибка"));
+  };
+
+  const closeModal = () => {
+   
+    setIsOrderDetailsOpen(false);
   };
 
   return (
@@ -87,17 +112,16 @@ function BurgerConstructor({openModal}) {
           <span className={constructorStyles.price}>{state.totalPrice}</span>
           <CurrencyIcon type="primary" />
       </div>
+      {isOrderDetailsOpen && 
+            <Modal title={ '' } closeModal={ closeModal }>
+              <OrderDetails orderNumber={ orderNumber }/> 
+            </Modal> }
         <Button type="primary" size="large" onClick={handleOrder}>
           Оформить заказ
         </Button>
       </div>
     </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  //data: PropTypes.arrayOf(ingredientType).isRequired,
-  openModal: PropTypes.func.isRequired
 }
 
 export default BurgerConstructor
