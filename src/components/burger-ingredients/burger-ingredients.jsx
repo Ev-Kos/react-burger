@@ -52,21 +52,21 @@ function BurgerIngredients() {
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <nav className="mt-5">
         <div className={burgerStyles.menu}>
-          <Tab value='bun' active={current === INGREDIENT_TYPES.BUN} onClick={selectTabs}>
+          <Tab value={`${INGREDIENT_TYPES.BUN}`} active={current === INGREDIENT_TYPES.BUN} onClick={selectTabs}>
             Булки
           </Tab>
-          <Tab value='sauce' active={current === INGREDIENT_TYPES.SAUCE} onClick={selectTabs}>
+          <Tab value={`${INGREDIENT_TYPES.SAUCE}`} active={current === INGREDIENT_TYPES.SAUCE} onClick={selectTabs}>
             Соусы
           </Tab>
-          <Tab value='main' active={current === INGREDIENT_TYPES.MAIN} onClick={selectTabs}>
+          <Tab value={`${INGREDIENT_TYPES.MAIN}`} active={current === INGREDIENT_TYPES.MAIN} onClick={selectTabs}>
             Начинки
           </Tab>
         </div>
       </nav>
       <ul className={burgerStyles.burgersScroll}>
-        <Ingredients type='bun' name='Булки' clickInfo={ openIngredientDetails } ref={buns}/>
-        <Ingredients type='sauce' name='Соусы' clickInfo={ openIngredientDetails } ref={sauces}/>
-        <Ingredients type='main' name='Начинки' clickInfo={ openIngredientDetails } ref={mains}/>
+        <Ingredients type={`${INGREDIENT_TYPES.BUN}`} name='Булки' clickInfo={ openIngredientDetails } ref={buns}/>
+        <Ingredients type={`${INGREDIENT_TYPES.SAUCE}`} name='Соусы' clickInfo={ openIngredientDetails } ref={sauces}/>
+        <Ingredients type={`${INGREDIENT_TYPES.MAIN}`} name='Начинки' clickInfo={ openIngredientDetails } ref={mains}/>
       </ul>
       {isIngredientDetailsOpen &&
       <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>

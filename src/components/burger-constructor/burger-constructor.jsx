@@ -49,7 +49,7 @@ function BurgerConstructor() {
   }, [ingredients]);
 
   const handleOrder = () => {
-    const order = [state.bun, state.bun, ...state.toppings]
+    const order = [state.bun, ...state.toppings, state.bun]
       .map((item) => item._id);
       makeOrder(order);
   };
@@ -60,8 +60,10 @@ function BurgerConstructor() {
         openOrderDetails();
         setOrderNumber(res);
       })
-      .catch((err) => console.log(err))
-      .catch((err) => alert("Произошла ошибка"));
+      .catch((err) => {
+        console.log(err);
+        alert("Произошла ошибка");
+   })
   };
 
   const closeModal = () => {
