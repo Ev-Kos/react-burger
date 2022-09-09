@@ -4,9 +4,7 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import {getIngredients} from '../../utils/api';
 import {useState, useEffect} from 'react';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import {IngredientContext} from '../../services/context';
 
 function App() {
   const [state, setState] = useState({
@@ -14,24 +12,7 @@ function App() {
     isLoading: true,
     hasError: false,
   });
-  const [isOrderDetails, setIsOrderDetails] = useState(false);
-  const [isIngredientDetails, setIsIngredientDetails] = useState(false);
-  const [ingredient, setIngredient] = useState({});
-
-  const openOrderDetails = () => {
-    setIsOrderDetails(true);
-  };
-
-  const openIngredientDetails = (el: {}) => {
-    setIngredient(el);
-    setIsIngredientDetails(true);
-  }
-
-  const closeModal = () => {
-    setIsOrderDetails(false);
-    setIsIngredientDetails(false);
-  };
-
+  
   useEffect(() => {
     const getNewData = () => {
       setState({ ...state, hasError: false, isLoading: true });
@@ -49,24 +30,18 @@ function App() {
   return (
     <>
       <AppHeader/>
-      <main className={appStyles.content}>
-        {state.isLoading && "Загрузка..."}
-        {state.hasError && "Произошла ошибка"}
-        {!state.isLoading && !state.hasError && (
-          <>
-          <BurgerIngredients data={state.data} openModal={ openIngredientDetails }/>
-          <BurgerConstructor data={state.data} openModal={ openOrderDetails }/>
-          </>
-        )}  
-        {isOrderDetails && 
-          <Modal title={ '' } closeModal={ closeModal }>
-            <OrderDetails /> 
-          </Modal> }
-        {isIngredientDetails &&
-          <Modal title={ 'Детали ингредиента' } closeModal={ closeModal }>
-            <IngredientDetails data={ ingredient } /> 
-          </Modal> }
-      </main>
+      <IngredientContext.Provider value={{ state }}>
+        <main className={appStyles.content}>
+          {state.isLoading && "Загрузка..."}
+          {state.hasError && "Произошла ошибка"}
+          {!state.isLoading && !state.hasError && (
+            <>
+            <BurgerIngredients />
+            <BurgerConstructor />
+            </>
+          )}  
+        </main>
+      </IngredientContext.Provider>
     </>
   );
 }
