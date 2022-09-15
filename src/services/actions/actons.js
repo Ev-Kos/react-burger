@@ -1,4 +1,4 @@
-import {getIngredients, getOrderNumber} from '../../utils/api';
+import { getIngredients, getOrderNumber } from '../../utils/api';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -22,39 +22,44 @@ export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
 export const OPEN_ORDER_MODAL = 'OPEN_ORDER_MODAL';
 export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
 
-export function getItems() {
+export function getAllIngredients() {
     return function(dispatch) {
         dispatch({
             type: GET_INGREDIENTS_REQUEST
         });
-
         getIngredients().then(res => {
             if (res && res.success) {
-            dispatch({
-                type: GET_INGREDIENTS_SUCCESS,
-                data: res.data
-            })
+                dispatch({
+                    type: GET_INGREDIENTS_SUCCESS,
+                    ingredients: res.data
+                });
             } else {
-                dispatch({type: GET_INGREDIENTS_FAILED})
+                dispatch({
+                type: GET_INGREDIENTS_FAILED
+                });
             }
         })
+        .catch(() => dispatch({ type: GET_INGREDIENTS_FAILED }));
     }
 }
 
-export function getOrderNumberApi(data) {
+export function getOrderNumberApi(orderData) {
     return function(dispatch) {
         dispatch({
             type: GET_ORDER_REQUEST
         });
-        getOrderNumber(data)
-        .then(res=> {
-          if (res && res.success) {
-            dispatch({
-              type: GET_ORDER_SUCCESS
-            })
-          } else {
-              dispatch({type: GET_ORDER_FAILED})
-          }
+        getOrderNumber(orderData).then(res => {
+            if (res) {
+                dispatch({
+                    type: GET_ORDER_SUCCESS,
+                    order: res,
+                });
+            } else {
+                dispatch({
+                    type: GET_ORDER_FAILED
+                });
+            }
         })
+        .catch(() => dispatch({ type: GET_ORDER_FAILED }));
     }
-  }
+}

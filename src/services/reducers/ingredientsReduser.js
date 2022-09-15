@@ -1,69 +1,50 @@
-import {combineReducers} from "redux";
-import {GET_INGREDIENTS_REQUEST,
+import {
+    GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
-    OPEN_INGREDIENT_MODAL,
-    CLOSE_INGREDIENT_MODAL,
-    OPEN_ORDER_MODAL,
-    CLOSE_ORDER_MODAL,
-    GET_ORDER_SUCCESS,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
     MOVE_ELEMENT,
     ADD_INGREDIENT_DATA,
     DELETE_INGREDIENT_DATA,
-    GET_ORDER_FAILED
-  } from '../actions/actions';
+    OPEN_INGREDIENT_MODAL,
+    CLOSE_INGREDIENT_MODAL
+} from '../actions/actons';
 
 const initialState = {
     ingredients: [],
     selectedIngredient: [],
     detailsIngredient: {},
-    order: {
-      number: 0
-    },
     ingredientsRequest: false,
     ingredientsFailed: false,
     ingredientModal: false,
-    orderModal: false,
-    orderRequest: false,
-    orderFailed: false
-};  
+    isIngredientDetailsOpen: false
+};
+    
 
-export const ingredientsReducer = (state = initialState, action) => {
+  export const ingredientsReducer = (state = initialState, action) => {
     switch (action.type) {
       case GET_INGREDIENTS_REQUEST: {
         return {
           ...state,
-          ingredientsRequest: true
-        }
+          ingredientsRequest: true,
+        };
       }
       case GET_INGREDIENTS_SUCCESS: {
         return {
           ...state,
+          ingredients: action.ingredients,
           ingredientsRequest: false,
           ingredientsFailed: false,
-          ingredients: action.ingredients
-        }
+        };
       }
       case GET_INGREDIENTS_FAILED: {
         return {
           ...state,
+          ingredients: [],
           ingredientsRequest: false,
-          ingredientsFailed: true
-        }
-      }
-      case OPEN_INGREDIENT_MODAL: {
-        return {
-          ...state,
-          ingredientModal: true
-        }
-      }
-      case CLOSE_INGREDIENT_MODAL: {
-        return {
-          ...state,
-          ingredientModal: false
-        }
+          ingredientsFailed: true,
+        };
       }
       case ADD_INGREDIENT: {
         return {
@@ -95,42 +76,15 @@ export const ingredientsReducer = (state = initialState, action) => {
           detailsIngredient: {},
         };
       }
-      case OPEN_ORDER_MODAL: {
-        return {
-          ...state,
-          orderModal: true
-        }
+      case (OPEN_INGREDIENT_MODAL): {
+        return { ...state, isIngredientDetailsOpen: true };
       }
-      case CLOSE_ORDER_MODAL: {
-        return {
-          ...state,
-          orderModal: false
-        }
-      }
-      case GET_ORDER_SUCCESS: {
-        return {
-          ...state,
-          order: action.order,
-          orderRequest: false,
-          orderFailed: false,
-        }
-      }
-      case GET_ORDER_FAILED: {
-        return {
-          ...state,
-          order: {
-            number: 0,
-          },
-          orderRequest: false,
-          orderFailed: true,
-        };
+      case (CLOSE_INGREDIENT_MODAL): {
+        return { ...state, isIngredientDetailsOpen: false };
       }
       default: {
-        return state
+        return state;
       }
     }
-  }
-
-export const rootReducer = combineReducers({
-    data: ingredientsReducer
-})
+  };
+  

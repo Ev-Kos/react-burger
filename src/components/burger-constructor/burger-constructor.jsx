@@ -1,120 +1,141 @@
 import constructorStyles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
-import { IngredientContext } from '../../services/context';
-import { useContext, useEffect, useReducer, useState } from "react";
-import {getOrderNumber} from '../../utils/api';
+import { ConstructorElement, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useMemo, useCallback } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import {INGREDIENT_TYPES, COLLECT_ACTION, COUNT_ACTION} from '../../utils/constants';
-
-const initialState = {
-  bun: {},
-  toppings: [],
-  totalPrice: 0
-};
+import {INGREDIENT_TYPES} from '../../utils/constants';
+import { CLOSE_ORDER_MODAL, getOrderNumberApi,
+         OPEN_ORDER_MODAL,
+         DELETE_INGREDIENT,
+         ADD_INGREDIENT,
+         MOVE_ELEMENT } from '../../services/actions/actons';
+import update from 'immutability-helper';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor() {
-  const data = useContext(IngredientContext);
-  const ingredients = data.state.data;
-  const [isOrderDetailsOpen, setIsOrderDetailsOpen] = useState(false);
-  const [orderNumber, setOrderNumber] = useState(null);
+  const selectedIngredient = useSelector((store) => store.ingredientsReducer.selectedIngredient);
+  const dispatch = useDispatch();
+ 
+  const bun = selectedIngredient && selectedIngredient.find((item) => item.type === INGREDIENT_TYPES.BUN);
+  const totalPrice = selectedIngredient.length ? selectedIngredient.reduce((total, current) => 
+    (current.type !== INGREDIENT_TYPES.BUN ? total + current.price : total + current.price * 2), 0) : 0;
+  const isOrderDetailsOpen = useSelector((store) => store.orderReducer.isOrderDetailsOpen);
+  const orderNumber = useSelector((store) => store.orderReducer.order);
 
+  const selectedIngredients = [...selectedIngredient].filter((item) => item.type !== INGREDIENT_TYPES.BUN);
 
   const openOrderDetails = () => {
-    setIsOrderDetailsOpen(true);
+    dispatch({ type: OPEN_ORDER_MODAL });
   };
   
-  function reducer (state, action) {
-    const bun = ingredients && ingredients
-      .find((item) => item.type === INGREDIENT_TYPES.BUN);
-    const toppings = ingredients && ingredients
-      .filter((item) => item.type !== INGREDIENT_TYPES.BUN);
-    const totalPrice = state.toppings.length && state.toppings
-      .reduce((total, current) => total + current.price, 0) + state.bun.price * 2;
-    switch (action.type) {
-      case COLLECT_ACTION:
-        return { ...state, toppings, bun };
-      case COUNT_ACTION:
-        return { ...state, totalPrice };
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`);
-    }
-  };
-
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    dispatch({ type: COLLECT_ACTION });
-    dispatch({ type: COUNT_ACTION });
-  }, [ingredients]);
-
   const handleOrder = () => {
-    const order = [state.bun, ...state.toppings, state.bun]
-      .map((item) => item._id);
-      makeOrder(order);
+    makeOrder(selectedIngredient);
   };
 
-  const makeOrder = (order) => {
-    getOrderNumber(order)
-      .then((res) => {
-        openOrderDetails();
-        setOrderNumber(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Произошла ошибка");
-   })
+  const makeOrder = (orderData) => {
+    dispatch(getOrderNumberApi(orderData));
+    openOrderDetails();
   };
 
   const closeModal = () => {
-    setIsOrderDetailsOpen(false);
+    dispatch({ type: CLOSE_ORDER_MODAL });
   };
 
+  const [, dropTarget] = useDrop({
+    accept: 'ingredient',
+    drop(item) {
+      handleDrop(item);
+    }
+  });
+
+  const handleDrop = (item) => {
+    if (item.type === INGREDIENT_TYPES.BUN) {
+      const bun = selectedIngredient.find((element) => element.type === INGREDIENT_TYPES.BUN);
+      const index = selectedIngredient.indexOf(bun);
+      if (index !== -1) {
+        dispatch({ type: DELETE_INGREDIENT, index });
+      }
+    }
+    dispatch({ type: ADD_INGREDIENT, item: {...item, key:uuidv4()} });
+  };
+
+  const deleteIngredient = (item) => {
+    const index = selectedIngredient.indexOf(item);
+    dispatch({ type: DELETE_INGREDIENT, index });
+  };
+
+  const movedIngredient = useCallback((dragIndex, hoverIndex) => {
+    const bun = [...selectedIngredient].find((item) => item.type === INGREDIENT_TYPES.BUN);
+    const dragElement = selectedIngredients[dragIndex];
+    const payload = bun
+      ? [bun, ...update(selectedIngredients, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragElement]
+        ],
+      })]
+      : update(selectedIngredients, {
+        $splice: [
+          [dragIndex, 1],
+          [hoverIndex, 0, dragElement]
+        ],
+      });
+    dispatch({ type: MOVE_ELEMENT, payload });
+  }, [selectedIngredients]);
+
+  const selectedElement = useMemo(() => selectedIngredient
+  .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
+  .map((element, index) => (
+    <BurgerConstructorElement
+      element={ element }
+      id={ element._id }
+      index={ index }
+      onDelete={ deleteIngredient }
+      onMove={ movedIngredient } 
+      key= { element.key }
+    />
+  )),
+[selectedIngredient]
+);
+
   return (
-    <section className={`${constructorStyles.constructor} mr-5 pl-4`}>
+    <section className={`${constructorStyles.constructor} mr-5 pl-4`} ref={ dropTarget }>
       <ul className={`${constructorStyles.elements} mt-25`}>
-        <li className={`${constructorStyles.element} mr-8 mb-4`}>
-          {state.bun && <ConstructorElement
+      {bun && (<li className={`${constructorStyles.element} mr-8 mb-4`}>
+           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${state.bun.name } (верх)`}
-            price={state.bun.price}
-            thumbnail={state.bun.image_mobile}
-          />}
-        </li>
+            text={`${ bun.name } (верх)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </li>)}
         <li>
           <ul className={`${constructorStyles.elementScroll} mr-4`}>
-            {state.toppings.map((elem) => {
-                return(
-                  <li key={elem._id} className={`${constructorStyles.element} mr-2`}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={elem.name}
-                      price={elem.price}
-                      thumbnail={elem.image_mobile}
-                    />
-                  </li>)
-            })}
+            { selectedElement }
           </ul>
         </li>
-        <li className={`${constructorStyles.element} mr-8 mt-4`}>
-          {state.bun && <ConstructorElement
+        {bun && (<li className={`${constructorStyles.element} mr-8 mt-4`}>
+            <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${state.bun.name } (низ)`}
-            price={state.bun.price}
-            thumbnail={state.bun.image_mobile}
-          />}
-        </li>
+            text={`${bun.name } (низ)`}
+            price={bun.price}
+            thumbnail={bun.image_mobile}
+          />
+        </li>)}
       </ul>
       <div className={`${constructorStyles.order} mr-15 mt-10`}>
         <div className={constructorStyles.priceContainer}>
-          <span className={constructorStyles.price}>{state.totalPrice}</span>
+          <span className={constructorStyles.price}>{totalPrice}</span>
           <CurrencyIcon type="primary" />
         </div>
         {isOrderDetailsOpen && 
             <Modal title={ '' } closeModal={ closeModal }>
-              <OrderDetails orderNumber={ orderNumber }/> 
+              <OrderDetails orderNumber={ orderNumber.number }/> 
             </Modal>}
         <Button type="primary" size="large" onClick={handleOrder}>
           Оформить заказ
