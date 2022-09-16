@@ -5,12 +5,17 @@ import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientStyles from './ingredient.module.css';
 import {INGREDIENT_TYPES} from '../../utils/constants';
+import { useMemo } from 'react';
 
 function Ingredient({ element, onClick }) {
-    const selectedIngredient = useSelector((store) => store.ingredientsReducer.selectedIngredient);
-    const counter = selectedIngredient.filter((item) => item.type === INGREDIENT_TYPES.BUN 
-                    && item._id === element._id).length * 2 
-                    || selectedIngredient.filter((item) => item._id === element._id).length;
+    const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
+    const counter = useMemo(() => {
+      return (
+        selectedIngredient.filter((item) => item.type === INGREDIENT_TYPES.BUN 
+          && item._id === element._id).length * 2 
+          || selectedIngredient.filter((item) => item._id === element._id).length
+      ); 
+    }, [selectedIngredient]);
   
     const [, ref] = useDrag({
       type: 'ingredient',
@@ -23,7 +28,8 @@ function Ingredient({ element, onClick }) {
              onClick={ onClick }
              ref={ ref }
              draggable>
-            <Counter count={ counter } size="default" />
+            {counter !== 0 ? (<Counter count={ counter } size="default" />) 
+            : (null)}
             <img src={ element.image } className={ ingredientStyles.image } alt={ element.name } />
             <p className={ ingredientStyles.price }>
         	    <span className='text text_type_digits-default'>{ element.price }</span> 
@@ -35,7 +41,7 @@ function Ingredient({ element, onClick }) {
   }
   
   Ingredient.propTypes = {
-    element: PropTypes.oneOfType([PropTypes.object, ingredientType]).isRequired,
+    element: PropTypes.oneOfType([ingredientType]).isRequired,
     onClick: PropTypes.func.isRequired
   };
   

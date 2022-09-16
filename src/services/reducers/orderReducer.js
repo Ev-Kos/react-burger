@@ -1,17 +1,13 @@
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
-  GET_ORDER_FAILED,
-  OPEN_ORDER_MODAL,
-  CLOSE_ORDER_MODAL
-  } from '../actions/actons';
+  GET_ORDER_FAILED
+  } from '../actions/orderActions';
 
   const initialState = {
     order: {number: 0},
-    orderModal: false,
     orderRequest: false,
-    orderFailed: false,
-    isOrderDetailsOpen: false
+    orderFailed: false
   };
 
 export const orderReducer = (state = initialState, action) => {
@@ -39,12 +35,6 @@ export const orderReducer = (state = initialState, action) => {
         orderRequest: false,
         orderFailed: true,
       };
-    }
-    case (OPEN_ORDER_MODAL): {
-      return { ...state, isOrderDetailsOpen: true };
-    }
-    case (CLOSE_ORDER_MODAL): {
-      return { ...state, isOrderDetailsOpen: false };
     }
     default: {
       return state;

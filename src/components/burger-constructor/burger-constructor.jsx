@@ -6,38 +6,61 @@ import { useDrop } from 'react-dnd';
 import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import {INGREDIENT_TYPES} from '../../utils/constants';
-import { CLOSE_ORDER_MODAL, getOrderNumberApi,
-         OPEN_ORDER_MODAL,
-         DELETE_INGREDIENT,
+import { INGREDIENT_TYPES } from '../../utils/constants';
+import { CLOSE_ORDER_MODAL, 
+         OPEN_ORDER_MODAL } 
+         from '../../services/actions/modalActions';
+import { DELETE_INGREDIENT,
          ADD_INGREDIENT,
-         MOVE_ELEMENT } from '../../services/actions/actons';
+         MOVE_ELEMENT } 
+         from '../../services/actions/selectedIngredientsActions';
+import { getOrderNumberApi } from '../../services/actions/orderActions';
+import { getOrderNumber } from '../../utils/api'
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor() {
-  const selectedIngredient = useSelector((store) => store.ingredientsReducer.selectedIngredient);
+  const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
   const dispatch = useDispatch();
- 
   const bun = selectedIngredient && selectedIngredient.find((item) => item.type === INGREDIENT_TYPES.BUN);
-  const totalPrice = selectedIngredient.length ? selectedIngredient.reduce((total, current) => 
-    (current.type !== INGREDIENT_TYPES.BUN ? total + current.price : total + current.price * 2), 0) : 0;
-  const isOrderDetailsOpen = useSelector((store) => store.orderReducer.isOrderDetailsOpen);
+
+  const totalPrice = useMemo(() => {
+    return (
+      selectedIngredient.length ? selectedIngredient.reduce((total, current) => 
+    (current.type !== INGREDIENT_TYPES.BUN ? total + current.price : total + current.price * 2), 0) : 0
+    )
+  }, [selectedIngredient]);
+
+  const isOrderDetailsOpen = useSelector((store) => store.modalReducer.isOrderDetailsOpen);
   const orderNumber = useSelector((store) => store.orderReducer.order);
 
-  const selectedIngredients = [...selectedIngredient].filter((item) => item.type !== INGREDIENT_TYPES.BUN);
+  const selectedIngredients = useMemo(() => {
+    return (
+      [...selectedIngredient].filter((item) => item.type !== INGREDIENT_TYPES.BUN)
+    )
+  }, [selectedIngredient]);
 
   const openOrderDetails = () => {
-    dispatch({ type: OPEN_ORDER_MODAL });
+      dispatch({ type: OPEN_ORDER_MODAL });
   };
   
   const handleOrder = () => {
-    makeOrder(selectedIngredient);
+    const oder = [bun, 
+      ...selectedIngredients.map((item) => item._id), 
+      bun];
+    makeOrder(oder);
   };
 
-  const makeOrder = (orderData) => {
-    dispatch(getOrderNumberApi(orderData));
-    openOrderDetails();
+  const makeOrder = (oder) => {
+    getOrderNumber(oder)
+    .then(() => {
+      openOrderDetails();
+    })
+    .catch((err) => {
+      console.log(err);
+      alert('Произошла ошибка');
+    })
+    dispatch(getOrderNumberApi(oder))
   };
 
   const closeModal = () => {
@@ -53,8 +76,7 @@ function BurgerConstructor() {
 
   const handleDrop = (item) => {
     if (item.type === INGREDIENT_TYPES.BUN) {
-      const bun = selectedIngredient.find((element) => element.type === INGREDIENT_TYPES.BUN);
-      const index = selectedIngredient.indexOf(bun);
+      const index = selectedIngredient.findIndex((element) => element === bun);
       if (index !== -1) {
         dispatch({ type: DELETE_INGREDIENT, index });
       }
@@ -86,7 +108,7 @@ function BurgerConstructor() {
     dispatch({ type: MOVE_ELEMENT, payload });
   }, [selectedIngredients]);
 
-  const selectedElement = useMemo(() => selectedIngredient
+  const selectedElements = useMemo(() => selectedIngredient
   .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
   .map((element, index) => (
     <BurgerConstructorElement
@@ -115,7 +137,7 @@ function BurgerConstructor() {
         </li>)}
         <li>
           <ul className={`${constructorStyles.elementScroll} mr-4`}>
-            { selectedElement }
+            { selectedElements }
           </ul>
         </li>
         {bun && (<li className={`${constructorStyles.element} mr-8 mt-4`}>
@@ -137,7 +159,7 @@ function BurgerConstructor() {
             <Modal title={ '' } closeModal={ closeModal }>
               <OrderDetails orderNumber={ orderNumber.number }/> 
             </Modal>}
-        <Button type="primary" size="large" onClick={handleOrder}>
+        <Button type="primary" size="large" onClick={handleOrder} disabled={ !selectedIngredient.length }>
           Оформить заказ
         </Button>
       </div>

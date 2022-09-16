@@ -44,6 +44,10 @@ const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove })
 
   dragRef(dropRef(ref));
 
+  const handleClose = () => {
+    onDelete(element)
+  }
+
   return (
     <li
       className={`${constructorElementStyles.element} ${isDragging && constructorElementStyles.dragging}`}
@@ -57,14 +61,14 @@ const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove })
         text={ name }
         price={ price }
         thumbnail={ image }
-        handleClose={() => onDelete(element)}
+        handleClose={ handleClose }
       />
     </li>
   );
 });
 
 BurgerConstructorElement.propTypes = {
-  element: PropTypes.oneOfType([PropTypes.object, ingredientType]).isRequired,
+  element: PropTypes.oneOfType([ingredientType]).isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,
