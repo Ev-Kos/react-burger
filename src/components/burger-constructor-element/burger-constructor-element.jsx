@@ -68,7 +68,7 @@ const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove })
 });
 
 BurgerConstructorElement.propTypes = {
-  element: PropTypes.oneOfType([ingredientType]).isRequired,
+  element: ingredientType.isRequired,
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   onDelete: PropTypes.func.isRequired,

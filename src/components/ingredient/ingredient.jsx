@@ -41,7 +41,7 @@ function Ingredient({ element, onClick }) {
   }
   
   Ingredient.propTypes = {
-    element: PropTypes.oneOfType([ingredientType]).isRequired,
+    element: ingredientType.isRequired,
     onClick: PropTypes.func.isRequired
   };
   

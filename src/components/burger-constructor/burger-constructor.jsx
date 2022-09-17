@@ -45,14 +45,14 @@ function BurgerConstructor() {
   };
   
   const handleOrder = () => {
-    const oder = [bun, 
+    const order = [bun._id, 
       ...selectedIngredients.map((item) => item._id), 
-      bun];
-    makeOrder(oder);
+      bun._id];
+    makeOrder(order);
   };
 
-  const makeOrder = (oder) => {
-    getOrderNumber(oder)
+  const makeOrder = (order) => {
+    getOrderNumber(order)
     .then(() => {
       openOrderDetails();
     })
@@ -60,7 +60,7 @@ function BurgerConstructor() {
       console.log(err);
       alert('Произошла ошибка');
     })
-    dispatch(getOrderNumberApi(oder))
+    dispatch(getOrderNumberApi(order))
   };
 
   const closeModal = () => {
@@ -159,7 +159,7 @@ function BurgerConstructor() {
             <Modal title={ '' } closeModal={ closeModal }>
               <OrderDetails orderNumber={ orderNumber.number }/> 
             </Modal>}
-        <Button type="primary" size="large" onClick={handleOrder} disabled={ !selectedIngredient.length }>
+        <Button type="primary" size="large" onClick={handleOrder} disabled={ !selectedIngredient.length || !bun}>
           Оформить заказ
         </Button>
       </div>
