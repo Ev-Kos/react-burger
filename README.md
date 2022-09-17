@@ -10,6 +10,7 @@
 1. Flex
 2. Grid
 3. React
+4. Redux
 
 
 
