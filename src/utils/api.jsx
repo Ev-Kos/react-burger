@@ -20,7 +20,7 @@ const getOrderNumber = (data) => {
     body: JSON.stringify({ ingredients: data }),
     })
   .then(checkResponse)
-  .then((data) => data.order.number)
+  .then((data) => data.order)
 }
 
 
