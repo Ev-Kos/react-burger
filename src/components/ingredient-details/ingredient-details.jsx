@@ -1,16 +1,16 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import {ingredientType} from '../../utils/prop-types';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-function IngredientDetails({data}) {
+function IngredientDetails() {
+  const ingredient = useSelector((store) => store.ingredientReducer.detailsIngredient);
   return (
     <div className={`${ingredientDetailsStyles.container} pr-25 pb-15 pl-25`}>
       <img className={ingredientDetailsStyles.image} 
-           src={data.image} 
-           alt={ data.name }
+           src={ingredient.image} 
+           alt={ ingredient.name }
       />
       <p className={`${ingredientDetailsStyles.title} text text_type_main-medium mt-4 mb-8` }>
-         {data.name }
+         {ingredient.name }
       </p>
       <ul className={`${ingredientDetailsStyles.list} text text_type_main-default text_color_inactive`}>
         <li className={`${ingredientDetailsStyles.element} mr-5`}>
@@ -18,7 +18,7 @@ function IngredientDetails({data}) {
             Калории, ккал
           </p>
           <p className={`${ingredientDetailsStyles.title} text text_type_main-default text_color_inactive` }>
-            {data.calories }
+            {ingredient.calories }
           </p>
         </li>
         <li className={`${ingredientDetailsStyles.element} mr-5`}>
@@ -26,7 +26,7 @@ function IngredientDetails({data}) {
             Белки, г
           </p>
           <p className={`${ingredientDetailsStyles.title} text text_type_main-default text_color_inactive`}>
-            {data.proteins }
+            {ingredient.proteins }
           </p>
         </li>
         <li className={`${ingredientDetailsStyles.element} mr-5`}>
@@ -34,7 +34,7 @@ function IngredientDetails({data}) {
             Жиры, г
           </p>
           <p className={`${ingredientDetailsStyles.title} text text_type_main-default text_color_inactive`}>
-            {data.fat}
+            {ingredient.fat}
           </p>
         </li>
         <li className={`${ingredientDetailsStyles.element} mr-5`}>
@@ -42,16 +42,12 @@ function IngredientDetails({data}) {
             Углеводы, г
           </p>
           <p className={`${ingredientDetailsStyles.title} text text_type_main-default text_color_inactive`}>
-            {data.carbohydrates}
+            {ingredient.carbohydrates}
           </p>
         </li>
       </ul>
     </div>
   );
 }
-
-IngredientDetails.propTypes = {
-  data: PropTypes.oneOfType([PropTypes.object, ingredientType]).isRequired,
-};
 
 export default IngredientDetails;

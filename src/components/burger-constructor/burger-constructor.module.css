@@ -6,18 +6,18 @@
     width: 100%;
 }
 
-.elements {
-    list-style-type: none;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-}
-
 .element {
     display: flex;
     justify-content: flex-end;
     align-items: center;
     column-gap: 8px;
+}
+
+.elements {
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
 }
 
 .elementScroll {
