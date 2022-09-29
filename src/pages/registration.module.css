@@ -1,0 +1,23 @@
+.page {
+    margin: 0 auto;
+    max-width: 1920px;
+}
+
+.wrap {
+    padding-top: 120px;
+    margin: 0 auto;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input {
+    width: 480px
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+    padding-left: 8px;
+}

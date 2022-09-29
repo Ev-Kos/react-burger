@@ -9,8 +9,8 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-
 import Login from "../../pages/login";
+import Registration from "../../pages/registration";
 
 function App() {
   return (
@@ -20,6 +20,9 @@ function App() {
       <Switch >
         <Route path='/login' exact={true}>
           <Login />
+        </Route>
+        <Route path="/register" exact={true}>
+          <Registration />
         </Route>
       </Switch>
     </Router>
