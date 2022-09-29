@@ -4,7 +4,7 @@ import {
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import loginStyle from './login.module.css';
+import loginStyle from './styles-pages.module.css';
 
 function Login() {
   return (

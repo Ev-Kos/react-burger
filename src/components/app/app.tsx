@@ -9,8 +9,9 @@ import {
   Route,
   Switch
 } from 'react-router-dom';
-import Login from "../../pages/login";
-import Registration from "../../pages/registration";
+import Login from '../../pages/login';
+import Registration from '../../pages/registration';
+import ForgotPassword from '../../pages/forgot-password';
 
 function App() {
   return (
@@ -21,8 +22,11 @@ function App() {
         <Route path='/login' exact={true}>
           <Login />
         </Route>
-        <Route path="/register" exact={true}>
+        <Route path='/register' exact={true}>
           <Registration />
+        </Route>
+        <Route path='/forgot-password' exact={true}>
+          <ForgotPassword />
         </Route>
       </Switch>
     </Router>
