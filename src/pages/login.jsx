@@ -5,17 +5,18 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import loginStyle from './styles-pages.module.css';
+import { useState } from 'react';
 
 function Login() {
   return (
     <section className={loginStyle.login}>
       <form className={loginStyle.form}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
-        <div className={`${loginStyle.input} pb-6`}>
-          <EmailInput name={'email'} />
+        <div className='pb-6'>
+          <EmailInput className={loginStyle.input} name={'email'}/>
         </div>
-        <div className={`${loginStyle.input} pb-6`}>
-          <PasswordInput name={'password'} />
+        <div className='pb-6'>
+          <PasswordInput className={loginStyle.input} name={'password'} />
         </div>
         <div className="pb-20 text">
           <Button>Войти</Button>

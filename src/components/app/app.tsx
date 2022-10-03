@@ -8,6 +8,7 @@ import {
 import Login from '../../pages/login';
 import Registration from '../../pages/registration';
 import ForgotPassword from '../../pages/forgot-password';
+import ResetPassword from '../../pages/reset-password';
 
 function App() {
   return (
@@ -26,6 +27,9 @@ function App() {
         </Route>
         <Route path='/forgot-password' exact={true}>
           <ForgotPassword />
+        </Route>
+        <Route path='/reset-password' exact={true}>
+          <ResetPassword />
         </Route>
       </Switch>
     </Router>
