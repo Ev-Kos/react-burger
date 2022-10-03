@@ -1,5 +1,4 @@
-const apiIngredients = 'https://norma.nomoreparties.space/api/ingredients';
-const apiOrderNumber = 'https://norma.nomoreparties.space/api/orders';
+const baseUrl = 'https://norma.nomoreparties.space/api/';
 
 const checkResponse = (res) => {
     if (res.ok) {
@@ -9,12 +8,12 @@ const checkResponse = (res) => {
   }
 
 const getIngredients = () => {
-    return fetch(apiIngredients)
+    return fetch(`${baseUrl}ingredients`)
     .then((res) => checkResponse(res))
 }
 
 const getOrderNumber = (data) => {
-  return fetch(apiOrderNumber, {
+  return fetch(`${baseUrl}orders`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ ingredients: data }),
@@ -23,5 +22,15 @@ const getOrderNumber = (data) => {
   .then((data) => data.order)
 }
 
+const getForgotPassword = async(forgotEmail) => {
+  return fetch(`${baseUrl}password-reset`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({ 'email': forgotEmail })
+  })
+  .then((res) => checkResponse(res))
+}
 
-export {getIngredients, getOrderNumber}
+
+export {getIngredients, getOrderNumber, getForgotPassword}

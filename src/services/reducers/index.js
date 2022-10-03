@@ -4,13 +4,15 @@ import {orderReducer} from './orderReducer';
 import {selectedIngredientsReducer} from './selectedIngredientsReduser';
 import {ingredientReducer} from './ingredientReducer';
 import {modalReducer} from './modalReducer';
+import {forgotPasswordReducer} from './forgotPasswordReducer';
 
 const rootReducer = combineReducers({
     ingredientsReducer,
     orderReducer,
     selectedIngredientsReducer,
     ingredientReducer,
-    modalReducer
+    modalReducer,
+    forgotPasswordReducer
   })
   
   export default rootReducer;
