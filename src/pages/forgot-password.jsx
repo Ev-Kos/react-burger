@@ -16,7 +16,7 @@ import {
       setValue(e.target.value)
     }
 
-    const fogot = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
+    const fogotPass = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
     const dispatch = useDispatch();
 
     const forgotHandler = (e) => {
@@ -24,7 +24,7 @@ import {
       dispatch(forgotPassword(value));
     };
 
-    if (fogot) {
+    if (fogotPass) {
       return (
         <Redirect
           to={{

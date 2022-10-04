@@ -26,8 +26,8 @@ function ResetPassword() {
     dispatch(resetPassword(valueToken, valuePassword));
   }
 
-  const fogot = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
-  if (!fogot) {
+  const fogotPass = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
+  if (!fogotPass) {
     return (
       <Redirect
         to={{

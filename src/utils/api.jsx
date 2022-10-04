@@ -42,6 +42,20 @@ const getResetPassword = (resetToken, resetPassword) => {
   .then((res) => checkResponse(res))
 }
 
+const getUserRegister = (userName, userEmail, userPassword) => {
+  return fetch(`${baseUrl}auth/register`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          "email": userEmail,
+          "password": userPassword,
+          "name": userName
+      })
+  })
+  .then((res) => checkResponse(res))
+}
 
 
-export {getIngredients, getOrderNumber, getForgotPassword, getResetPassword}
+
+export {getIngredients, getOrderNumber, getForgotPassword, getResetPassword, getUserRegister}

@@ -6,6 +6,7 @@ import {ingredientReducer} from './ingredientReducer';
 import {modalReducer} from './modalReducer';
 import {forgotPasswordReducer} from './forgotPasswordReducer';
 import {resetPasswordReducer} from './resetPasswordReducer';
+import {registerReduser} from './registerReducer';
 
 const rootReducer = combineReducers({
     ingredientsReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     ingredientReducer,
     modalReducer,
     forgotPasswordReducer,
-    resetPasswordReducer
+    resetPasswordReducer,
+    registerReduser
   })
   
   export default rootReducer;
