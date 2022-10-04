@@ -22,7 +22,7 @@ const getOrderNumber = (data) => {
   .then((data) => data.order)
 }
 
-const getForgotPassword = async(forgotEmail) => {
+const getForgotPassword = (forgotEmail) => {
   return fetch(`${baseUrl}password-reset`, {
       method: 'POST',
       headers: {
@@ -32,5 +32,16 @@ const getForgotPassword = async(forgotEmail) => {
   .then((res) => checkResponse(res))
 }
 
+const getResetPassword = (resetToken, resetPassword) => {
+  return fetch(`${baseUrl}reset`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({ 'password': resetToken, 'token': resetPassword })
+  })
+  .then((res) => checkResponse(res))
+}
 
-export {getIngredients, getOrderNumber, getForgotPassword}
+
+
+export {getIngredients, getOrderNumber, getForgotPassword, getResetPassword}
