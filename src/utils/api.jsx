@@ -27,17 +27,20 @@ const getForgotPassword = (forgotEmail) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'},
-      body: JSON.stringify({ 'email': forgotEmail })
+      body: JSON.stringify({ email: forgotEmail })
   })
   .then((res) => checkResponse(res))
 }
 
 const getResetPassword = (resetToken, resetPassword) => {
-  return fetch(`${baseUrl}reset`, {
+  return fetch(`${baseUrl}password-reset/reset`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'},
-      body: JSON.stringify({ 'password': resetToken, 'token': resetPassword })
+      body: JSON.stringify({ 
+        password: resetToken, 
+        token: resetPassword 
+      })
   })
   .then((res) => checkResponse(res))
 }
@@ -48,9 +51,9 @@ const getUserRegister = (userName, userEmail, userPassword) => {
       headers: {
           'Content-Type': 'application/json'},
       body: JSON.stringify({
-          "email": userEmail,
-          "password": userPassword,
-          "name": userName
+          email: userEmail,
+          password: userPassword,
+          name: userName
       })
   })
   .then((res) => checkResponse(res))
