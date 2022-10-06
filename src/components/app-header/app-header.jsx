@@ -1,19 +1,31 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
 function AppHeader() {
+  const [linkState, setLinkState] = useState({
+    profile: false,
+    constructor: true
+  });
+  const onClick = (element) => {
+    element === 'constructor'
+    ? setLinkState({ constructor: true, profile: false })
+    : setLinkState({ profile: true, constructor: false })
+  }
+
   return (
     <header className={`${headerStyles.header} pt-4 pb-3`}>
       <nav className={headerStyles.header__nav}>
         <ul className={headerStyles.header__linkBox}>
           <li>
-            <a href='#' className={linkActive}>
-              <BurgerIcon type="primary" />
+            <Link to='/' className={linkState.constructor ? linkActive : link}
+                  onClick={() => onClick('constructor')}>
+              <BurgerIcon type={linkState.constructor ? 'primary' : 'secondary'} />
               Конструктор
-            </a>
+            </Link>
           </li>
           <li>
             <a href='#' className={link}>
@@ -26,10 +38,11 @@ function AppHeader() {
           <Logo/>
         </a>
         <div className={headerStyles.header__linkProfile}>
-          <a href='#' className={link}>
-            <ProfileIcon type="secondary" />
+          <Link to='/profile' className={linkState.profile ? linkActive : link} 
+                onClick={() => onClick()}>
+            <ProfileIcon type={linkState.profile ? 'primary' : 'secondary'} />
             Личный кабинет
-          </a>
+          </Link>
         </div>
       </nav>
     </header>

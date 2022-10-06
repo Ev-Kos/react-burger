@@ -9,6 +9,7 @@ import Login from '../../pages/login';
 import Registration from '../../pages/registration';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
+import Profile from '../../pages/profile';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path='/login' exact={true}>
           <Login />
+        </Route>
+        <Route path='/profile' exact={true}>
+          <Profile />
         </Route>
         <Route path='/register' exact={true}>
           <Registration />
