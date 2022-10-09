@@ -1,3 +1,5 @@
+import { getCookie } from './utils';
+
 const baseUrl = 'https://norma.nomoreparties.space/api/';
 
 const checkResponse = (res) => {
@@ -7,12 +9,12 @@ const checkResponse = (res) => {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-const getIngredients = () => {
+export const getIngredients = () => {
     return fetch(`${baseUrl}ingredients`)
     .then((res) => checkResponse(res))
 }
 
-const getOrderNumber = (data) => {
+export const getOrderNumber = (data) => {
   return fetch(`${baseUrl}orders`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -22,7 +24,7 @@ const getOrderNumber = (data) => {
   .then((data) => data.order)
 }
 
-const getForgotPassword = (forgotEmail) => {
+export const getForgotPassword = (forgotEmail) => {
   return fetch(`${baseUrl}password-reset`, {
       method: 'POST',
       headers: {
@@ -32,7 +34,7 @@ const getForgotPassword = (forgotEmail) => {
   .then((res) => checkResponse(res))
 }
 
-const getResetPassword = (resetToken, resetPassword) => {
+export const getResetPassword = (resetToken, resetPassword) => {
   return fetch(`${baseUrl}password-reset/reset`, {
       method: 'POST',
       headers: {
@@ -45,7 +47,7 @@ const getResetPassword = (resetToken, resetPassword) => {
   .then((res) => checkResponse(res))
 }
 
-const getUserRegister = (userName, userEmail, userPassword) => {
+export const getUserRegister = (userName, userEmail, userPassword) => {
   return fetch(`${baseUrl}auth/register`, {
       method: 'POST',
       headers: {
@@ -59,6 +61,65 @@ const getUserRegister = (userName, userEmail, userPassword) => {
   .then((res) => checkResponse(res))
 }
 
+export const getUserLogin = (userEmail, userPassword) => {
+  return fetch(`${baseUrl}auth/login`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'},
+      body: JSON.stringify({
+          email: userEmail,
+          password: userPassword
+      })
+  })
+  .then((res) => checkResponse(res))
+}
+
+export const logoutApi = (token) => {
+  return fetch(`${baseUrl}auth/logout`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        token: token
+      })
+  })
+  .then((res) => checkResponse(res))
+}
+
+export const updateTokin = () => {
+  return fetch(`${baseUrl}auth/token`, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        token: getCookie('refreshToken')
+      })
+  })
+  .then((res) => checkResponse(res))
+}
+
+export const getUser = () => {
+  return fetch(`${baseUrl}auth/user`, {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token')}
+  })
+  .then((res) => checkResponse(res))
+}
+
+export const updateUser = (userName, userEmail, userPassword) => {
+  return fetch(`${baseUrl}auth/user`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token')},
+      body: JSON.stringify({
+        email: userEmail,
+        password: userPassword,
+        name: userName
+    })
+  })
+  .then((res) => checkResponse(res))
+}
 
 
-export {getIngredients, getOrderNumber, getForgotPassword, getResetPassword, getUserRegister}
