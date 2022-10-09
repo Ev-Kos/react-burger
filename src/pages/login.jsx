@@ -3,20 +3,50 @@ import {
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import loginStyle from './styles-pages.module.css';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
+import { useAuth } from '../services/auth';
 
 function Login() {
+  const [value, setValue] = useState('');
+  const [valuePassword, setValuePassword] = useState('');
+
+  const onChangeEmail = (e) => {
+    setValue(e.target.value);
+  };
+  
+  const onChangePassword = (e) => {
+    setValuePassword(e.target.value);
+  };
+
+  const auth = useAuth();
+  const login = useCallback((e) => {
+      e.preventDefault();
+      auth.signIn(value, valuePassword);
+    },
+    [auth, value, valuePassword]
+  );
+
+  if (auth.user) {
+    return <Redirect to={{ pathname: '/' }} />;
+  }
+
   return (
     <section className={loginStyle.login}>
-      <form className={loginStyle.form}>
+      <form className={loginStyle.form} onSubmit={login}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
         <div className='pb-6'>
-          <EmailInput className={loginStyle.input} name={'email'}/>
+          <EmailInput className={loginStyle.input} 
+            name={'email'} 
+            value={value} 
+            onChange={onChangeEmail}/>
         </div>
         <div className='pb-6'>
-          <PasswordInput className={loginStyle.input} name={'password'} />
+          <PasswordInput className={loginStyle.input} 
+            name={'password'}
+            value={valuePassword} 
+            onChange={onChangePassword} />
         </div>
         <div className="pb-20 text">
           <Button>Войти</Button>

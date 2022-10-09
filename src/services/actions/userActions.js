@@ -38,7 +38,7 @@ export function loginUser(userEmail, userPassword) {
 }
 
 
-export function signOutUser(token) {
+export function logoutUser(token) {
     return function(dispatch) {
         logoutApi(token)
             .then(data => data)

@@ -10,26 +10,32 @@ import {
   import { Redirect } from 'react-router-dom';
 
   function ForgotPassword() {
-   
+    const dispatch = useDispatch();
     const [value, setValue] = useState('');
+    const fogotPass = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
+    const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
+
     const onChange = e => {
       setValue(e.target.value)
     }
-
-    const fogotPass = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
-    const dispatch = useDispatch();
 
     const forgotHandler = (e) => {
       e.preventDefault();
       dispatch(forgotPassword(value));
     };
 
+    if (userLogin) {
+      return (
+        <Redirect
+          to={{ pathname: '/' }}
+        />
+      );
+    }
+
     if (fogotPass) {
       return (
         <Redirect
-          to={{
-            pathname: '/reset-password'
-          }}
+          to={{ pathname: '/reset-password' }}
         />
       );
     }
