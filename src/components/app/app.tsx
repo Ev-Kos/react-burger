@@ -18,13 +18,13 @@ import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { Location } from 'history'; 
 
 function App() {
-  const location = useLocation<{background: Location}>();
-  const background = location.state && location.state.background;
+  // const location = useLocation<{background: Location}>();
+  // const background = location.state && location.state.background;
   return (
     <>
     <ProvideAuth>
       <AppHeader/>
-      <Switch location={background || location}>
+      <Switch>
         <Route path='/' exact={true}>
           <HomePage />
         </Route>
