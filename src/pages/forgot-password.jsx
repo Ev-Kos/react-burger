@@ -26,17 +26,13 @@ import {
 
     if (userLogin) {
       return (
-        <Redirect
-          to={{ pathname: '/' }}
-        />
+        <Redirect to={{ pathname: '/' }}/>
       );
     }
 
     if (fogotPass) {
       return (
-        <Redirect
-          to={{ pathname: '/reset-password' }}
-        />
+        <Redirect to={{ pathname: '/reset-password' }}/>
       );
     }
 

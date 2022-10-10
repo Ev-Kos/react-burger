@@ -29,7 +29,7 @@ export const getForgotPassword = (forgotEmail) => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'},
-      body: JSON.stringify({ email: forgotEmail })
+      body: JSON.stringify({ 'email': forgotEmail })
   })
   .then((res) => checkResponse(res))
 }
@@ -40,8 +40,8 @@ export const getResetPassword = (resetToken, resetPassword) => {
       headers: {
         'Content-Type': 'application/json'},
       body: JSON.stringify({ 
-        password: resetToken, 
-        token: resetPassword 
+        'password': resetToken, 
+        'token': resetPassword 
       })
   })
   .then((res) => checkResponse(res))
@@ -53,9 +53,9 @@ export const getUserRegister = (userName, userEmail, userPassword) => {
       headers: {
           'Content-Type': 'application/json'},
       body: JSON.stringify({
-          email: userEmail,
-          password: userPassword,
-          name: userName
+          'email': userEmail,
+          'password': userPassword,
+          'name': userName
       })
   })
   .then((res) => checkResponse(res))
@@ -67,8 +67,8 @@ export const getUserLogin = (userEmail, userPassword) => {
       headers: {
           'Content-Type': 'application/json'},
       body: JSON.stringify({
-          email: userEmail,
-          password: userPassword
+          'email': userEmail,
+          'password': userPassword
       })
   })
   .then((res) => checkResponse(res))
@@ -80,7 +80,7 @@ export const logoutApi = (token) => {
       headers: {
           'Content-Type': 'application/json'},
       body: JSON.stringify({
-        token: token
+        'token': token
       })
   })
   .then((res) => checkResponse(res))
@@ -91,9 +91,7 @@ export const updateTokin = () => {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'},
-      body: JSON.stringify({
-        token: getCookie('refreshToken')
-      })
+      body: localStorage.getItem('refreshToken')
   })
   .then((res) => checkResponse(res))
 }

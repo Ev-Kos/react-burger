@@ -28,7 +28,7 @@ function Login() {
     [auth, value, valuePassword]
   );
 
-  if (auth.user) {
+  if (auth.user.name) {
     return <Redirect to={{ pathname: '/' }} />;
   }
 

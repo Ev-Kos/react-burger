@@ -14,29 +14,27 @@ export function loginUser(userEmail, userPassword) {
         dispatch({
             type: USER_AUTHORIZATION_REQUEST
         });
-        const data = getUserLogin(userEmail, userPassword)
-        .then(res => {
+        getUserLogin(userEmail, userPassword)
+        .then((data) => {
             let authToken;
-            res.headers.forEach(header => {
-                if (header.indexOf('Bearer') === 0) {
-                    authToken = header.split('Bearer ')[1];
-                }
-            });
-            if (authToken) {
-              setCookie('token', authToken);
+            if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
+                authToken = data.accessToken.split('Bearer ')[1];
             }
-            return res.json();
-          })
-        .then(data => data);
+            if (authToken) {
+                setCookie('token', authToken, 0);
+                localStorage.setItem('refreshToken', `${data.refreshToken}`);
+            }
             if (data.success) {
                 dispatch({
                     type: USER_AUTHORIZATION_SUCCESS,
                     payload: { userEmail, userPassword, ...data.user }
                 })
+                localStorage.setItem('password', `${userPassword}`);
             }
+        })
+        .catch(e => {console.log(e.type)})
     }
 }
-
 
 export function logoutUser(token) {
     return function(dispatch) {
@@ -49,6 +47,8 @@ export function logoutUser(token) {
             type: USER_LOGOUT
         })
         deleteCookie('token');
+        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('password');
     }
 }
 
@@ -59,7 +59,7 @@ export function getUserData(user) {
                 if (data.success) {
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
-                        payload: { password: data.password, ...data.user }
+                        payload: { password: localStorage.getItem('password'), ...data.user }
                     })
                 }
                 return data.success;
@@ -67,19 +67,17 @@ export function getUserData(user) {
             .catch(e => {
                 if (user.name) {
                     const data = updateTokin()
-                    .then(res => {
+                    .then(data => {
                         let authToken;
-                        res.headers.forEach(header => {
-                            if (header.indexOf('Bearer') === 0) {
-                                authToken = header.split('Bearer ')[1];
-                            }
-                        });
-                            if (authToken) {
-                                setCookie('token', authToken);
-                            }
-                            return res.json();
+                        if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
+                            authToken = data.accessToken.split('Bearer ')[1];
+                        }
+                        if (authToken) {
+                            setCookie('token', authToken, 0);
+                            localStorage.setItem('refreshToken', `${data.refreshToken}`);
+                            console.log('Token обновлен')
+                        }
                     })
-                    .then(data => data)
                     .catch(e => {
                         console.log(e.type);
                     })
@@ -89,15 +87,16 @@ export function getUserData(user) {
     }
 }
 
-export function updateUserProfile(userEmail, userPassword, userName) {
+export function updateUserProfile(email, password, name) {
     return function(dispatch) {
-        updateUser(userName, userEmail, userPassword)
+        updateUser(email, password, name)
             .then((res) => {
                 if (res && res.success === true) {
                     dispatch({
                         type: UPDATE_USER_PROFILE,
-                        payload: {...res.user, password: userPassword },
+                        payload: {...res.user, password: password },
                     });
+                    localStorage.setItem('password', password);
                 }
             })
             .catch((e) => {

@@ -34,14 +34,10 @@ function Registration() {
     dispatch(userRegister(valueName, valueEmail, valuePassword));
   };
 
-  const register = useSelector((store) => store.registerReduser.registrationSuccess);
-  if (register) {
+  const login = useSelector((store) => store.userReducer.userLoginSuccess);
+  if (login) {
     return (
-      <Redirect
-        to={{
-          pathname: '/',
-        }}
-      />
+      <Redirect to={{ pathname: '/' }}/>
     );
   }
 
