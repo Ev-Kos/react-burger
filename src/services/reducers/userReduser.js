@@ -10,8 +10,7 @@ export const initialState = {
     userLoginSuccess: false,
     userLoginFailed: false,
     userAuth: false,
-    userAuthProfile: { name: '', email: '', password: '' },
-    newUserProfile: null
+    userAuthProfile: { name: '', email: '', password: '' }
 }
 
 export const userReducer = (state = initialState, action) => {

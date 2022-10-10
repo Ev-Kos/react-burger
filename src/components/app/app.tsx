@@ -12,6 +12,7 @@ import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import IngredientsPage from '../../pages/ingredients';
 import Profile from '../../pages/profile';
+import PageNotFound from '../../pages/notFound';
 import { ProvideAuth } from '../../services/auth';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { Location } from 'history'; 
@@ -44,6 +45,9 @@ function App() {
         </Route>
         <Route path='/ingredients/:id' exact={true}>
           <IngredientsPage />
+        </Route>
+        <Route>
+          <PageNotFound />
         </Route>
       </Switch>
     </ProvideAuth>

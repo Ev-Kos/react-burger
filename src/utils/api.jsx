@@ -105,16 +105,16 @@ export const getUser = () => {
   .then((res) => checkResponse(res))
 }
 
-export const updateUser = (userName, userEmail, userPassword) => {
+export const updateUser = (email, password, name) => {
   return fetch(`${baseUrl}auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + getCookie('token')},
       body: JSON.stringify({
-        email: userEmail,
-        password: userPassword,
-        name: userName
+        email: email,
+        password: password,
+        name: name
     })
   })
   .then((res) => checkResponse(res))

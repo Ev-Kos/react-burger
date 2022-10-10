@@ -9,7 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../services/auth';
 import { updateUserProfile } from '../services/actions/userActions';
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { getCookie } from '../utils/utils';
 
 const navElemActive = `text text_type_main-medium ${profileStyle.navElem}`
 const navElem = `text text_type_main-medium text_color_inactive ${profileStyle.navElem}`
