@@ -53,7 +53,7 @@ export function logoutUser(token) {
 }
 
 export function getUserData(user) {
-    return function(dispatch) {
+    return function updateUserAction (dispatch) {
         getUser()
             .then(data => {
                 if (data.success) {
@@ -78,8 +78,13 @@ export function getUserData(user) {
                             console.log('Token обновлен')
                         }
                     })
-                    .catch(e => {
-                        console.log(e.type);
+                    .catch(error => {
+                        if (error.message === "jwt expired") {
+                            data.then((res) => {
+                              updateUserAction(dispatch);
+                            });
+                            return;
+                        }
                     })
                 }
                 console.log(e.type);
@@ -88,7 +93,7 @@ export function getUserData(user) {
 }
 
 export function updateUserProfile(email, password, name) {
-    return function(dispatch) {
+    return function updateUserAction(dispatch) {
         updateUser(email, password, name)
             .then((res) => {
                 if (res && res.success === true) {
@@ -99,8 +104,13 @@ export function updateUserProfile(email, password, name) {
                     localStorage.setItem('password', password);
                 }
             })
-            .catch((e) => {
-                console.log(e.type);
+            .catch((error) => {
+                if (error.message === "jwt expired") {
+                    updateTokin().then((res) => {
+                      updateUserAction(dispatch);
+                    });
+                    return;
+                }
             });
     }
 }

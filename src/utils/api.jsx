@@ -42,6 +42,7 @@ export const getResetPassword = (resetToken, resetPass) => {
       },
       body: JSON.stringify({ 'password': resetPass, 'token': resetToken })
   })
+  .then((res) => checkResponse(res))
 }
 
 export const getUserRegister = (userName, userEmail, userPassword) => {
