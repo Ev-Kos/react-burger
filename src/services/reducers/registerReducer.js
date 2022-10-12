@@ -7,6 +7,7 @@ const initialState = {
     registrationSuccess: false,
     registrationRequest: false,
     registrationFailed: false,
+    newUserProfile: null
 }
 
 export const registerReducer = (state = initialState, action) => {
@@ -22,6 +23,7 @@ export const registerReducer = (state = initialState, action) => {
                 ...state,
                 registrationRequest: false,
                 registrationSuccess: true,
+                newUserProfile: { name: action.data.user.name, email: action.data.user.email, password: action.data.user.password }
             }
         }
         case USER_REGISTER_FAILED: {

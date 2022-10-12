@@ -34,17 +34,14 @@ export const getForgotPassword = (forgotEmail) => {
   .then((res) => checkResponse(res))
 }
 
-export const getResetPassword = (resetToken, resetPassword) => {
+export const getResetPassword = (resetToken, resetPass) => {
   return fetch(`${baseUrl}password-reset/reset`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'},
-      body: JSON.stringify({ 
-        'password': resetToken, 
-        'token': resetPassword 
-      })
+          'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({ 'password': resetPass, 'token': resetToken })
   })
-  .then((res) => checkResponse(res))
 }
 
 export const getUserRegister = (userName, userEmail, userPassword) => {

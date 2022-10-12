@@ -1,7 +1,6 @@
 import resetPasswordStyle from './styles-pages.module.css';
 import { Link } from 'react-router-dom';
 import {
-    PasswordInput,
     Input,
     Button,
   } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -13,24 +12,18 @@ import {
 function ResetPassword() {
   const dispatch = useDispatch();
   const [valuePassword, setValuePassword] = useState('');
-  const onChangePassword = e => {
-    setValuePassword(e.target.value)
-  }
   const [valueToken, setValueToken] = useState('');
 
-  const onChangeToken = e => {
-    setValueToken(e.target.value)
-  }
-  const onClickToken = e => {
+  const onClickToken = (e) => {
     e.preventDefault();
     setValueToken(valueToken);
     dispatch(resetPassword(valueToken, valuePassword));
-  }
+  };
 
+  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
   const fogotPass = useSelector((store) => store.forgotPasswordReducer.forgotPasswordSuccess);
-  const login = useSelector((store) => store.userReducer.userLoginSuccess);
 
-  if (login) {
+  if (userLogin) {
     return (
       <Redirect to={{ pathname: '/' }}/>
     );
@@ -48,16 +41,16 @@ function ResetPassword() {
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
           <div className={`${resetPasswordStyle.input} pb-6 pt-6`}>
             <Input 
-              onChange={onChangePassword} 
               value={valuePassword}
+              onChange={(e) => setValuePassword(e.target.value)}
               type='text'
               placeholder='Введите новый пароль'/>
           </div>
           <div className={`${resetPasswordStyle.input}`}>
             <Input
               placeholder='Введите код из письма'
-              onChange={onChangeToken}
               value={valueToken}
+              onChange={(e) => setValueToken(e.target.value)}
               />
           </div>
           <div className='pb-20 pt-6'>
