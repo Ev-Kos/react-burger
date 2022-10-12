@@ -9,9 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../services/auth';
 import { updateUserProfile } from '../services/actions/userActions';
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const navElemActive = `text text_type_main-medium ${profileStyle.navElem}`
-const navElem = `text text_type_main-medium text_color_inactive ${profileStyle.navElem}`
+const navElemActive = `text text_type_main-medium ${profileStyle.navElem_active}`;
+const navElemInActive = `text text_type_main-medium ${profileStyle.navElem_inActive}`;
 
 function Profile() {
   const dispatch = useDispatch();
@@ -65,15 +66,30 @@ function Profile() {
     setValuePassword(password);
   }
 
+  const [linkState, setLinkState] = useState({
+    profile: true,
+    historyOrders: false
+  });
+
+  const onClick = (element) => {
+    element === 'profile'
+    ? setLinkState({ profile: true, historyOrders: false})
+    : setLinkState({ profile: false, historyOrders: true})
+  }
+
   return (
     <section className={profileStyle.page}>
       <div className={profileStyle.wrap}>
         <div className={profileStyle.profileConteiner}>
           <nav className='pr-30'>
             <ul className={profileStyle.nav}>
-              <li className={navElemActive}>Профиль</li>
-              <li className={navElem}>История Заказов</li>
-              <li className={navElem} onClick={logout}>Выход</li>
+              <li className={profileStyle.navElem}>
+                <Link className={linkState.profile ? navElemActive : navElemInActive} to='/profile' onClick={() => onClick('profile')}>Профиль</Link>
+              </li>
+              <li className={profileStyle.navElem}>
+                <Link className={linkState.historyOrders ? navElemActive : navElemInActive} to='/profile/orders' onClick={() => onClick('historyOders')}>История Заказов</Link>
+              </li>
+              <li className={navElemInActive} onClick={logout}>Выход</li>
               <li className='pt-20 text text_type_main-small text_color_inactive'>
                 В этом разделе вы можете изменить свои персональные данные
               </li>
@@ -107,10 +123,11 @@ function Profile() {
                   value={valuePassword ? valuePassword : ''}
                 />
               </div>
-              <div className={`${profileStyle.buttons} pt-10`}>
+              {valueName !== name || valuePassword !== password || valueEmail !== email ? (
+                <div className={`${profileStyle.buttons} pt-10`}>
                 <Button>Сохранить</Button>
                 <Button onClick={resetProfile}>Отмена</Button>
-              </div>
+              </div>) : null}
             </div>
           </form>
         </div>

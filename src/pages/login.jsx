@@ -1,14 +1,15 @@
 import {
-  EmailInput,
+  Input,
   PasswordInput,
   Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 import loginStyle from './styles-pages.module.css';
 import { useState, useCallback } from 'react';
 import { useAuth } from '../services/auth';
 
 function Login() {
+  const location = useLocation();
   const [value, setValue] = useState('');
   const [valuePassword, setValuePassword] = useState('');
 
@@ -29,7 +30,7 @@ function Login() {
   );
 
   if (auth.user.name) {
-    return <Redirect to={{ pathname: '/' }} />;
+    return <Redirect to={location?.state?.from || '/' } />;
   }
 
   return (
@@ -37,7 +38,8 @@ function Login() {
       <form className={loginStyle.form} onSubmit={login}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
         <div className='pb-6'>
-          <EmailInput className={loginStyle.input} 
+          <Input className={loginStyle.input} 
+            type='email'
             name={'email'} 
             value={value} 
             onChange={onChangeEmail}/>

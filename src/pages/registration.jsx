@@ -1,7 +1,6 @@
 import {
-    EmailInput,
-    PasswordInput,
     Input,
+    PasswordInput,
     Button,
   } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
@@ -35,6 +34,8 @@ function Registration() {
   };
 
   const login = useSelector((store) => store.userReducer.userLoginSuccess);
+  const register = useSelector((store) => store.registerReducer.registrationSuccess);
+  
   if (login) {
     return (
       <Redirect to={{ pathname: '/' }}/>
@@ -55,8 +56,10 @@ function Registration() {
             />
           </div>
           <div className={`${registrationStyle.input} pb-6`}>
-            <EmailInput 
+            <Input 
+              type='email'
               name={'email'}
+              placeholder='E-mail'
               onChange={onChangeEmail}
               value={valueEmail}
             />

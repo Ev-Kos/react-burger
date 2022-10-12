@@ -47,9 +47,11 @@ function ResetPassword() {
         <div className={resetPasswordStyle.wrap}>
           <h1 className='text text_type_main-medium'>Восстановление пароля</h1>
           <div className={`${resetPasswordStyle.input} pb-6 pt-6`}>
-            <PasswordInput 
+            <Input 
               onChange={onChangePassword} 
-              value={valuePassword}/>
+              value={valuePassword}
+              type='text'
+              placeholder='Введите новый пароль'/>
           </div>
           <div className={`${resetPasswordStyle.input}`}>
             <Input

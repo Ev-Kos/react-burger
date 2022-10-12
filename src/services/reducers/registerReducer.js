@@ -9,7 +9,7 @@ const initialState = {
     registrationFailed: false,
 }
 
-export const registerReduser = (state = initialState, action) => {
+export const registerReducer = (state = initialState, action) => {
     switch (action.type) {
         case USER_REGISTER_REQUEST: {
             return {

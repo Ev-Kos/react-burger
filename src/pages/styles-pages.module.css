@@ -51,7 +51,18 @@
 
 .navElem {
     height: 64px;
+    text-decoration: none;
+}
+
+.navElem_inActive {
+    height: 64px;
     cursor: pointer;
+    color: #8585AD;
+    text-decoration: none;
+}
+.navElem_active {
+    composes: navElem;
+    color: #F2F2F3;
 }
 
 .navElem:hover {
