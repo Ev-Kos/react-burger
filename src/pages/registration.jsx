@@ -33,15 +33,14 @@ function Registration() {
     dispatch(userRegister(valueName, valueEmail, valuePassword));
   };
 
-  const login = useSelector((store) => store.userReducer.userLoginSuccess);
   const register = useSelector((store) => store.registerReducer.registrationSuccess);
-  
-  if (login) {
+ 
+  if (register) {
     return (
-      <Redirect to={{ pathname: '/' }}/>
+      <Redirect to={{ pathname: '/login' }}/>
     );
   }
-
+ 
   return (
     <section className={registrationStyle.page}>
       <form onSubmit={onClickRegister}>

@@ -51,9 +51,9 @@ export const getUserRegister = (userName, userEmail, userPassword) => {
       headers: {
           'Content-Type': 'application/json'},
       body: JSON.stringify({
-          'email': userEmail,
-          'password': userPassword,
-          'name': userName
+          email: userEmail,
+          password: userPassword,
+          name: userName
       })
   })
   .then((res) => checkResponse(res))
@@ -88,17 +88,26 @@ export const updateTokin = () => {
   return fetch(`${baseUrl}auth/token`, {
       method: 'POST',
       headers: {
-          'Content-Type': 'application/json'},
-      body: localStorage.getItem('refreshToken')
+        'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        'token': localStorage.getItem('refreshToken')
+      })
   })
   .then((res) => checkResponse(res))
 }
 
 export const getUser = () => {
   return fetch(`${baseUrl}auth/user`, {
+    method: 'GET',
+    mode: 'cors',
+    cache: 'no-cache',
+    credentials: 'same-origin',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'Bearer ' + getCookie('token')}
+      Authorization: 'Bearer ' + getCookie('token')
+    },
+    redirect: 'follow',
+    referrerPolicy: 'no-referrer'
   })
   .then((res) => checkResponse(res))
 }

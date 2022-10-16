@@ -53,7 +53,7 @@ export function logoutUser(token) {
 }
 
 export function getUserData(user) {
-    return function updateUserAction (dispatch) {
+    return function(dispatch) {
         getUser()
             .then(data => {
                 if (data.success) {
@@ -64,36 +64,22 @@ export function getUserData(user) {
                 }
                 return data.success;
             })
-            .catch(e => {
-                if (user.name) {
-                    const data = updateTokin()
+            .catch(error => {
+                if (error === "Ошибка: 403") {
+                    updateTokin()
                     .then(data => {
-                        let authToken;
-                        if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
-                            authToken = data.accessToken.split('Bearer ')[1];
-                        }
-                        if (authToken) {
-                            setCookie('token', authToken, 0);
-                            localStorage.setItem('refreshToken', `${data.refreshToken}`);
-                            console.log('Token обновлен')
-                        }
+                        errorHandler(data);
                     })
-                    .catch(error => {
-                        if (error.message === "jwt expired") {
-                            data.then((res) => {
-                              updateUserAction(dispatch);
-                            });
-                            return;
-                        }
+                    .catch(e => {
+                        console.log(e)
                     })
                 }
-                console.log(e.type);
             })
     }
 }
 
 export function updateUserProfile(email, password, name) {
-    return function updateUserAction(dispatch) {
+    return function(dispatch) {
         updateUser(email, password, name)
             .then((res) => {
                 if (res && res.success === true) {
@@ -104,14 +90,28 @@ export function updateUserProfile(email, password, name) {
                     localStorage.setItem('password', password);
                 }
             })
-            .catch((error) => {
-                if (error.message === "jwt expired") {
-                    updateTokin().then((res) => {
-                      updateUserAction(dispatch);
-                    });
-                    return;
+            .catch(error => {
+                if (error === "Ошибка: 403") {
+                    updateTokin()
+                    .then(data => {
+                        errorHandler(data);
+                        updateUser(email, password, name);
+                    })
+                    .catch(error => {console.log(error)})
                 }
-            });
+            })
+    }
+}
+
+export const errorHandler = (data) => {
+    let authToken;
+    if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
+        authToken = data.accessToken.split('Bearer ')[1];
+    }
+    if (authToken) {
+        setCookie('token', authToken, 0);
+        localStorage.setItem('refreshToken', `${data.refreshToken}`);
+        console.log('Token обновлен')
     }
 }
 
