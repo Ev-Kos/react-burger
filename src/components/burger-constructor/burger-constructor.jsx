@@ -18,6 +18,7 @@ import { getOrderNumberApi } from '../../services/actions/orderActions';
 import { getOrderNumber } from '../../utils/api'
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from 'react-router-dom';
 
 function BurgerConstructor() {
   const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
@@ -43,12 +44,19 @@ function BurgerConstructor() {
   const openOrderDetails = () => {
       dispatch({ type: OPEN_ORDER_MODAL });
   };
-  
+  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
+  const history = useHistory();
+
   const handleOrder = () => {
-    const order = [bun._id, 
-      ...selectedIngredients.map((item) => item._id), 
-      bun._id];
-    makeOrder(order);
+    if(!userLogin) {
+      return history.replace('/login');
+    } 
+    else {
+      const order = [bun._id, 
+        ...selectedIngredients.map((item) => item._id), 
+        bun._id];
+      makeOrder(order);
+    } 
   };
 
   const makeOrder = (order) => {

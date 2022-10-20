@@ -1,0 +1,76 @@
+.login {
+    margin-top: 180px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input>div>div {
+    max-width: 480px;
+}
+
+.conteiner {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+    padding-left: 8px;
+}
+
+.page {
+    margin: 0 auto;
+    max-width: 1920px;
+}
+
+.wrap {
+    padding-top: 120px;
+    margin: 0 auto;
+    max-width: 1240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileConteiner {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.nav {
+    max-width: 320px;
+    list-style: none;
+}
+
+.navElem {
+    height: 64px;
+    text-decoration: none;
+}
+
+.navElem_inActive {
+    height: 64px;
+    cursor: pointer;
+    color: #8585AD;
+    text-decoration: none;
+}
+.navElem_active {
+    composes: navElem;
+    color: #F2F2F3;
+}
+
+.navElem:hover {
+    opacity: .7;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
