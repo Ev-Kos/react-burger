@@ -1,0 +1,48 @@
+.container {
+    margin-top: 100px;
+    width: 580px;
+    max-width: 580p;
+}
+
+.wrap {
+    display: flex;
+    flex-direction: row;
+}
+
+.wrapList {
+    width: 272px;
+}
+
+.name {
+    color: #F2F2F3;
+    margin: 0;
+}
+
+.listDone {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    list-style: none;
+    color: #00CCCC;
+    max-height: 322px;
+    height: 322px;
+}
+
+.listItem {
+    padding-right: 4px;
+}
+
+.listWork {
+    composes: listDone;
+    color: #F2F2F3;
+}
+
+.amount {
+    margin: 0;
+    font-family: 'Iceland';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 144px;
+    line-height: 120px;
+    text-shadow: 0px 0px 16px rgba(51, 51, 255, 0.25), 0px 0px 8px rgba(51, 51, 255, 0.25), 0px 4px 32px rgba(51, 51, 255, 0.5);
+}

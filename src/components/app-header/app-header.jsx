@@ -8,12 +8,15 @@ const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
 function AppHeader() {
   const [linkState, setLinkState] = useState({
     profile: false,
-    constructor: true
+    constructor: true,
+    feed: false
   });
   const onClick = (element) => {
     element === 'constructor'
-    ? setLinkState({ constructor: true, profile: false })
-    : setLinkState({ profile: true, constructor: false })
+    ? setLinkState({ constructor: true, profile: false, feed: false })
+    : element === 'feed'
+    ? setLinkState({ constructor: false, profile: false, feed: true })
+    : setLinkState({ profile: true, constructor: false, feed: false })
   }
 
   return (
@@ -28,15 +31,16 @@ function AppHeader() {
             </Link>
           </li>
           <li>
-            <a href='#' className={link}>
-              <ListIcon type="secondary" />
+            <Link to='/feed' className={linkState.feed ? linkActive : link}
+                  onClick={() => onClick('feed')}>
+              <ListIcon type={linkState.feed ? 'primary' : 'secondary'} />
               Лента заказов
-            </a>
+            </Link>
           </li>
         </ul>
-        <a href="#" className={headerStyles.header__logo}>
+        <Link to='/' className={headerStyles.header__logo}>
           <Logo/>
-        </a>
+        </Link>
         <div className={headerStyles.header__linkProfile}>
           <Link to='/profile' className={linkState.profile ? linkActive : link} 
                 onClick={() => onClick()}>

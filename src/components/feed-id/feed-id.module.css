@@ -1,0 +1,47 @@
+.page {
+    width: 640px;
+    max-height: 680px;
+    margin: 56px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch
+}
+
+.number {
+    text-align: center;
+}
+
+.list {
+    list-style: none;
+    overflow: auto;
+    max-height: 320px;
+}
+
+.listItem {
+    margin-left: -40px;
+}
+
+.listItemWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    border-radius: 100px;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.priceWrap {
+    justify-content: space-between;
+}

@@ -12,11 +12,12 @@ import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
 import IngredientsPage from '../../pages/ingredients';
 import Profile from '../../pages/profile';
+import FeedPage from '../../pages/feed';
+import FeedId from '../feed-id/feed-id';
 import PageNotFound from '../../pages/notFound';
 import { ProvideAuth } from '../../services/auth';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { Location } from 'history'; 
-import { HistoryOrdersPage } from '../../pages/history-orders';
 
 function App() {
   const location = useLocation<{background: Location}>();
@@ -35,6 +36,12 @@ function App() {
         <ProtectedRoute path='/profile' exact={true}>
           <Profile />
         </ProtectedRoute>
+        <ProtectedRoute path='/profile/orders' exact={true}>
+          <Profile />
+        </ProtectedRoute>
+        <ProtectedRoute path='/profile/order/:id' exact={true}>
+          <FeedId />
+        </ProtectedRoute>
         <Route path='/register' exact={true}>
           <Registration />
         </Route>
@@ -47,8 +54,11 @@ function App() {
         <Route path='/ingredients/:id' exact={true}>
           <IngredientsPage />
         </Route>
-        <Route path='/profile/orders' exact={true}>
-        <HistoryOrdersPage />
+        <Route path='/feed'>
+          <FeedPage />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <FeedId />
         </Route>
         <Route>
           <PageNotFound />
