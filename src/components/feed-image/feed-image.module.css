@@ -1,0 +1,38 @@
+.images {
+    padding-left: 34px;
+}
+
+.imagesHidden {
+    display: none;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    border-radius: 100px;
+    margin-left: -60px;
+}
+
+.imageSmall {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+}
+
+.countWrap {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: -66px 0 0 -55px;
+    width: 62px;
+    height: 62px;
+}
+
+.count {
+    width: 62px;
+    height: 62px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 100px;
+}

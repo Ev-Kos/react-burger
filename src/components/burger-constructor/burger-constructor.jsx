@@ -14,6 +14,7 @@ import { DELETE_INGREDIENT,
          ADD_INGREDIENT,
          MOVE_ELEMENT } 
          from '../../services/actions/selectedIngredientsActions';
+import { DELETE_INGREDIENT_DATA } from '../../services/actions/ingredientActions';
 import { getOrderNumberApi } from '../../services/actions/orderActions';
 import { getOrderNumber } from '../../utils/api'
 import update from 'immutability-helper';
@@ -117,24 +118,33 @@ function BurgerConstructor() {
   }, [selectedIngredients]);
 
   const selectedElements = useMemo(() => selectedIngredient
-  .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
-  .map((element, index) => (
-    <BurgerConstructorElement
-      element={ element }
-      id={ element._id }
-      index={ index }
-      onDelete={ deleteIngredient }
-      onMove={ movedIngredient } 
-      key= { element.key }
-    />
-  )),
-[selectedIngredient]
-);
+    .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
+    .map((element, index) => (
+      <BurgerConstructorElement
+        element={ element }
+        id={ element._id }
+        index={ index }
+        onDelete={ deleteIngredient }
+        onMove={ movedIngredient } 
+        key= { element.key }
+      />
+    )),
+    [selectedIngredient]
+  );
+
+  const orderRequest = useSelector((store) => store.orderReducer.orderRequest);
 
   return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`} ref={ dropTarget }>
       <ul className={`${constructorStyles.elements} mt-25`}>
-      {bun && (<li className={`${constructorStyles.element} mr-8 mb-4`}>
+        {orderRequest && (
+          <div className={constructorStyles.loader}>
+            <p className='text text_type_main-large'>
+              Обрабатываем Ваш заказ
+            </p>
+          </div>
+        )}
+        {bun && (<li className={`${constructorStyles.element} mr-8 mb-4`}>
            <ConstructorElement
             type="top"
             isLocked={true}

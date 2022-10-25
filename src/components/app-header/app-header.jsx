@@ -5,17 +5,20 @@ import { useState } from 'react';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
-function AppHeader() {
+
+export default function AppHeader() {
+
   const [linkState, setLinkState] = useState({
     profile: false,
     constructor: true,
     feed: false
   });
+
   const onClick = (element) => {
     element === 'constructor'
     ? setLinkState({ constructor: true, profile: false, feed: false })
     : element === 'feed'
-    ? setLinkState({ constructor: false, profile: false, feed: true })
+    ? setLinkState({ profile: false, constructor: false, feed: true })
     : setLinkState({ profile: true, constructor: false, feed: false })
   }
 
@@ -31,7 +34,7 @@ function AppHeader() {
             </Link>
           </li>
           <li>
-            <Link to='/feed' className={linkState.feed ? linkActive : link}
+            <Link to='/feeds' className={linkState.feed ? linkActive : link}
                   onClick={() => onClick('feed')}>
               <ListIcon type={linkState.feed ? 'primary' : 'secondary'} />
               Лента заказов
@@ -52,5 +55,3 @@ function AppHeader() {
     </header>
   )
 }
-
-export default AppHeader

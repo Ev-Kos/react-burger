@@ -1,7 +1,6 @@
-import { legacy_createStore as createStore, applyMiddleware, compose } from 'redux';
-import rootReducer from './reducers/index';
-import thunk from 'redux-thunk';
-import { socketMiddleware } from './middleware';
+import { legacy_createStore as createStore, applyMiddleware, compose } from "redux";
+import rootReducer from "./reducers/index";
+import thunk from "redux-thunk";
 import {
     WS_CONNECTION_CLOSED,
     WS_CONNECTION_ERROR,
@@ -9,10 +8,10 @@ import {
     WS_CONNECTION_SUCCESS,
     WS_GET_MESSAGE,
     WS_SEND_MESSAGE
-    } from './action-types';
+} from './actions/wsActions';
+import { socketMiddleware } from './middleware/socketMiddleware';
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders';
-
 const wsActions = {
     wsInit: WS_CONNECTION_START,
     wsSendMessage: WS_SEND_MESSAGE,

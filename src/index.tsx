@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './services/store';
 import { BrowserRouter } from 'react-router-dom';
+import { ProvideAuth } from './services/auth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={ store }>
-        <App />
+        <ProvideAuth>
+          <App />
+        </ProvideAuth>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

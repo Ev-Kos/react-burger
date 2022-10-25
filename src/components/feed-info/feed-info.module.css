@@ -7,18 +7,23 @@
 .wrap {
     display: flex;
     flex-direction: row;
+    max-height: 206px;
 }
 
 .wrapList {
     width: 272px;
+    flex-wrap: wrap;
+    overflow: hidden;
+
 }
 
-.name {
+.listName {
     color: #F2F2F3;
     margin: 0;
 }
 
-.listDone {
+.listDone,
+.listWork {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -28,16 +33,16 @@
     height: 322px;
 }
 
+.listWork {
+    color: #F2F2F3;
+    list-style: none;
+}
+
 .listItem {
     padding-right: 4px;
 }
 
-.listWork {
-    composes: listDone;
-    color: #F2F2F3;
-}
-
-.amount {
+.number {
     margin: 0;
     font-family: 'Iceland';
     font-style: normal;

@@ -1,1 +1,1 @@
-export const getWsConnected = (state) => state.ws.wsConnected;
+export const getWsConnected = (state) => state.wsReducer.wsConnected;

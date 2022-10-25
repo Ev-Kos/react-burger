@@ -17,7 +17,10 @@ export const getIngredients = () => {
 export const getOrderNumber = (data) => {
   return fetch(`${baseUrl}orders`, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + getCookie('token')
+    },
     body: JSON.stringify({ ingredients: data }),
     })
   .then(checkResponse)
