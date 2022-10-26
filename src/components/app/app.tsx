@@ -57,7 +57,7 @@ function App() {
         <Route path='/reset-password' exact={true}>
           <ResetPassword />
         </Route>
-        <Route path='/feeds'>
+        <Route path='/feed'>
           <Feeds />
         </Route>
         <Route path='/ingredients/:id' exact={true}>
@@ -70,18 +70,18 @@ function App() {
       {background && (
         <Switch>
           <Route path='/ingredients/:id'>
-            <Modal closeModal={() => {closeModals()}} title={'Детали Ингредиента'}>
+            <Modal closeModal={closeModals} title={'Детали Ингредиента'}>
               <IngredientsPage />
             </Modal>
           </Route>
           <Route path='/feed/:id'>
-            <Modal closeModal={() => {closeModals()}} title={'Детали Заказа'}>
+            <Modal closeModal={closeModals} title={'Детали Заказа'}>
               <FeedId />
             </Modal>
           </Route>
           <Route path='/profile/order/:id' exact={true}>
             <Modal
-              closeModal={() => {closeModals()}} title={'Детали Заказа'}>
+              closeModal={closeModals} title={'Детали Заказа'}>
               <FeedId />
             </Modal>
           </Route>
