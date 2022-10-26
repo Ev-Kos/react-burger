@@ -1,4 +1,5 @@
 import { getOrderNumber } from '../../utils/api';
+import {OPEN_ORDER_MODAL} from './modalActions';
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -14,6 +15,9 @@ export function getOrderNumberApi(orderData) {
                 dispatch({
                     type: GET_ORDER_SUCCESS,
                     order: res,
+                });
+                dispatch({
+                    type: OPEN_ORDER_MODAL
                 });
             } else {
                 dispatch({

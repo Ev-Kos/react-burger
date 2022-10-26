@@ -42,9 +42,6 @@ function BurgerConstructor() {
     )
   }, [selectedIngredient]);
 
-  const openOrderDetails = () => {
-      dispatch({ type: OPEN_ORDER_MODAL });
-  };
   const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
   const history = useHistory();
 
@@ -56,20 +53,8 @@ function BurgerConstructor() {
       const order = [bun._id, 
         ...selectedIngredients.map((item) => item._id), 
         bun._id];
-      makeOrder(order);
+        dispatch(getOrderNumberApi(order))
     } 
-  };
-
-  const makeOrder = (order) => {
-    getOrderNumber(order)
-    .then(() => {
-      openOrderDetails();
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Произошла ошибка');
-    })
-    dispatch(getOrderNumberApi(order))
   };
 
   const closeModal = () => {
