@@ -1,3 +1,5 @@
+import {NORMAL_CLOSE_CODE} from '../../utils/constants';
+
 export const socketMiddleware = (wsUrl, wsActions) => {
 
     return store => {
@@ -13,12 +15,11 @@ export const socketMiddleware = (wsUrl, wsActions) => {
                 socket = new WebSocket(`${wsUrl}${payload}`);
             }
             if (socket && type === onClose) {
-                socket.close(1000);
+                socket.close(NORMAL_CLOSE_CODE);
             }
 
             if (socket) {
                 socket.onopen = event => {
-                    //console.log('открылся');
                     dispatch({ type: onOpen, payload: event });
                 };
 
@@ -32,7 +33,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
                 };
 
                 socket.onclose = event => {
-                    //console.log("закрылся");
                     dispatch({ type: onClose, payload: event });
                 };
 

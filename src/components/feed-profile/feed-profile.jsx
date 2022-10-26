@@ -3,7 +3,7 @@ import FeedItem from '../feed-item/feed-item';
 
 export default function FeedProfile({data}) {
     return (
-      <section className={feedProfileStyles.conteiner}>
+      <section className={feedProfileStyles.container}>
         <ul className={feedProfileStyles.content}>
           {data != null &&
             [...data].reverse().map((item) => {

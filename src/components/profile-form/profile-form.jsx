@@ -12,9 +12,8 @@ import { useState, useRef, useEffect } from 'react';
 export default function ProfileForm() {
     const dispatch = useDispatch();
     const userProfile = useSelector((store) => store.userReducer.userAuthProfile);
-    const name = userProfile.name;
-    const email = userProfile.email;
-    const password = userProfile.password;
+
+    const {name, email, password} = userProfile;
 
     const [valueName, setValueName] = useState('');
     const nameRef = useRef(null);

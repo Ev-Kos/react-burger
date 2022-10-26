@@ -4,6 +4,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useLocation, Link } from 'react-router-dom';
 import FeedItemImage from '../feed-image/feed-image';
 import {getDate} from '../../utils/utils';
+import PropTypes from 'prop-types';
 
 export default function FeedItem(item) {
     const location = useLocation();
@@ -36,9 +37,7 @@ export default function FeedItem(item) {
       }
     }, 0);
   
-    order.profile === 'true'
-      ? (order.url = `/profile/order/${order.id}`)
-      : (order.url = `/feed/${order.id}`);
+    order.url = order.profile === 'true' ? `/profile/order/${order.id}` : `/feed/${order.id}`
 
     return (
       <Link to={{pathname: order.url, state: { background: location }}}
@@ -86,3 +85,7 @@ export default function FeedItem(item) {
       </Link>
     )
   }
+
+  FeedItem.propTypes = {
+    item: PropTypes.object.isRequired,
+  };
