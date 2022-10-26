@@ -6,8 +6,8 @@ export default function FeedInfo() {
   let data;
   let total = 0;
   let totalDay = 0;
-  let orderDone = [];
-  let orderWork = [];
+  const orderDone = [];
+  const orderWork = [];
 
   let textSizeDone = 'default';
   let textSizeWork = 'default';

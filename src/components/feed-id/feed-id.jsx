@@ -41,21 +41,6 @@ export default function FeedId() {
     order.orderModalIngredients = order.orderModal.ingredients;
   }
 
-  let orderStatus = {
-    color: '#00CCCC',
-    text: ''
-  }
-  if (order.orderModalStatus === 'done') {
-    orderStatus.color = '#00CCCC';
-    orderStatus.text = 'Выполнен';
-  } else if (order.orderModalStatus === 'pending') {
-    orderStatus.color = '#B22222';
-    orderStatus.text = 'Отменен';
-  } else {
-    orderStatus.color = '#F2F2F3';
-    orderStatus.text = 'Готовится';
-  }
-
   const date = getDate(order.orderModalCreatedAt);
 
   let price = 0;
@@ -88,9 +73,13 @@ export default function FeedId() {
             <p className={`${feedIdStyle.name} text text_type_main-medium mb-3`}>
               {order.orderModal.name}
             </p>
-            <p className={`text text_type_main-default mb-15`} style={orderStatus}>
-              {orderStatus.text}
+            {order.orderModalStatus === 'done' ? (<p className={`text text_type_main-default mb-15 ${feedIdStyle.colorStatusDone}`}>
+              Выполнен
+            </p>) : (
+              <p className={`text text_type_main-default mb-15 ${feedIdStyle.colorStatusPending}`}>
+              Готовится
             </p>
+            )}
             <p className='text text_type_main-medium mb-6'>Состав:</p>
             <div>
               <ul className={`${feedIdStyle.list} pr-6 mb-10`}>

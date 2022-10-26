@@ -37,7 +37,8 @@ export default function FeedItem(item) {
       }
     }, 0);
   
-    order.url = order.profile === 'true' ? `/profile/order/${order.id}` : `/feed/${order.id}`
+    order.url = order.profile === 'true' ? `/profile/order/${order.id}` : `/feed/${order.id}`;
+    const orderReverse = order.ingredientsArray.reverse();
 
     return (
       <Link to={{pathname: order.url, state: { background: location }}}
@@ -59,7 +60,7 @@ export default function FeedItem(item) {
             </p>
             <div className={feedItemStyles.wrapPrice}>
               <div className={feedItemStyles.price}>
-                {order.ingredientsArray.reverse().map((item) => {
+                {orderReverse.map((item) => {
                   price += elemCount[item._id] * item.price;
                   if (order.ingredientsArray.length <= 6) {
                     return <FeedItemImage data={item} key={item._id} />;

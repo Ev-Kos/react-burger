@@ -58,3 +58,11 @@
     height: 194px;
     background-color: #8585ad;
 }
+
+.colorStatusDone {
+    color: #00CCCC;
+}
+
+.colorStatusPending {
+    color: #F2F2F3;
+}
