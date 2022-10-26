@@ -1,26 +1,11 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
 
 export default function AppHeader() {
-
-  const [linkState, setLinkState] = useState({
-    profile: false,
-    constructor: true,
-    feed: false
-  });
-
-  const onClick = (element) => {
-    element === 'constructor'
-    ? setLinkState({ constructor: true, profile: false, feed: false })
-    : element === 'feed'
-    ? setLinkState({ profile: false, constructor: false, feed: true })
-    : setLinkState({ profile: true, constructor: false, feed: false })
-  }
 
   const { pathname } = useLocation()
 

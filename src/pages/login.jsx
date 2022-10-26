@@ -42,7 +42,8 @@ function Login() {
             type='email'
             name={'email'} 
             value={value} 
-            onChange={onChangeEmail}/>
+            onChange={onChangeEmail}
+            placeholder={'E-mail'}/>
         </div>
         <div className='pb-6'>
           <PasswordInput className={loginStyle.input} 

@@ -1,8 +1,8 @@
 import profileStyle from './styles-pages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useAuth } from '../services/auth';
-import { useState, useRef, useCallback, useEffect } from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { useMemo, useCallback, useEffect } from 'react';
+import { Switch, Route, useLocation, NavLink } from 'react-router-dom';
 import ProfileForm from '../components/profile-form/profile-form';
 import FeedProfile from '../components/feed-profile/feed-profile';
 import {
@@ -26,17 +26,6 @@ export default function Profile() {
     },
     [auth]
   );
-
-  const [linkState, setLinkState] = useState({
-    profile: true,
-    historyOrders: false
-  });
-
-  const onClick = (element) => {
-    element === 'profile'
-    ? setLinkState({ profile: true, historyOrders: false})
-    : setLinkState({ profile: false, historyOrders: true})
-  }
  
   useEffect(() => {
     const token = '?token=' + getCookie('token');
@@ -56,6 +45,22 @@ export default function Profile() {
     data = feed[`${feed.length - 1}`].orders;
   }
 
+  const { pathname } = useLocation();
+
+  const description = useMemo(() => {
+    switch (pathname) {
+      case '/profile': {
+        return 'В этом разделе вы можете изменить свои персональные данные';
+      }
+      case '/profile/orders': {
+        return 'В этом разделе вы можете просмотреть свою историю заказов';
+      }
+      default: {
+        return null;
+      }
+    }
+  }, [pathname]);
+
   return (
     <section className={profileStyle.page}>
       <div className={profileStyle.wrap}>
@@ -63,14 +68,18 @@ export default function Profile() {
           <nav className='pr-30'>
             <ul className={profileStyle.nav}>
               <li className={profileStyle.navElem}>
-                <Link className={linkState.profile ? navElemActive : navElemInActive} to='/profile' onClick={() => onClick('profile')}>Профиль</Link>
+                <NavLink className={navElemInActive} to='/profile' activeClassName={navElemActive} exact>
+                    Профиль
+                </NavLink>
               </li>
               <li className={profileStyle.navElem}>
-                <Link className={linkState.historyOrders ? navElemActive : navElemInActive} to='/profile/orders' onClick={() => onClick('historyOders')}>История Заказов</Link>
+                <NavLink className={navElemInActive} to='/profile/orders' activeClassName={navElemActive} exact>
+                  История Заказов
+                </NavLink>
               </li>
               <li className={navElemInActive} onClick={logout}>Выход</li>
               <li className='pt-20 text text_type_main-small text_color_inactive'>
-                В этом разделе вы можете изменить свои персональные данные
+                {description}
               </li>
             </ul>
           </nav>
