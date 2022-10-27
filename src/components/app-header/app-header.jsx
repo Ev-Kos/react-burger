@@ -25,7 +25,7 @@ export default function AppHeader() {
             <NavLink to='/feed' className={link}
                   activeClassName={linkActive}
                   exact>
-              <ListIcon type={pathname.includes('/feed') ? 'primary' : 'secondary'} />
+              <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />
               Лента заказов
             </NavLink>
           </li>

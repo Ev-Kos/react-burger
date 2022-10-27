@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import feedsStyle from './styles-pages.module.css';
 import Feed from '../components/feed/feed';
@@ -7,6 +7,7 @@ import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,
 } from '../services/actions/wsActions';
+
 
 export default function Feeds() {
   const dispatch = useDispatch();

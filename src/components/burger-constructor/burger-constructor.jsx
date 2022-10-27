@@ -14,9 +14,7 @@ import { DELETE_INGREDIENT,
          ADD_INGREDIENT,
          MOVE_ELEMENT } 
          from '../../services/actions/selectedIngredientsActions';
-import { DELETE_INGREDIENT_DATA } from '../../services/actions/ingredientActions';
 import { getOrderNumberApi } from '../../services/actions/orderActions';
-import { getOrderNumber } from '../../utils/api'
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';

@@ -1,0 +1,70 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 640px;
+    max-height: 680px;
+    margin: 56px auto;
+}
+
+.number {
+    text-align: center;
+}
+
+.list {
+    list-style: none;
+    max-height: 320px;
+    overflow: auto;
+}
+
+
+
+.listItem {
+    margin-left: -40px;
+}
+
+.listItemWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+    border: 2px solid #801AB2;
+    background: #131316;
+    border-radius: 100px;
+}
+
+.price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+.priceWrap {
+    justify-content: space-between;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2f2f37;
+}
+
+.list::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 194px;
+    background-color: #8585ad;
+}
+
+.colorStatusDone {
+    color: #00CCCC;
+}
+
+.colorStatusPending {
+    color: #F2F2F3;
+}

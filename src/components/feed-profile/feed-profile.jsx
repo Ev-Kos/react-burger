@@ -1,7 +1,9 @@
 import feedProfileStyles from './feed-profile.module.css';
 import FeedItem from '../feed-item/feed-item';
+import PropTypes from 'prop-types';
 
 export default function FeedProfile({data}) {
+ 
     return (
       <section className={feedProfileStyles.container}>
         <ul className={feedProfileStyles.content}>
@@ -13,3 +15,7 @@ export default function FeedProfile({data}) {
       </section>
     );
   }
+
+FeedProfile.propTypes = {
+  data: PropTypes.array.isRequired
+};

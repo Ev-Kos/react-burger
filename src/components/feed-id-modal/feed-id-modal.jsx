@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import feedIdStyle from './feed-id.module.css';
+import { useEffect } from 'react';
+import feedIdStyle from './feed-id-modal.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,7 @@ import {
 } from '../../services/actions/wsActions';
 import {getDate} from '../../utils/utils';
 
-export default function FeedId() {
+export default function FeedIdModal() {
   const { id } = useParams();
   const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredientsReducer.ingredients);
@@ -51,7 +51,8 @@ export default function FeedId() {
   }, []);
 
   const result = ingredients.map((elem) => {
-    const ingredient = order.orderModalIngredients.find((item) => elem._id === item);
+    const ingredient = order.orderModalIngredients.find((item) => elem._id === item
+    );
     if (ingredient) {
       order.ingredientsArray.push(elem);
     }
@@ -121,6 +122,3 @@ export default function FeedId() {
     </>
   )
 }
-
-
-

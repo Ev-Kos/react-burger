@@ -34,6 +34,7 @@ export function deleteCookie(name) {
 
 export const getDate = (date) => {
   const orderDate = new Date(date);
+  
   let days;
   const now = new Date();
   const nowDay = now.getDate();
@@ -42,6 +43,7 @@ export const getDate = (date) => {
   let month = orderDate.getMonth();
   let min = orderDate.getMinutes();
   const gmt = orderDate.toString().split('GMT')[1];
+ 
   if (min < 10) min = '0' + min;
   const time = `${hour}:${min} i-GMT${gmt.slice(0, 1)}${Number(
     gmt.slice(1, 3)

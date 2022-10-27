@@ -73,5 +73,5 @@ export default function FeedInfo() {
         <p className={`${feedInfoStyle.number}`}>{totalDay}</p>
       </div>
     </section>
-  );
+  )
 }

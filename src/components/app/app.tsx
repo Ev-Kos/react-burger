@@ -5,7 +5,7 @@ import {
   Route,
   Switch,
   useLocation,
-  useHistory
+  useHistory,
 } from 'react-router-dom';
 import Login from '../../pages/login';
 import Registration from '../../pages/registration';
@@ -17,18 +17,28 @@ import PageNotFound from '../../pages/notFound';
 import FeedId from '../feed-id/feed-id';
 import Feeds from '../../pages/feeds';
 import Modal from '../modal/modal';
+import FeedIdModal from '../feed-id-modal/feed-id-modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { Location } from 'history'; 
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { getAllIngredients } from '../../services/actions/ingredientsActions';
 
 function App() {
   const location = useLocation<{background: Location}>();
-  const background = location.state && location.state.background;
+  const background = location.state?.background;
   const history = useHistory();
-
+  const dispatch: any = useDispatch();
+  
   function closeModals() {
     history.goBack();
   }
 
+  useEffect(() => {
+    dispatch(getAllIngredients());
+  }, [dispatch]);
+
+  
   return (
     <>
       <AppHeader/>
@@ -57,8 +67,11 @@ function App() {
         <Route path='/reset-password' exact={true}>
           <ResetPassword />
         </Route>
-        <Route path='/feed'>
+        <Route path='/feed' exact={true}>
           <Feeds />
+        </Route>
+        <Route path="/feed/:id" exact={true}>
+          <FeedId />
         </Route>
         <Route path='/ingredients/:id' exact={true}>
           <IngredientsPage />
@@ -69,20 +82,20 @@ function App() {
       </Switch>
       {background && (
         <Switch>
-          <Route path='/ingredients/:id'>
+          <Route path='/ingredients/:id' exact={true}>
             <Modal closeModal={closeModals} title={'Детали Ингредиента'}>
               <IngredientsPage />
             </Modal>
           </Route>
-          <Route path='/feed/:id'>
+          <Route path='/feed/:id' exact={true}>
             <Modal closeModal={closeModals} title={'Детали Заказа'}>
-              <FeedId />
+              <FeedIdModal />
             </Modal>
           </Route>
           <Route path='/profile/order/:id' exact={true}>
             <Modal
               closeModal={closeModals} title={'Детали Заказа'}>
-              <FeedId />
+              <FeedIdModal />
             </Modal>
           </Route>
         </Switch>
