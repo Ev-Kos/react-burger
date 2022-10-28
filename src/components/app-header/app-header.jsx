@@ -1,6 +1,7 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
@@ -8,6 +9,8 @@ const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
 export default function AppHeader() {
 
   const { pathname } = useLocation()
+  const {name} = useSelector((store) => store.userReducer.userAuthProfile);
+  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
 
   return (
     <header className={`${headerStyles.header} pt-4 pb-3`}>
@@ -24,8 +27,8 @@ export default function AppHeader() {
           <li>
             <NavLink to='/feed' className={link}
                   activeClassName={linkActive}
-                  exact>
-              <ListIcon type={pathname === '/feed' ? 'primary' : 'secondary'} />
+            >
+              <ListIcon type={pathname.includes('/feed') ? 'primary' : 'secondary'} />
               Лента заказов
             </NavLink>
           </li>
@@ -36,9 +39,9 @@ export default function AppHeader() {
         <div className={headerStyles.header__linkProfile}>
           <NavLink to='/profile' className={link} 
                 activeClassName={linkActive}
-                exact>
-            <ProfileIcon type={pathname === '/profile' ? 'primary' : 'secondary'} />
-            Личный кабинет
+          >
+            <ProfileIcon type={userLogin ? 'success' : 'secondary'} />
+            {!userLogin ? 'Личный кабинет' : name ? name: 'Личный кабинет'}
           </NavLink>
         </div>
       </nav>

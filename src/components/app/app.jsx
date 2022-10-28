@@ -19,16 +19,30 @@ import Feeds from '../../pages/feeds';
 import Modal from '../modal/modal';
 import FeedIdModal from '../feed-id-modal/feed-id-modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
-import { Location } from 'history'; 
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
+import { getUserData } from '../../services/actions/userActions';
+import { useAuth } from '../../services/auth';
+import {
+  WS_CONNECTION_START,
+  WS_CONNECTION_CLOSED,
+} from '../../services/actions/wsActions';
 
 function App() {
-  const location = useLocation<{background: Location}>();
+  const location = useLocation();
   const background = location.state?.background;
   const history = useHistory();
-  const dispatch: any = useDispatch();
+  const dispatch = useDispatch();
+  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
+  const auth = useAuth();
+
+  useEffect(() => {
+      if (!userLogin) {
+        dispatch(getUserData(auth.user));
+      }
+  }, [dispatch, userLogin]);
+
   
   function closeModals() {
     history.goBack();
@@ -37,7 +51,6 @@ function App() {
   useEffect(() => {
     dispatch(getAllIngredients());
   }, [dispatch]);
-
   
   return (
     <>
@@ -82,7 +95,7 @@ function App() {
       </Switch>
       {background && (
         <Switch>
-          <Route path='/ingredients/:id' exact={true}>
+          <Route path='/ingredients/:id'>
             <Modal closeModal={closeModals} title={'Детали Ингредиента'}>
               <IngredientsPage />
             </Modal>
@@ -93,13 +106,12 @@ function App() {
             </Modal>
           </Route>
           <Route path='/profile/order/:id' exact={true}>
-            <Modal
-              closeModal={closeModals} title={'Детали Заказа'}>
+            <Modal closeModal={closeModals} title={'Детали Заказа'}>
               <FeedIdModal />
             </Modal>
           </Route>
         </Switch>
-      )}
+      )} 
     </>
   )
 }

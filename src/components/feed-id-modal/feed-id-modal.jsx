@@ -23,15 +23,6 @@ export default function FeedIdModal() {
     orderModalIngredients: [],
     ingredientsArray: []
   }
-
-  useEffect(() => {
-    if (ingredients.length) {
-      dispatch({ type: WS_CONNECTION_START, payload: '/all' });
-    }
-    return () => {
-      dispatch({ type: WS_CONNECTION_CLOSED, payload: '' });
-    };
-  }, [ingredients]);
   
   if (feed.length > 0) {
     order.data = feed[`${feed.length - 1}`].orders;
