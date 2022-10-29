@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 
 export default function Feed() {
 
-  const dataFeed = useSelector((store) => store.wsReducer.messages);
+  const feed = useSelector((store) => store.wsReducer.messages);
   let data = null;
 
-  if (dataFeed.length > 0) {
-    data = dataFeed[`${dataFeed.length - 1}`].orders;
+  if (feed.length > 0) {
+    data = feed[`${feed.length - 1}`].orders;
   }
 
   return (

@@ -1,17 +1,11 @@
-import { useEffect } from 'react';
 import feedIdStyle from './feed-id-modal.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from '../../services/actions/wsActions';
 import {getDate} from '../../utils/utils';
 
 export default function FeedIdModal() {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredientsReducer.ingredients);
   const feed = useSelector((store) => store.wsReducer.messages);
 
@@ -55,6 +49,11 @@ export default function FeedIdModal() {
 
   return (
     <>
+      {!order.orderModal && (
+        <h1 className={`${feedIdStyle.loader} text text_type_main-large`}>
+          Загрузка
+        </h1>
+      )}
       {order.orderModal && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">

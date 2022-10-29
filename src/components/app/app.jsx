@@ -32,6 +32,8 @@ import {
 function App() {
   const location = useLocation();
   const background = location.state?.background;
+  // console.log('background ', background)
+  // console.log('location ', location)
   const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
@@ -65,12 +67,12 @@ function App() {
         <ProtectedRoute path='/profile' exact={true}>
           <Profile />
         </ProtectedRoute>
-        <ProtectedRoute path='/profile/orders' exact={true}>
+        <Route path='/profile/orders' exact={true}>
           <Profile />
-        </ProtectedRoute>
-        <ProtectedRoute path='/profile/order/:id' exact={true}>
+        </Route>
+        <Route path='/profile/order/:id' exact={true}>
           <FeedId />
-        </ProtectedRoute>
+        </Route>
         <Route path='/register' exact={true}>
           <Registration />
         </Route>

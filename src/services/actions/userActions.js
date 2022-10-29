@@ -29,7 +29,6 @@ export function loginUser(userEmail, userPassword) {
                     type: USER_AUTHORIZATION_SUCCESS,
                     payload: { userEmail, userPassword, ...data.user }
                 })
-                localStorage.setItem('password', `${userPassword}`);
             }
         })
         .catch(e => {console.log(e.type)})
@@ -87,7 +86,6 @@ export function updateUserProfile(email, password, name) {
                         type: UPDATE_USER_PROFILE,
                         payload: {...res.user, password: password },
                     });
-                    localStorage.setItem('password', password);
                 }
             })
             .catch(error => {

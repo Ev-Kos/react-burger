@@ -1,5 +1,6 @@
 import feedImageStyle from './feed-image.module.css';
 import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/prop-types';
 
 export default function FeedItemImage({ data, number, lengthArray }) {
   let count = lengthArray - number;
@@ -40,7 +41,7 @@ export default function FeedItemImage({ data, number, lengthArray }) {
 }
 
 FeedItemImage.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: ingredientType.isRequired,
   number: PropTypes.number,
   lengthArray: PropTypes.number
 }

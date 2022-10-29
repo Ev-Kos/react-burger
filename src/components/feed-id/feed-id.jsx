@@ -63,6 +63,11 @@ export default function FeedId() {
 
   return (
     <>
+      {!order.orderModal && (
+        <h1 className={`${feedIdStyle.loader} text text_type_main-large`}>
+          Загрузка
+        </h1>
+      )}
       {order.orderModal && (
         <section className={feedIdStyle.page}>
           <div className="pl-8 pr-8">

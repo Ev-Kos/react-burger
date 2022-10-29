@@ -87,5 +87,13 @@ export default function FeedItem(item) {
 }
 
 FeedItem.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.shape({
+    createdAt: PropTypes.string,
+    ingredients: PropTypes.arrayOf(PropTypes.string),
+    name: PropTypes.string,
+    number: PropTypes.number,
+    status: PropTypes.string,
+    updatedAt: PropTypes.string,
+    _id: PropTypes.string
+  })
 }

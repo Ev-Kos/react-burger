@@ -10,7 +10,6 @@ import {
   WS_CONNECTION_CLOSED,
 } from '../services/actions/wsActions';
 import { getCookie } from '../utils/utils';
-import FeedIdModal from '../components/feed-id-modal/feed-id-modal';
 
 const navElemActive = `text text_type_main-medium ${profileStyle.navElem_active}`;
 const navElemInActive = `text text_type_main-medium ${profileStyle.navElem_inActive}`;
