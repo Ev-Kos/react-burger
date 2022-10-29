@@ -1,7 +1,6 @@
 import feedProfileStyles from './feed-profile.module.css';
 import FeedItem from '../feed-item/feed-item';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
 
 export default function FeedProfile({data}) {
  

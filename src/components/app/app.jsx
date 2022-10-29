@@ -20,20 +20,14 @@ import Modal from '../modal/modal';
 import FeedIdModal from '../feed-id-modal/feed-id-modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
 import { getUserData } from '../../services/actions/userActions';
 import { useAuth } from '../../services/auth';
-import {
-  WS_CONNECTION_START,
-  WS_CONNECTION_CLOSED,
-} from '../../services/actions/wsActions';
 
 function App() {
   const location = useLocation();
   const background = location.state?.background;
-  // console.log('background ', background)
-  // console.log('location ', location)
   const history = useHistory();
   const dispatch = useDispatch();
   const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
