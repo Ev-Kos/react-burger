@@ -88,12 +88,12 @@ export default function FeedItem(item) {
 
 FeedItem.propTypes = {
   item: PropTypes.shape({
-    createdAt: PropTypes.string,
-    ingredients: PropTypes.arrayOf(PropTypes.string),
-    name: PropTypes.string,
-    number: PropTypes.number,
-    status: PropTypes.string,
-    updatedAt: PropTypes.string,
-    _id: PropTypes.string
+    createdAt: PropTypes.string.isRequired,
+    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired),
+    name: PropTypes.string.isRequired,
+    number: PropTypes.number.isRequired,
+    status: PropTypes.string.isRequired,
+    updatedAt: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired
   })
 }

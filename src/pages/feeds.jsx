@@ -19,22 +19,13 @@ export default function Feeds() {
     };
   }, []);
 
-  const wsConnected = useSelector((store) => store.wsReducer.wsConnected)
-
   return (
-    <>
-    {!wsConnected ? (
-      <h1 className={`${feedsStyle.loader} text text_type_main-large`}>
-        Загрузка
-      </h1>
-    ) :
-    (<section className={feedsStyle.feedPage}>
+    <section className={feedsStyle.feedPage}>
       <div>
         <h1 className='text text_type_main-large mt-10 mb-5'>Лента Заказов</h1>
         <Feed />
       </div>
       <FeedInfo />
-    </section>)}
-    </>
+    </section>
   );
 }

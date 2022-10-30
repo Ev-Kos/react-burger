@@ -17,29 +17,17 @@ import PageNotFound from '../../pages/notFound';
 import FeedId from '../feed-id/feed-id';
 import Feeds from '../../pages/feeds';
 import Modal from '../modal/modal';
-import FeedIdModal from '../feed-id-modal/feed-id-modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
-import { getUserData } from '../../services/actions/userActions';
-import { useAuth } from '../../services/auth';
 
 function App() {
   const location = useLocation();
   const background = location.state?.background;
   const history = useHistory();
   const dispatch = useDispatch();
-  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
-  const auth = useAuth();
 
-  useEffect(() => {
-      if (!userLogin) {
-        dispatch(getUserData(auth.user));
-      }
-  }, [dispatch, userLogin]);
-
-  
   function closeModals() {
     history.goBack();
   }
@@ -61,9 +49,9 @@ function App() {
         <ProtectedRoute path='/profile' exact={true}>
           <Profile />
         </ProtectedRoute>
-        <Route path='/profile/orders' exact={true}>
+        <ProtectedRoute path='/profile/orders' exact={true}>
           <Profile />
-        </Route>
+        </ProtectedRoute>
         <Route path='/profile/order/:id' exact={true}>
           <FeedId />
         </Route>
@@ -98,14 +86,14 @@ function App() {
           </Route>
           <Route path='/feed/:id' exact={true}>
             <Modal closeModal={closeModals} title={'Детали Заказа'}>
-              <FeedIdModal />
+              <FeedId />
             </Modal>
           </Route>
-          <Route path='/profile/order/:id' exact={true}>
+          <ProtectedRoute path='/profile/order/:id' exact={true}>
             <Modal closeModal={closeModals} title={'Детали Заказа'}>
-              <FeedIdModal />
+              <FeedId />
             </Modal>
-          </Route>
+          </ProtectedRoute>
         </Switch>
       )} 
     </>

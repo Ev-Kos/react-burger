@@ -23,6 +23,7 @@ export default function Profile() {
   const logout = useCallback((e) => {
       e.preventDefault();
       auth.signOut(localStorage.getItem('refreshToken'));
+      console.log('token')
     },
     [auth]
   );
