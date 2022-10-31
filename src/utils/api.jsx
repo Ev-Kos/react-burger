@@ -87,7 +87,7 @@ export const logoutApi = (token) => {
   .then((res) => checkResponse(res))
 }
 
-export const updateTokin = () => {
+export const updateToken = () => {
   return fetch(`${baseUrl}auth/token`, {
       method: 'POST',
       headers: {

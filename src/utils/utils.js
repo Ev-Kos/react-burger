@@ -61,3 +61,15 @@ export const getDate = (date) => {
   } else return `Сегодня, ${time}`;
 };
 
+export const errorHandler = (data) => {
+  let authToken;
+  if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
+      authToken = data.accessToken.split('Bearer ')[1];
+  }
+  if (authToken) {
+      setCookie('token', authToken, 0);
+      localStorage.setItem('refreshToken', `${data.refreshToken}`);
+      console.log('Token обновлен')
+  }
+}
+

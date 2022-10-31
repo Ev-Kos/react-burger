@@ -18,7 +18,6 @@ function HomePage() {
         }
     }, [dispatch, userLogin]);
   
-
     return (
         <main className={appStyles.content}>
             <>

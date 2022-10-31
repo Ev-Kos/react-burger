@@ -18,7 +18,7 @@ import FeedId from '../feed-id/feed-id';
 import Feeds from '../../pages/feeds';
 import Modal from '../modal/modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
 

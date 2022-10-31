@@ -1,5 +1,5 @@
-import { logoutApi, getUserLogin, getUser, updateTokin, updateUser } from '../../utils/api';
-import { setCookie, deleteCookie } from '../../utils/utils';
+import { logoutApi, getUserLogin, getUser, updateToken, updateUser } from '../../utils/api';
+import { setCookie, deleteCookie, errorHandler } from '../../utils/utils';
 
 export const USER_LOGOUT = 'USER_LOGOUT';
 
@@ -65,7 +65,7 @@ export function getUserData(user) {
             })
             .catch(error => {
                 if (error === "Ошибка: 403") {
-                    updateTokin()
+                    updateToken()
                     .then(data => {
                         errorHandler(data);
                     })
@@ -90,7 +90,7 @@ export function updateUserProfile(email, password, name) {
             })
             .catch(error => {
                 if (error === "Ошибка: 403") {
-                    updateTokin()
+                    updateToken()
                     .then(data => {
                         errorHandler(data);
                         updateUser(email, password, name);
@@ -101,14 +101,3 @@ export function updateUserProfile(email, password, name) {
     }
 }
 
-export const errorHandler = (data) => {
-    let authToken;
-    if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
-        authToken = data.accessToken.split('Bearer ')[1];
-    }
-    if (authToken) {
-        setCookie('token', authToken, 0);
-        localStorage.setItem('refreshToken', `${data.refreshToken}`);
-        console.log('Token обновлен')
-    }
-}

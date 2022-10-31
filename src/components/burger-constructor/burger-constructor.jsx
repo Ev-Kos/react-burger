@@ -51,7 +51,7 @@ function BurgerConstructor() {
       const order = [bun._id, 
         ...selectedIngredients.map((item) => item._id), 
         bun._id];
-        dispatch(getOrderNumberApi(order))
+        dispatch(getOrderNumberApi(order));
     } 
   };
 
