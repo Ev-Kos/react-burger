@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/app/app';
+import AppSwitch from './components/app-switch/app-switch';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './services/store';
@@ -16,7 +16,7 @@ root.render(
     <BrowserRouter>
       <Provider store={ store }>
         <ProvideAuth>
-          <App />
+          <AppSwitch />
         </ProvideAuth>
       </Provider>
     </BrowserRouter>
