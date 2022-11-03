@@ -15,7 +15,6 @@ import { DELETE_INGREDIENT,
          MOVE_ELEMENT } 
          from '../../services/actions/selectedIngredientsActions';
 import { getOrderNumberApi } from '../../services/actions/orderActions';
-import { getOrderNumber } from '../../utils/api'
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
@@ -41,9 +40,6 @@ function BurgerConstructor() {
     )
   }, [selectedIngredient]);
 
-  const openOrderDetails = () => {
-      dispatch({ type: OPEN_ORDER_MODAL });
-  };
   const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
   const history = useHistory();
 
@@ -55,20 +51,8 @@ function BurgerConstructor() {
       const order = [bun._id, 
         ...selectedIngredients.map((item) => item._id), 
         bun._id];
-      makeOrder(order);
+        dispatch(getOrderNumberApi(order));
     } 
-  };
-
-  const makeOrder = (order) => {
-    getOrderNumber(order)
-    .then(() => {
-      openOrderDetails();
-    })
-    .catch((err) => {
-      console.log(err);
-      alert('Произошла ошибка');
-    })
-    dispatch(getOrderNumberApi(order))
   };
 
   const closeModal = () => {
@@ -117,24 +101,33 @@ function BurgerConstructor() {
   }, [selectedIngredients]);
 
   const selectedElements = useMemo(() => selectedIngredient
-  .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
-  .map((element, index) => (
-    <BurgerConstructorElement
-      element={ element }
-      id={ element._id }
-      index={ index }
-      onDelete={ deleteIngredient }
-      onMove={ movedIngredient } 
-      key= { element.key }
-    />
-  )),
-[selectedIngredient]
-);
+    .filter((item) => item.type !== INGREDIENT_TYPES.BUN)
+    .map((element, index) => (
+      <BurgerConstructorElement
+        element={ element }
+        id={ element._id }
+        index={ index }
+        onDelete={ deleteIngredient }
+        onMove={ movedIngredient } 
+        key= { element.key }
+      />
+    )),
+    [selectedIngredient]
+  );
+
+  const orderRequest = useSelector((store) => store.orderReducer.orderRequest);
 
   return (
     <section className={`${constructorStyles.constructor} mr-5 pl-4`} ref={ dropTarget }>
       <ul className={`${constructorStyles.elements} mt-25`}>
-      {bun && (<li className={`${constructorStyles.element} mr-8 mb-4`}>
+        {orderRequest && (
+          <div className={constructorStyles.loader}>
+            <p className='text text_type_main-large'>
+              Обрабатываем Ваш заказ
+            </p>
+          </div>
+        )}
+        {bun && (<li className={`${constructorStyles.element} mr-8 mb-4`}>
            <ConstructorElement
             type="top"
             isLocked={true}

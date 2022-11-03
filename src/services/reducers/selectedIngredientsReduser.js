@@ -1,7 +1,8 @@
 import {
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    MOVE_ELEMENT
+    MOVE_ELEMENT,
+    CLEAR_CONSTRUCTOR
   } from '../actions/selectedIngredientsActions';
 
 const initialState = {
@@ -27,6 +28,12 @@ export const selectedIngredientsReducer = (state = initialState, action) => {
             ...state,
             selectedIngredient: action.payload,
           });
+        }
+        case CLEAR_CONSTRUCTOR: {
+          return ({
+            ...state,
+            selectedIngredient: []
+          })
         }
         default: {
           return state;

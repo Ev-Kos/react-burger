@@ -2,7 +2,7 @@ import {
     OPEN_ORDER_MODAL,
     CLOSE_ORDER_MODAL,
     OPEN_INGREDIENT_MODAL,
-    CLOSE_INGREDIENT_MODAL
+    CLOSE_INGREDIENT_MODAL,
   } from '../actions/modalActions';
 
 

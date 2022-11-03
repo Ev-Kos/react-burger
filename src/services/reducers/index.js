@@ -7,6 +7,7 @@ import {modalReducer} from './modalReducer';
 import {forgotPasswordReducer} from './forgotPasswordReducer';
 import {registerReducer} from './registerReducer';
 import {userReducer} from './userReducer';
+import {wsReducer} from './wsReducer';
 
 const rootReducer = combineReducers({
     ingredientsReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
     modalReducer,
     forgotPasswordReducer,
     registerReducer,
-    userReducer
+    userReducer,
+    wsReducer
   })
   
   export default rootReducer;

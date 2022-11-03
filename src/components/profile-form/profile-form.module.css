@@ -1,0 +1,9 @@
+.input {
+    max-width: 480px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}

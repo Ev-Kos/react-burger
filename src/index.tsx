@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/app/app';
+import AppSwitch from './components/app-switch/app-switch';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './services/store';
 import { BrowserRouter } from 'react-router-dom';
+import { ProvideAuth } from './services/auth';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -14,7 +15,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Provider store={ store }>
-        <App />
+        <ProvideAuth>
+          <AppSwitch />
+        </ProvideAuth>
       </Provider>
     </BrowserRouter>
   </React.StrictMode>

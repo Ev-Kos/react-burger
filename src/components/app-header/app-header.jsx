@@ -1,52 +1,50 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;
-function AppHeader() {
-  const [linkState, setLinkState] = useState({
-    profile: false,
-    constructor: true
-  });
-  const onClick = (element) => {
-    element === 'constructor'
-    ? setLinkState({ constructor: true, profile: false })
-    : setLinkState({ profile: true, constructor: false })
-  }
+
+export default function AppHeader() {
+
+  const { pathname } = useLocation()
+  const {name} = useSelector((store) => store.userReducer.userAuthProfile);
+  const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
 
   return (
     <header className={`${headerStyles.header} pt-4 pb-3`}>
       <nav className={headerStyles.header__nav}>
         <ul className={headerStyles.header__linkBox}>
           <li>
-            <Link to='/' className={linkState.constructor ? linkActive : link}
-                  onClick={() => onClick('constructor')}>
-              <BurgerIcon type={linkState.constructor ? 'primary' : 'secondary'} />
+            <NavLink to='/' className={link}
+                  activeClassName={linkActive}
+                  exact>
+              <BurgerIcon type={pathname === '/' ? 'primary' : 'secondary'} />
               Конструктор
-            </Link>
+            </NavLink>
           </li>
           <li>
-            <a href='#' className={link}>
-              <ListIcon type="secondary" />
+            <NavLink to='/feed' className={link}
+                  activeClassName={linkActive}
+            >
+              <ListIcon type={pathname.includes('/feed') ? 'primary' : 'secondary'} />
               Лента заказов
-            </a>
+            </NavLink>
           </li>
         </ul>
-        <a href="#" className={headerStyles.header__logo}>
+        <Link to='/' className={headerStyles.header__logo}>
           <Logo/>
-        </a>
+        </Link>
         <div className={headerStyles.header__linkProfile}>
-          <Link to='/profile' className={linkState.profile ? linkActive : link} 
-                onClick={() => onClick()}>
-            <ProfileIcon type={linkState.profile ? 'primary' : 'secondary'} />
-            Личный кабинет
-          </Link>
+          <NavLink to='/profile' className={link} 
+                activeClassName={linkActive}
+          >
+            <ProfileIcon type={userLogin ? 'success' : 'secondary'} />
+            {!userLogin ? 'Личный кабинет' : name ? name: 'Личный кабинет'}
+          </NavLink>
         </div>
       </nav>
     </header>
   )
 }
-
-export default AppHeader

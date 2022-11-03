@@ -12,13 +12,12 @@ function HomePage() {
     const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
     const auth = useAuth();
     const dispatch = useDispatch();
-
     useEffect(() => {
         if (!userLogin) {
           dispatch(getUserData(auth.user));
         }
-      }, [dispatch, userLogin]);
-
+    }, [dispatch, userLogin]);
+  
     return (
         <main className={appStyles.content}>
             <>

@@ -1,0 +1,26 @@
+.conteiner {
+    width: 600px;
+    max-width: 600px;
+    margin-right: 8px;
+}
+
+.content {
+    overflow: auto;
+    max-height: calc(100vh - 246px);
+    position: relative;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+
+.content::-webkit-scrollbar {
+    width: 8px;
+    background-color: #2f2f37;
+}
+
+.content::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 640px;
+    background-color: #8585ad;
+}
