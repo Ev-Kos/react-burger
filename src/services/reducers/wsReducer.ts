@@ -1,20 +1,27 @@
 import {
-    WS_USER_NAME_UPDATE,
+    TWsActions,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
 } from '../actions/wsActions';
 
+type TWsInitialState = {
+    wsConnected: boolean;
+    wsError: undefined | string;
+    messages: any;
+  };
 
-const initialState = {
+const initialState: TWsInitialState = {
     wsConnected: false,
     wsError: undefined,
     messages: [],
-
 };
 
-export const wsReducer = (state = initialState, action) => {
+export const wsReducer = (
+    state = initialState, 
+    action: TWsActions
+    ): TWsInitialState => {
     switch (action.type) {
         case WS_CONNECTION_SUCCESS:
             return {

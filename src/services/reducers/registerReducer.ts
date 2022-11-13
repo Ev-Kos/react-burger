@@ -1,16 +1,27 @@
 import { USER_REGISTER_SUCCESS,
          USER_REGISTER_REQUEST,
-         USER_REGISTER_FAILED } 
+         USER_REGISTER_FAILED,
+         TUserRegisterActions } 
        from '../actions/registerActions';
+import { TUserProfile } from '../types/data';
 
-const initialState = {
+type TInitialState = {
+    registrationSuccess: boolean;
+    registrationRequest: boolean;
+    registrationFailed: boolean;
+    newUserProfile: null | TUserProfile;
+}
+
+const initialState: TInitialState = {
     registrationSuccess: false,
     registrationRequest: false,
     registrationFailed: false,
     newUserProfile: null
 }
 
-export const registerReducer = (state = initialState, action) => {
+export const registerReducer = (
+    state = initialState, 
+    action: TUserRegisterActions) => {
     switch (action.type) {
         case USER_REGISTER_REQUEST: {
             return {
@@ -23,7 +34,11 @@ export const registerReducer = (state = initialState, action) => {
                 ...state,
                 registrationRequest: false,
                 registrationSuccess: true,
-                newUserProfile: { name: action.data.user.name, email: action.data.user.email, password: action.data.user.password }
+                newUserProfile: { 
+                    name: action.data.user.name, 
+                    email: action.data.user.email, 
+                    password: action.data.user.password 
+                }
             }
         }
         case USER_REGISTER_FAILED: {

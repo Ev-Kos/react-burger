@@ -1,9 +1,15 @@
-import {NORMAL_CLOSE_CODE} from '../../utils/constants';
+import { NORMAL_CLOSE_CODE } from '../../utils/constants';
+import { TwsActions } from '../store';
+import { Middleware, MiddlewareAPI } from 'redux';
+import { AppDispatch, RootState } from '../types/index';
 
-export const socketMiddleware = (wsUrl, wsActions) => {
+export const socketMiddleware = (
+    wsUrl: string, 
+    wsActions: TwsActions
+    ): Middleware => {
 
-    return store => {
-        let socket = null;
+    return (store: MiddlewareAPI<AppDispatch, RootState>) => {
+        let socket: WebSocket | null = null;
 
         return next => action => {
             const { dispatch, getState } = store;

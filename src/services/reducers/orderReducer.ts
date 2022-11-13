@@ -1,17 +1,29 @@
 import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
-  GET_ORDER_FAILED
+  GET_ORDER_FAILED,
+  TOrderActions
   } from '../actions/orderActions';
+import { AppThunk } from '../types';
 
-  const initialState = {
-    order: {number: 0},
-    orderRequest: false,
-    orderFailed: false,
-    orderSuccess: false
-  };
+type TinitialState = {
+  order: null | number;
+  orderRequest: boolean;
+  orderFailed: boolean;
+  orderSuccess: boolean;
+}
 
-export const orderReducer = (state = initialState, action) => {
+const initialState: TinitialState = {
+  order: null,
+  orderRequest: false,
+  orderFailed: false,
+  orderSuccess: false
+};
+
+export const orderReducer = (
+  state = initialState, 
+  action: TOrderActions
+  ): TinitialState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return {
@@ -31,9 +43,7 @@ export const orderReducer = (state = initialState, action) => {
     case GET_ORDER_FAILED: {
       return {
         ...state,
-        order: {
-          number: 0,
-        },
+        order: null,
         orderRequest: false,
         orderFailed: true,
         orderSuccess: false

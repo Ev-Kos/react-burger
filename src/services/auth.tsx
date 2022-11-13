@@ -1,9 +1,13 @@
-import { useContext } from 'react';
+import { useContext, ReactNode, FC } from 'react';
 import { loginUser, getUserData, logoutUser } from './actions/userActions';
 import { AuthContext } from './context';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from './hooks';
 
-export function ProvideAuth({ children }) {
+interface IProvideAuth {
+    children: ReactNode;
+  }
+
+export const ProvideAuth: FC<IProvideAuth> = ({ children }) => {
     const auth = useProvideAuth();
     return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
@@ -18,10 +22,10 @@ export function useProvideAuth() {
 
     const getUser = () => dispatch(getUserData(user));
 
-    const signIn = (userEmail, userPassword) => {
+    const signIn = (userEmail: string, userPassword: string) => {
         dispatch(loginUser(userEmail, userPassword));
     }
-    const signOut = (token) => {
+    const signOut = (token: string) => {
         dispatch(logoutUser(token));
 
     }
