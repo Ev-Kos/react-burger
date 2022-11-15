@@ -4,8 +4,8 @@ import {
     Input,
     Button,
   } from '@ya.praktikum/react-developer-burger-ui-components';
-  import { useState } from 'react';
-  import { useDispatch, useSelector } from 'react-redux';
+  import { useState, FormEvent } from 'react';
+  import { useDispatch, useSelector } from '../services/hooks';
   import { resetPassword } from '../services/actions/resetPasswordActions';
   import { Redirect } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ function ResetPassword() {
   const [valuePassword, setValuePassword] = useState('');
   const [valueToken, setValueToken] = useState('');
 
-  const onClickToken = (e) => {
+  const onClickToken = (e: FormEvent) => {
     e.preventDefault();
     setValueToken(valueToken);
     dispatch(resetPassword(valueToken, valuePassword));
@@ -54,7 +54,7 @@ function ResetPassword() {
               />
           </div>
           <div className='pb-20 pt-6'>
-            <Button>Сохранить</Button>
+            <Button htmlType='submit'>Сохранить</Button>
           </div>
           <p className='text text_type_main-small text_color_inactive'>
             Вспомнили пароль?

@@ -6,29 +6,29 @@ import {
 import { Link } from 'react-router-dom';
 import registrationStyle from './styles-pages.module.css';
 import { userRegister } from '../services/actions/registerActions';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { Redirect } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
 function Registration() {
   const [valueName, setValueName] = useState('');
   const [valuePassword, setValuePassword] = useState('');
   const dispatch = useDispatch();
 
-  const onChangeName = (e) => {
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
     setValueName(e.target.value);
   }; 
 
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setValuePassword(e.target.value);
   };
 
   const [valueEmail, setValueEmail] = useState('');
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setValueEmail(e.target.value);
   };
 
-  const onClickRegister = (e) => {
+  const onClickRegister = (e: FormEvent) => {
     e.preventDefault();
     dispatch(userRegister(valueName, valueEmail, valuePassword));
   };
@@ -71,7 +71,7 @@ function Registration() {
             />
           </div>
           <div className='pb-20 pt-6'>
-            <Button type='primary' size='medium'>
+            <Button htmlType='submit' type='primary' size='medium'>
               Зарегистрироваться
             </Button>
           </div>

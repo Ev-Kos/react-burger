@@ -1,7 +1,7 @@
 import profileStyle from './styles-pages.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { useAuth } from '../services/auth';
-import { useMemo, useCallback, useEffect } from 'react';
+import { useMemo, useCallback, useEffect, FormEvent } from 'react';
 import { Switch, Route, useLocation, NavLink } from 'react-router-dom';
 import ProfileForm from '../components/profile-form/profile-form';
 import FeedProfile from '../components/feed-profile/feed-profile';
@@ -14,13 +14,17 @@ import { getCookie } from '../utils/utils';
 const navElemActive = `text text_type_main-medium ${profileStyle.navElem_active}`;
 const navElemInActive = `text text_type_main-medium ${profileStyle.navElem_inActive}`;
 
+interface LocationState {
+  from: {pathname: string}
+}
+
 export default function Profile() {
   
   const dispatch = useDispatch();
   const userProfile = useSelector((store) => store.userReducer.userAuthProfile);
 
   const auth = useAuth();
-  const logout = useCallback((e) => {
+  const logout = useCallback((e: FormEvent) => {
       e.preventDefault();
       auth.signOut(localStorage.getItem('refreshToken'));
       console.log('token')
@@ -46,7 +50,7 @@ export default function Profile() {
     data = feed[`${feed.length - 1}`].orders;
   }
 
-  const { pathname } = useLocation();
+  const { pathname } = useLocation<LocationState>();
 
   const description = useMemo(() => {
     switch (pathname) {

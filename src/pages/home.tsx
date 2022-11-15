@@ -3,12 +3,12 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import BurgerIngredients from '../components/burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../components/burger-constructor/burger-constructor';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../services/hooks';
 import { useEffect } from 'react';
 import { useAuth } from '../services/auth';
 import { getUserData } from '../services/actions/userActions';
 
-function HomePage() {
+export default function HomePage() {
     const userLogin = useSelector((store) => store.userReducer.userLoginSuccess);
     const auth = useAuth();
     const dispatch = useDispatch();
@@ -29,5 +29,3 @@ function HomePage() {
         </main>
     ) 
 }
-
-export default HomePage;

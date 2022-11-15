@@ -1,7 +1,7 @@
 import notFoundStyle from './styles-pages.module.css';
 import { Link } from 'react-router-dom';
 
-function PageNotFound() {
+export default function PageNotFound() {
   return (
     <section className={notFoundStyle.page}>
       <div className={notFoundStyle.wrap}>
@@ -14,5 +14,3 @@ function PageNotFound() {
     </section>
   );
 }
-
-export default PageNotFound;

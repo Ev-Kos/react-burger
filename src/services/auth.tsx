@@ -12,7 +12,7 @@ export const ProvideAuth: FC<IProvideAuth> = ({ children }) => {
     return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
-export function useAuth() {
+export function useAuth(): any {
     return useContext(AuthContext);
 }
 

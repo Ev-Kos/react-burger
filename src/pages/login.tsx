@@ -5,24 +5,28 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import loginStyle from './styles-pages.module.css';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, ChangeEvent, FormEvent } from 'react';
 import { useAuth } from '../services/auth';
 
-function Login() {
-  const location = useLocation();
+interface LocationState {
+  from: {pathname: string}
+}
+
+export default function Login() {
+  const location = useLocation<LocationState>();
   const [value, setValue] = useState('');
   const [valuePassword, setValuePassword] = useState('');
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
   
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setValuePassword(e.target.value);
   };
 
   const auth = useAuth();
-  const login = useCallback((e) => {
+  const login = useCallback((e: FormEvent) => {
       e.preventDefault();
       auth.signIn(value, valuePassword);
     },
@@ -52,7 +56,7 @@ function Login() {
             onChange={onChangePassword} />
         </div>
         <div className="pb-20 text">
-          <Button>Войти</Button>
+          <Button htmlType='submit'>Войти</Button>
         </div>
         <div className={`pb-4 ${loginStyle.conteiner}`}>
           <p className='text text_type_main-small text_color_inactive'>
@@ -74,4 +78,3 @@ function Login() {
     </section>
   );
 }
-export default Login;
