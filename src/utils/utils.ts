@@ -1,11 +1,14 @@
-export function getCookie(name) {
+export function getCookie(name: string) {
     const matches = document.cookie.match(
       new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
-export function setCookie(name, value, props) {
+export function setCookie(
+  name: string, 
+  value: string | number | boolean, 
+  props: any = {}) {
     props = props || {};
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
@@ -28,11 +31,11 @@ export function setCookie(name, value, props) {
     document.cookie = updatedCookie;
   }
   
-export function deleteCookie(name) {
-  setCookie(name, null, { expires: -1 });
+export function deleteCookie(name: string) {
+  setCookie(name, false, { expires: -1 });
 }
 
-export const getDate = (date) => {
+export const getDate = (date: string) => {
   const orderDate = new Date(date);
   
   let days;
@@ -41,7 +44,7 @@ export const getDate = (date) => {
   let day = orderDate.getUTCDate();
   let hour = orderDate.getHours();
   let month = orderDate.getMonth();
-  let min = orderDate.getMinutes();
+  let min: string | number = orderDate.getMinutes();
   const gmt = orderDate.toString().split('GMT')[1];
  
   if (min < 10) min = '0' + min;
@@ -61,7 +64,7 @@ export const getDate = (date) => {
   } else return `Сегодня, ${time}`;
 };
 
-export const errorHandler = (data) => {
+export const errorHandler = (data: {accessToken: string, refreshToken: string, success: boolean}) => {
   let authToken;
   if (data.accessToken && data.accessToken.indexOf('Bearer') === 0) {
       authToken = data.accessToken.split('Bearer ')[1];

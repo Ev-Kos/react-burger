@@ -40,7 +40,7 @@ export const GetOrderFailed = (): IGetOrderFailed => ({
 
 
 
-export const getOrderNumberApi: AppThunk = (orderData: number) => {
+export const getOrderNumberApi: AppThunk = (orderData: Array<string>) => {
     return function(dispatch: AppDispatch) {
         dispatch(GetOrderRequest());
         getOrderNumber(orderData).then(res => {
