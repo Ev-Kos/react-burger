@@ -6,14 +6,14 @@ import {
   } from '../actions/orderActions';
 
 type TinitialState = {
-  order: number;
+  order: number | null;
   orderRequest: boolean;
   orderFailed: boolean;
   orderSuccess: boolean;
 }
 
 const initialState: TinitialState = {
-  order: 0,
+  order: null,
   orderRequest: false,
   orderFailed: false,
   orderSuccess: false
@@ -42,10 +42,8 @@ export const orderReducer = (
     case GET_ORDER_FAILED: {
       return {
         ...state,
-        order: 0,
         orderRequest: false,
-        orderFailed: true,
-        orderSuccess: false
+        orderFailed: true
       };
     }
     default: {

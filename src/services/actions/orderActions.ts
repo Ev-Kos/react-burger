@@ -40,12 +40,13 @@ export const GetOrderFailed = (): IGetOrderFailed => ({
 
 
 
-export const getOrderNumberApi: AppThunk = (orderData: Array<string>) => {
+export const getOrderNumberApi: AppThunk = (order: number) => {
     return function(dispatch: AppDispatch) {
         dispatch(GetOrderRequest());
-        getOrderNumber(orderData).then(res => {
+        getOrderNumber(order)
+        .then(res => {
             if (res) {
-                dispatch(GetOrderSuccess(res));
+                dispatch(GetOrderSuccess(res.order.number));
                 dispatch(OpenOrderModal());
                 dispatch(ClearConstructor());
             } else {

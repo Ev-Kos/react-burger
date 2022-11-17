@@ -78,12 +78,13 @@ export default function ProfileForm() {
           <PasswordInput name={'password'}
             onChange={onChangePassword}
             value={valuePassword ? valuePassword : ''}
+            icon="EditIcon"
           />
         </div>
         {valueName !== name || valuePassword !== password || valueEmail !== email ? (
           <div className={`${profileFormStyles.buttons} pt-10`}>
           <Button htmlType='submit'>Сохранить</Button>
-          <Button htmlType='submit' onClick={resetProfile}>Отмена</Button>
+          <Button htmlType='reset' onClick={resetProfile}>Отмена</Button>
         </div>) : null}
       </div>
     </form>

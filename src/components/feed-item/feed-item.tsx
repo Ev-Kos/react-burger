@@ -14,7 +14,7 @@ type TFeedItems = {
 }
 
 type TOrder = {
-  time: string,
+  time: string | number,
   id: string,
   profile?: string,
   url: string

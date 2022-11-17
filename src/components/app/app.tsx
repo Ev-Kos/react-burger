@@ -19,14 +19,18 @@ import FeedId from '../feed-id/feed-id';
 import Feeds from '../../pages/feeds';
 import { Modal } from '../modal/modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/hooks';
 import { useEffect } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
 import { DELETE_INGREDIENT_DATA } from '../../services/actions/ingredientActions';
 import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/modalActions';
 
+type TLocationState = {
+  background?: any;
+}
+
 function App() {
-  const location = useLocation();
+  const location = useLocation<TLocationState>();
   const background = location.state?.background;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -85,7 +89,7 @@ function App() {
       {background && (
         <Switch>
           <Route path='/ingredients/:id'>
-            <Modal closeModal={closeModals}>
+            <Modal title={''}closeModal={closeModals}>
               <IngredientDetails />
             </Modal>
           </Route>

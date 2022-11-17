@@ -1,7 +1,7 @@
 import headerStyles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 
 const link = `${headerStyles.header__link} p-5 text text_type_main-default`
 const linkActive = `${headerStyles.linkActive} p-5 text text_type_main-default`;

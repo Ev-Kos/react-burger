@@ -1,9 +1,9 @@
 import constructorStyles from './burger-constructor.module.css';
 import { ConstructorElement, Button, CurrencyIcon  } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useMemo, useCallback } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
-import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
+import {BurgerConstructorElement} from '../burger-constructor-element/burger-constructor-element';
 import {Modal} from '../modal/modal';
 import {OrderDetails} from '../order-details/order-details';
 import { INGREDIENT_TYPES } from '../../utils/constants';
@@ -18,6 +18,7 @@ import { getOrderNumberApi } from '../../services/actions/orderActions';
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
+import {TSelectedIngredient} from '../../services/types/data';
 
 function BurgerConstructor() {
   const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
@@ -48,9 +49,9 @@ function BurgerConstructor() {
       return history.replace('/login');
     } 
     else {
-      const order = [bun._id, 
+      const order = [bun?._id, 
         ...selectedIngredients.map((item) => item._id), 
-        bun._id];
+        bun?._id];
         dispatch(getOrderNumberApi(order));
     } 
   };
@@ -61,12 +62,12 @@ function BurgerConstructor() {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item) {
+    drop(item: TSelectedIngredient) {
       handleDrop(item);
     }
   });
 
-  const handleDrop = (item) => {
+  const handleDrop = (item: TSelectedIngredient) => {
     if (item.type === INGREDIENT_TYPES.BUN) {
       const index = selectedIngredient.findIndex((element) => element === bun);
       if (index !== -1) {
@@ -76,12 +77,12 @@ function BurgerConstructor() {
     dispatch({ type: ADD_INGREDIENT, item: {...item, key:uuidv4()} });
   };
 
-  const deleteIngredient = (item) => {
+  const deleteIngredient = (item: TSelectedIngredient) => {
     const index = selectedIngredient.indexOf(item);
     dispatch({ type: DELETE_INGREDIENT, index });
   };
 
-  const movedIngredient = useCallback((dragIndex, hoverIndex) => {
+  const movedIngredient = useCallback((dragIndex: number, hoverIndex: number) => {
     const bun = [...selectedIngredient].find((item) => item.type === INGREDIENT_TYPES.BUN);
     const dragElement = selectedIngredients[dragIndex];
     const payload = bun
@@ -158,9 +159,9 @@ function BurgerConstructor() {
         </div>
         {isOrderDetailsOpen && 
             <Modal title={ '' } closeModal={ closeModal }>
-              <OrderDetails orderNumber={ orderNumber.number }/> 
+              <OrderDetails orderNumber={ orderNumber}/> 
             </Modal>}
-        <Button type="primary" size="large" onClick={handleOrder} disabled={ !selectedIngredient.length || !bun}>
+        <Button htmlType='submit' type="primary" size="large" onClick={handleOrder} disabled={ !selectedIngredient.length || !bun}>
           Оформить заказ
         </Button>
       </div>

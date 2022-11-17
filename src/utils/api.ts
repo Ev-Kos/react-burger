@@ -14,17 +14,17 @@ export const getIngredients = () => {
     .then((res) => checkResponse(res))
 }
 
-export const getOrderNumber = (data: Array<string>) => {
+export const getOrderNumber = (order: number) => {
   return fetch(`${baseUrl}orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + getCookie('token')
     },
-    body: JSON.stringify({ ingredients: data }),
+    body: JSON.stringify({ ingredients: order }),
     })
   .then(checkResponse)
-  .then((data) => data.order)
+  //.then((data) => data.order)
 }
 
 export const getForgotPassword = (forgotEmail: string) => {

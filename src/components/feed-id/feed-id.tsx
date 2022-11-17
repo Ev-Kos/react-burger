@@ -14,7 +14,7 @@ type TInfo = {
   data: TFeedItem | null;
   orderModal: TFeedItem | null;
   orderModalStatus: string | undefined;
-  orderModalCreatedAt: string | undefined;
+  orderModalCreatedAt: string | any;
   orderModalIngredients: any[] | undefined;
   ingredientsArray: TIngredient[] | never;
 }
@@ -29,7 +29,7 @@ export default function FeedId() {
     data: null,
     orderModal: null,
     orderModalStatus: undefined,
-    orderModalCreatedAt: undefined,
+    orderModalCreatedAt: null,
     orderModalIngredients: [],
     ingredientsArray: []
   }

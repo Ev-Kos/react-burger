@@ -38,7 +38,7 @@ export type TIngredient = {
 }
 
 export type TSelectedIngredient = {
-    _id?: string;
+    _id: string;
     id: string;
     name: string;
     type: string;
@@ -55,7 +55,7 @@ export type TMoveIngredient = {
 }
 
 export type TFeedItem = {
-    createdAt: string;
+    createdAt: string | number;
     ingredients: string[];
     name: string;
     number: number;

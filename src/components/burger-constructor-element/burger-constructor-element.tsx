@@ -1,13 +1,20 @@
 import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { memo, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorElementStyles from './burger-constructor-element.module.css';
+import {TSelectedIngredient} from '../../services/types/data';
 
-const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove }) => {
-  const {name, price, image} = element;
+type TElem = {
+  element: TSelectedIngredient; 
+  id: string; 
+  index: string | number; 
+  onDelete: Function;
+  onMove: Function;
+}
+
+export const BurgerConstructorElement = memo<TElem>(({ element, id, index, onDelete, onMove }) => {
+  const {name, price, image_mobile} = element;
   const ref = useRef(null);
 
   const [{ isDragging }, dragRef] = useDrag({
@@ -25,7 +32,7 @@ const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove })
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item) {
+    hover(item: any) {
       if (!ref.current) {
         return;
       }
@@ -60,19 +67,9 @@ const BurgerConstructorElement = memo(({ element, id, index, onDelete, onMove })
         isLocked={ false }
         text={ name }
         price={ price }
-        thumbnail={ image }
+        thumbnail={ image_mobile }
         handleClose={ handleClose }
       />
     </li>
   );
 });
-
-BurgerConstructorElement.propTypes = {
-  element: ingredientType.isRequired,
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onMove: PropTypes.func.isRequired,
-};
-
-export default BurgerConstructorElement;
