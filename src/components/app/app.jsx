@@ -11,16 +11,19 @@ import Login from '../../pages/login';
 import Registration from '../../pages/registration';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
-import IngredientsPage from '../../pages/ingredients';
+import {IngredientsPage} from '../../pages/ingredients';
+import {IngredientDetails} from '../ingredient-details/ingredient-details';
 import Profile from '../../pages/profile';
 import PageNotFound from '../../pages/notFound';
 import FeedId from '../feed-id/feed-id';
 import Feeds from '../../pages/feeds';
-import Modal from '../modal/modal';
+import { Modal } from '../modal/modal';
 import { ProtectedRoute } from '../protectedRoute/protectedRoute';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getAllIngredients } from '../../services/actions/ingredientsActions';
+import { DELETE_INGREDIENT_DATA } from '../../services/actions/ingredientActions';
+import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/modalActions';
 
 function App() {
   const location = useLocation();
@@ -29,6 +32,8 @@ function App() {
   const dispatch = useDispatch();
 
   function closeModals() {
+    dispatch({ type: DELETE_INGREDIENT_DATA });
+    dispatch({ type: CLOSE_INGREDIENT_MODAL });
     history.goBack();
   }
 
@@ -80,8 +85,8 @@ function App() {
       {background && (
         <Switch>
           <Route path='/ingredients/:id'>
-            <Modal closeModal={closeModals} title={'Детали Ингредиента'}>
-              <IngredientsPage />
+            <Modal closeModal={closeModals}>
+              <IngredientDetails />
             </Modal>
           </Route>
           <Route path='/feed/:id' exact={true}>

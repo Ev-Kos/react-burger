@@ -1,4 +1,3 @@
-import Ingredients from '../../components/ingredients/ingredients';
 import { getIngredients } from '../../utils/api';
 import { TIngredient } from '../types/data';
 import { AppDispatch, AppThunk } from '../types/index';

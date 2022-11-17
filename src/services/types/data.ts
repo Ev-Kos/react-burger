@@ -1,5 +1,3 @@
-import { type } from "os";
-
 export type TUserRegister = {
     accesToken: string;
     refreshTokn: string;
@@ -25,7 +23,7 @@ export type TUserResetPassword = {
 
 export type TIngredient = {
     _id: string;
-    id: string;
+    id?: string;
     name: string;
     type: string;
     proteins: string | number;
@@ -35,7 +33,8 @@ export type TIngredient = {
     price: number;
     image: string;
     image_large: string;
-    image_mobile: string;  
+    image_mobile: string; 
+    __v: number; 
 }
 
 export type TSelectedIngredient = {
@@ -47,7 +46,7 @@ export type TSelectedIngredient = {
     index: string;
     key: string;
     price: number;
-    src: string;
+    image_mobile: string; 
 }
 
 export type TMoveIngredient = {
@@ -64,4 +63,4 @@ export type TFeedItem = {
     updateAt: string;
     _id: string;
     find: Function;
-  }
+}

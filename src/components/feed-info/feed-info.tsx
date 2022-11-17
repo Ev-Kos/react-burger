@@ -1,13 +1,14 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/hooks';
 import feedInfoStyle from './feed-info.module.css';
+import {TFeedItem} from '../../services/types/data';
 
 export default function FeedInfo() {
   const feed = useSelector((store) => store.wsReducer.messages);
-  let data;
-  let total = 0;
-  let totalDay = 0;
-  const orderDone = [];
-  const orderWork = [];
+  let data: TFeedItem[];
+  let total: number = 0;
+  let totalDay: number = 0;
+  const orderDone: number[] = [];
+  const orderWork: number[] = [];
 
   let textSizeDone = 'default';
   let textSizeWork = 'default';

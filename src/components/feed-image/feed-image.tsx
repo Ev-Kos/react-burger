@@ -1,9 +1,16 @@
 import feedImageStyle from './feed-image.module.css';
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/prop-types';
+import {TIngredient} from '../../services/types/data';
+import {FC} from 'react';
 
-export default function FeedItemImage({ data, number, lengthArray }) {
-  let count = lengthArray - number;
+export type TFeedItemImage = {
+  data: TIngredient;
+  number?: any;
+  lengthArray?: number;
+  key: string;
+}
+
+export const FeedItemImage: FC<TFeedItemImage> = ({ data, number, lengthArray = 0 }) => {
+  let count: number = lengthArray - number;
   
   return (
     <>
@@ -38,10 +45,4 @@ export default function FeedItemImage({ data, number, lengthArray }) {
       )}
     </>
   )
-}
-
-FeedItemImage.propTypes = {
-  data: ingredientType.isRequired,
-  number: PropTypes.number,
-  lengthArray: PropTypes.number
 }

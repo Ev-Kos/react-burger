@@ -35,7 +35,7 @@ export function deleteCookie(name: string) {
   setCookie(name, false, { expires: -1 });
 }
 
-export const getDate = (date: string) => {
+export const getDate = (date: string | any) => {
   const orderDate = new Date(date);
   
   let days;

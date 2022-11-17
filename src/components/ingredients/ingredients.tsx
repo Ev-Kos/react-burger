@@ -1,11 +1,12 @@
 import ingredientStyles from './ingredients.module.css';
-import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
-import { useSelector } from 'react-redux';
-import Ingredient from '../ingredient/ingredient';
+import { useSelector } from '../../services/hooks';
+import { Ingredient } from '../ingredient/ingredient';
 
+type Props = { type: string, name: string, onClick: any}
+type Ref = HTMLLIElement
 
-const Ingredients = forwardRef(({ type, name, onClick }, ref) => {
+export const Ingredients = forwardRef<Ref, Props>(({ type, name, onClick }, ref) => {
   const ingredients = useSelector(store => store.ingredientsReducer.ingredients);
   const filteredIngredients = ingredients && ingredients.filter(item => item.type === type);
   
@@ -13,7 +14,7 @@ const Ingredients = forwardRef(({ type, name, onClick }, ref) => {
 		<li ref={ref}>
       <h2 className='text text_type_main-medium mt-10 mb-6'>{ name }</h2>
       <div className={ ingredientStyles.container }>
-      { filteredIngredients.map((element) => (
+      {filteredIngredients.map((element) => (
           <Ingredient element={ element } 
           onClick={() => onClick(element)}
                       key={ element._id } 
@@ -22,12 +23,3 @@ const Ingredients = forwardRef(({ type, name, onClick }, ref) => {
     </li>
 	)
 })
-
-Ingredients.propTypes = {
-  type: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
-}
-
-export default Ingredients
-

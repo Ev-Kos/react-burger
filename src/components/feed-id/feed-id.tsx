@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import feedIdStyle from './feed-id.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import {
@@ -8,18 +8,28 @@ import {
   WS_CONNECTION_CLOSED,
 } from '../../services/actions/wsActions';
 import {getDate} from '../../utils/utils';
+import { TFeedItem, TIngredient } from '../../services/types/data';
+
+type TInfo = {
+  data: TFeedItem | null;
+  orderModal: TFeedItem | null;
+  orderModalStatus: string | undefined;
+  orderModalCreatedAt: string | undefined;
+  orderModalIngredients: any[] | undefined;
+  ingredientsArray: TIngredient[] | never;
+}
 
 export default function FeedId() {
-  const { id } = useParams();
+  const { id } = useParams<{id: string}>();
   const dispatch = useDispatch();
   const ingredients = useSelector((store) => store.ingredientsReducer.ingredients);
   const feed = useSelector((store) => store.wsReducer.messages);
 
-  const order = {
+  const order: TInfo = {
     data: null,
     orderModal: null,
-    orderModalStatus: null,
-    orderModalCreatedAt: null,
+    orderModalStatus: undefined,
+    orderModalCreatedAt: undefined,
     orderModalIngredients: [],
     ingredientsArray: []
   }
@@ -35,23 +45,23 @@ export default function FeedId() {
   
   if (feed.length > 0) {
     order.data = feed[`${feed.length - 1}`].orders;
-    order.orderModal = order.data.find((ingredient) => ingredient._id === id);
-    order.orderModalStatus = order.orderModal.status;
-    order.orderModalCreatedAt = order.orderModal.createdAt;
-    order.orderModalIngredients = order.orderModal.ingredients;
+    order.orderModal = order.data?.find((ingredient: { _id: string }) => ingredient._id === id);
+    order.orderModalStatus = order.orderModal?.status;
+    order.orderModalCreatedAt = order.orderModal?.createdAt;
+    order.orderModalIngredients = order.orderModal?.ingredients;
   }
 
   const date = getDate(order.orderModalCreatedAt);
 
   let price = 0;
 
-  const elemCount = order.orderModalIngredients.reduce((total, elem) => {
+  const elemCount = order.orderModalIngredients?.reduce((total, elem) => {
     total[elem] = (total[elem] || 0) + 1;
     return total;
   }, []);
 
   const result = ingredients.map((elem) => {
-    const ingredient = order.orderModalIngredients.find((item) => elem._id === item);
+    const ingredient = order.orderModalIngredients?.find((item) => elem._id === item);
     if (ingredient) {
       order.ingredientsArray.push(elem);
     }
@@ -103,7 +113,7 @@ export default function FeedId() {
                           <p className='text text_type_digits-default pl-4'>
                             {elemCount[item._id]}&nbsp;x&nbsp;{item.price}
                           </p>
-                          <CurrencyIcon />
+                          <CurrencyIcon type='primary'/>
                         </div>
                       </div>
                     </li>
@@ -117,7 +127,7 @@ export default function FeedId() {
               </p>
               <div className={`${feedIdStyle.price}`}>
                 <p className='text text_type_digits-default'>{price}</p>{" "}
-                <CurrencyIcon />
+                <CurrencyIcon type='primary' />
               </div>
             </div>
           </div>

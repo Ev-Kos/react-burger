@@ -1,8 +1,10 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
 import { useSelector } from '../../services/hooks';
 import { useParams } from 'react-router-dom';
+import {FC} from 'react';
+import {TIngredient} from '../../services/types/data';
 
-export default function IngredientDetailsPage(): JSX.Element {
+export const IngredientDetails: FC<{ingredient?: TIngredient}> = () => {
     const { ingredients } = useSelector((store) => store.ingredientsReducer);
     const { id } = useParams<{id: string}>();
     const ingredient = ingredients.find((ingr) => ingr._id === id);

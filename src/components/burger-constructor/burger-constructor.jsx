@@ -4,8 +4,8 @@ import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useDrop } from 'react-dnd';
 import BurgerConstructorElement from '../burger-constructor-element/burger-constructor-element';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import {Modal} from '../modal/modal';
+import {OrderDetails} from '../order-details/order-details';
 import { INGREDIENT_TYPES } from '../../utils/constants';
 import { CLOSE_ORDER_MODAL, 
          OPEN_ORDER_MODAL } 

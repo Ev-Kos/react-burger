@@ -1,8 +1,8 @@
 import doneImage from '../../images/done.jpg';
 import orderDetailsStyles from './order-details.module.css';
-import PropTypes from 'prop-types';
+import { FC } from 'react';
 
-function OrderDetails({orderNumber}) {
+export const OrderDetails: FC<{orderNumber: number}> = ({orderNumber}) => {
   return (
     <div className={`${orderDetailsStyles.container} pt-4 pr-25 pb-30 pl-25`}>
       <p className={`text text_type_digits-large mb-8`}>{orderNumber}</p>
@@ -21,9 +21,3 @@ function OrderDetails({orderNumber}) {
     </div>
   );
 }
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.number.isRequired
-}
-
-export default OrderDetails;

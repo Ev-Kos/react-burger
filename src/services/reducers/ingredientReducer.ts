@@ -1,12 +1,12 @@
-import { ReadonlyCollection } from 'typescript';
 import {
     ADD_INGREDIENT_DATA,
     DELETE_INGREDIENT_DATA,
     TIngredientActions
   } from '../actions/ingredientActions';
+import {TIngredient} from '../types/data';
 
 type TInitialState = {
-  detailsIngredient: object;
+  detailsIngredient: any;
 }
 
 const initialState: TInitialState = {

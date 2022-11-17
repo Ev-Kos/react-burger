@@ -9,7 +9,7 @@ import { TSelectedIngredient } from '../types/data';
 
 type TInitialState = {
     selectedIngredient: ReadonlyArray<TSelectedIngredient>;
-    moveIngredient: object;
+    moveIngredient: Object;
 };
 
 const initialState: TInitialState = {

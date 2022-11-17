@@ -1,13 +1,13 @@
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/prop-types';
+import { useSelector } from '../../services/hooks';
 import { useDrag } from 'react-dnd';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientStyles from './ingredient.module.css';
 import {INGREDIENT_TYPES} from '../../utils/constants';
-import { useMemo } from 'react';
+import { useMemo, FC } from 'react';
+import { TIngredient } from '../../services/types/data';
+import { Link, useLocation } from 'react-router-dom';
 
-function Ingredient({ element, onClick }) {
+export const Ingredient: FC<{element: TIngredient, onClick: () => void}> = ({ element, onClick }) => {
     const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
     const counter = useMemo(() => {
       return (
@@ -21,8 +21,18 @@ function Ingredient({ element, onClick }) {
       type: 'ingredient',
       item: element
     });
+
+    const location = useLocation();
+    const id = element._id;
   
     return (
+      <Link
+      key={ id }
+      to={{
+        pathname: `/ingredients/${id}`,
+        state: { background: location },
+      }}
+      className={ ingredientStyles.link }>
         <div className={ ingredientStyles.item } 
              id={ element._id }
              onClick={ onClick }
@@ -37,12 +47,6 @@ function Ingredient({ element, onClick }) {
             </p>
             <p className={`${ingredientStyles.text} text text_type_main-default`}>{ element.name }</p>
         </div>
+        </Link>
     );
-  }
-  
-  Ingredient.propTypes = {
-    element: ingredientType.isRequired,
-    onClick: PropTypes.func.isRequired
-  };
-  
-  export default Ingredient;
+}

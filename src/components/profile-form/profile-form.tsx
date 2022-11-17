@@ -5,9 +5,9 @@ import {
     Input,
     Button,
   } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/hooks';
 import { updateUserProfile } from '../../services/actions/userActions';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, ChangeEvent, FormEvent } from 'react';
 
 export default function ProfileForm() {
   const dispatch = useDispatch();
@@ -15,22 +15,22 @@ export default function ProfileForm() {
   const {name, email, password} = userProfile;
 
   const [valueName, setValueName] = useState('');
-  const nameRef = useRef(null);
+  const nameRef = useRef<HTMLInputElement>(null);
   const onIconClick = () => {
-      setTimeout(() => nameRef.current.focus(), 0);
+      setTimeout(() => nameRef.current?.focus(), 0);
   };
 
-  const onChangeName = (e) => {
+  const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
       setValueName(e.target.value);
   };
 
   const [valueEmail, setValueEmail] = useState('');
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
       setValueEmail(e.target.value);
   };
 
   const [valuePassword, setValuePassword] = useState('');
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
       setValuePassword(e.target.value);
   };
 
@@ -40,7 +40,7 @@ export default function ProfileForm() {
       setValuePassword(password);
   }, [userProfile]);
 
-  function saveProfile(e) {
+  function saveProfile(e: FormEvent) {
       e.preventDefault();
       dispatch(updateUserProfile(valueEmail, valuePassword, valueName));
   }
@@ -82,8 +82,8 @@ export default function ProfileForm() {
         </div>
         {valueName !== name || valuePassword !== password || valueEmail !== email ? (
           <div className={`${profileFormStyles.buttons} pt-10`}>
-          <Button>Сохранить</Button>
-          <Button onClick={resetProfile}>Отмена</Button>
+          <Button htmlType='submit'>Сохранить</Button>
+          <Button htmlType='submit' onClick={resetProfile}>Отмена</Button>
         </div>) : null}
       </div>
     </form>

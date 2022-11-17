@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC, ReactNode } from 'react';
 import { useAuth } from '../../services/auth';
-import { Redirect, Route } from 'react-router-dom';
+import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-export function ProtectedRoute({ children, ...rest }) {
+export const ProtectedRoute: FC<RouteProps & { children: ReactNode}> = ({children, ...rest}) => {
     let { getUser, ...auth } = useAuth();
     const [isUserLoaded, setUserLoaded] = useState(false);
     

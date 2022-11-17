@@ -4,7 +4,7 @@ import { useAuth } from '../services/auth';
 import { useMemo, useCallback, useEffect, FormEvent } from 'react';
 import { Switch, Route, useLocation, NavLink } from 'react-router-dom';
 import ProfileForm from '../components/profile-form/profile-form';
-import FeedProfile from '../components/feed-profile/feed-profile';
+import { FeedProfile } from '../components/feed-profile/feed-profile';
 import {
   WS_CONNECTION_START,
   WS_CONNECTION_CLOSED,

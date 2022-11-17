@@ -100,3 +100,7 @@
     background-position-x: 180%;
     border-radius: 80px;
 }
+
+.ingredientPage {
+    margin: 56px auto;
+}

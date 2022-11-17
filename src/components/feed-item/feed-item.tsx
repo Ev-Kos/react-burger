@@ -1,27 +1,41 @@
 import feedItemStyles from './feed-item.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation, Link } from 'react-router-dom';
-import FeedItemImage from '../feed-image/feed-image';
-import {getDate} from '../../utils/utils';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { FeedItemImage } from '../feed-image/feed-image';
+import { getDate } from '../../utils/utils';
+import { useSelector } from '../../services/hooks';
+import { TFeedItem, TIngredient } from '../../services/types/data';
+import { FC } from 'react';
 
-export default function FeedItem(item) {
+type TFeedItems = {
+  item: TFeedItem;
+  key: string;
+  profile?: string;
+}
+
+type TOrder = {
+  time: string,
+  id: string,
+  profile?: string,
+  url: string
+}
+
+export const FeedItem: FC<TFeedItems> = (item) => {
   const location = useLocation();
   const ingredientsData = useSelector((store) => store.ingredientsReducer.ingredients);
-  const ingredients = item.item.ingredients;
+  const ingredients: any[] | undefined = item.item.ingredients;
+  const ingredientsArray: TIngredient[] = [];
 
-  const order = {
-    ingredientsArray: [],
+  const order: TOrder = {
     time: item.item.createdAt,
     id: item.item._id,
     profile: item.profile,
     url: ''
   };
   
-  let price = 0;
-  let countImage = 0;
-  let elemCount = [];
+  let price: number = 0;
+  let countImage: number = 0;
+  let elemCount: { [x: string]: number };
 
   const date = getDate(order.time);
   const result = ingredientsData.map((elem) => {
@@ -32,12 +46,12 @@ export default function FeedItem(item) {
     }, []);
   
     if (data) {
-      order.ingredientsArray.push(elem);
+      ingredientsArray.push(elem);
     }
   }, 0);
   
   order.url = order.profile === 'true' ? `/profile/order/${order.id}` : `/feed/${order.id}`;
-  const orderReverse = order.ingredientsArray.slice();
+  const orderReverse = ingredientsArray.slice();
   
   return (
     <Link to={{pathname: order.url, state: { background: location }}}
@@ -77,23 +91,11 @@ export default function FeedItem(item) {
             </div>
             <div className={feedItemStyles.wrapPrice}>
               <p className='text text_type_digits-default pr-2'>{price}</p>
-              <CurrencyIcon />
+              <CurrencyIcon type='primary'/>
             </div>
           </div>
         </div>
       </li>
     </Link>
   )
-}
-
-FeedItem.propTypes = {
-  item: PropTypes.shape({
-    createdAt: PropTypes.string.isRequired,
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired),
-    name: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-    status: PropTypes.string.isRequired,
-    updatedAt: PropTypes.string.isRequired,
-    _id: PropTypes.string.isRequired
-  })
 }

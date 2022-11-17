@@ -4,17 +4,16 @@ import {
   GET_ORDER_FAILED,
   TOrderActions
   } from '../actions/orderActions';
-import { AppThunk } from '../types';
 
 type TinitialState = {
-  order: null | number;
+  order: number;
   orderRequest: boolean;
   orderFailed: boolean;
   orderSuccess: boolean;
 }
 
 const initialState: TinitialState = {
-  order: null,
+  order: 0,
   orderRequest: false,
   orderFailed: false,
   orderSuccess: false
@@ -43,7 +42,7 @@ export const orderReducer = (
     case GET_ORDER_FAILED: {
       return {
         ...state,
-        order: null,
+        order: 0,
         orderRequest: false,
         orderFailed: true,
         orderSuccess: false

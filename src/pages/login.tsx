@@ -41,16 +41,16 @@ export default function Login() {
     <section className={loginStyle.login}>
       <form className={loginStyle.form} onSubmit={login}>
         <h1 className="pb-6 text text_type_main-medium">Вход</h1>
-        <div className='pb-6'>
-          <Input className={loginStyle.input} 
+        <div className={`pb-6 ${loginStyle.input}`}>
+          <Input 
             type='email'
             name={'email'} 
             value={value} 
             onChange={onChangeEmail}
             placeholder={'E-mail'}/>
         </div>
-        <div className='pb-6'>
-          <PasswordInput className={loginStyle.input} 
+        <div className={`pb-6 ${loginStyle.input}`}>
+          <PasswordInput 
             name={'password'}
             value={valuePassword} 
             onChange={onChangePassword} />
