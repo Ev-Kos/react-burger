@@ -64,3 +64,10 @@ export type TFeedItem = {
     _id: string;
     find: Function;
 }
+
+export type TFeedItemImage = {
+    data: TIngredient;
+    number?: any;
+    lengthArray?: number;
+    key: string;
+}

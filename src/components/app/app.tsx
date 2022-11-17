@@ -11,8 +11,8 @@ import Login from '../../pages/login';
 import Registration from '../../pages/registration';
 import ForgotPassword from '../../pages/forgot-password';
 import ResetPassword from '../../pages/reset-password';
-import {IngredientsPage} from '../../pages/ingredients';
-import {IngredientDetails} from '../ingredient-details/ingredient-details';
+import { IngredientsPage } from '../../pages/ingredients';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import Profile from '../../pages/profile';
 import PageNotFound from '../../pages/notFound';
 import FeedId from '../feed-id/feed-id';
@@ -29,7 +29,7 @@ type TLocationState = {
   background?: any;
 }
 
-function App() {
+export default function App() {
   const location = useLocation<TLocationState>();
   const background = location.state?.background;
   const history = useHistory();
@@ -108,5 +108,3 @@ function App() {
     </>
   )
 }
-  
-export default App;

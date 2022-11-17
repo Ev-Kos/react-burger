@@ -24,7 +24,6 @@ export const getOrderNumber = (order: number) => {
     body: JSON.stringify({ ingredients: order }),
     })
   .then(checkResponse)
-  //.then((data) => data.order)
 }
 
 export const getForgotPassword = (forgotEmail: string) => {

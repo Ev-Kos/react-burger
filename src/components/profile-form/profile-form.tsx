@@ -72,13 +72,14 @@ export default function ProfileForm() {
           <EmailInput name={'email'}
             onChange={onChangeEmail}
             value={valueEmail ? valueEmail : ''}
+            isIcon={true}
           />
         </div>
         <div className={`${profileFormStyles.input}`}>
           <PasswordInput name={'password'}
             onChange={onChangePassword}
             value={valuePassword ? valuePassword : ''}
-            icon="EditIcon"
+            icon={'EditIcon'}
           />
         </div>
         {valueName !== name || valuePassword !== password || valueEmail !== email ? (

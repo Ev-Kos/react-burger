@@ -3,13 +3,11 @@ import { ConstructorElement, Button, CurrencyIcon  } from '@ya.praktikum/react-d
 import { useMemo, useCallback } from 'react';
 import { useSelector, useDispatch } from '../../services/hooks';
 import { useDrop } from 'react-dnd';
-import {BurgerConstructorElement} from '../burger-constructor-element/burger-constructor-element';
-import {Modal} from '../modal/modal';
-import {OrderDetails} from '../order-details/order-details';
+import { BurgerConstructorElement } from '../burger-constructor-element/burger-constructor-element';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
 import { INGREDIENT_TYPES } from '../../utils/constants';
-import { CLOSE_ORDER_MODAL, 
-         OPEN_ORDER_MODAL } 
-         from '../../services/actions/modalActions';
+import { CLOSE_ORDER_MODAL } from '../../services/actions/modalActions';
 import { DELETE_INGREDIENT,
          ADD_INGREDIENT,
          MOVE_ELEMENT } 
@@ -18,9 +16,9 @@ import { getOrderNumberApi } from '../../services/actions/orderActions';
 import update from 'immutability-helper';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router-dom';
-import {TSelectedIngredient} from '../../services/types/data';
+import { TSelectedIngredient } from '../../services/types/data';
 
-function BurgerConstructor() {
+export default function BurgerConstructor() {
   const selectedIngredient = useSelector((store) => store.selectedIngredientsReducer.selectedIngredient);
   const dispatch = useDispatch();
   const bun = selectedIngredient && selectedIngredient.find((item) => item.type === INGREDIENT_TYPES.BUN);
@@ -168,5 +166,3 @@ function BurgerConstructor() {
     </section>
   )
 }
-
-export default BurgerConstructor

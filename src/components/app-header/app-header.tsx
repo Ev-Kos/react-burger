@@ -26,8 +26,7 @@ export default function AppHeader() {
           </li>
           <li>
             <NavLink to='/feed' className={link}
-                  activeClassName={linkActive}
-            >
+                  activeClassName={linkActive}>
               <ListIcon type={pathname.includes('/feed') ? 'primary' : 'secondary'} />
               Лента заказов
             </NavLink>
@@ -38,8 +37,7 @@ export default function AppHeader() {
         </Link>
         <div className={headerStyles.header__linkProfile}>
           <NavLink to='/profile' className={link} 
-                activeClassName={linkActive}
-          >
+                activeClassName={linkActive}>
             <ProfileIcon type={userLogin ? 'success' : 'secondary'} />
             {!userLogin ? 'Личный кабинет' : name ? name: 'Личный кабинет'}
           </NavLink>

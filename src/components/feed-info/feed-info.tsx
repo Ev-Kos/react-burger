@@ -1,6 +1,6 @@
 import { useSelector } from '../../services/hooks';
 import feedInfoStyle from './feed-info.module.css';
-import {TFeedItem} from '../../services/types/data';
+import { TFeedItem } from '../../services/types/data';
 
 export default function FeedInfo() {
   const feed = useSelector((store) => store.wsReducer.messages);

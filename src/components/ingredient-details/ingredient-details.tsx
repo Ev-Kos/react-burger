@@ -1,8 +1,8 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
 import { useSelector } from '../../services/hooks';
 import { useParams } from 'react-router-dom';
-import {FC} from 'react';
-import {TIngredient} from '../../services/types/data';
+import { FC } from 'react';
+import { TIngredient } from '../../services/types/data';
 
 export const IngredientDetails: FC<{ingredient?: TIngredient}> = () => {
     const { ingredients } = useSelector((store) => store.ingredientsReducer);
@@ -16,8 +16,7 @@ export const IngredientDetails: FC<{ingredient?: TIngredient}> = () => {
                     <h2 className={`text text_type_main-large ${ingredientDetailsStyles.title}`}>Детали ингредиента</h2>
                     <img className={ingredientDetailsStyles.image} 
                         src={ingredient.image} 
-                        alt={ ingredient.name }
-                    />
+                        alt={ ingredient.name }/>
                     <p className={`${ingredientDetailsStyles.title} text text_type_main-medium mt-4 mb-8` }>
                         {ingredient.name }
                     </p>

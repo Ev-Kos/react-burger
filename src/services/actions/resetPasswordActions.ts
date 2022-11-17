@@ -1,5 +1,5 @@
 import { getResetPassword} from '../../utils/api';
-import { AppDispatch, AppThunk } from '../types/index';
+import { AppThunk } from '../types/index';
 import { TUserResetPassword } from '../types/data';
 
 export const USER_RESET_PASSWORD_SUCCESS: 'USER_RESET_PASSWORD_SUCCESS' = 'USER_RESET_PASSWORD_SUCCESS';

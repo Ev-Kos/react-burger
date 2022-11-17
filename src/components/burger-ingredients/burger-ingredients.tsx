@@ -1,7 +1,7 @@
 import burgerStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import {Ingredients} from '../ingredients/ingredients';
-import { useState, useRef, useEffect, UIEvent } from 'react';
+import { useState, useRef } from 'react';
 import { INGREDIENT_TYPES } from '../../utils/constants';
 import { useDispatch } from '../../services/hooks';
 import { ADD_INGREDIENT_DATA } from '../../services/actions/ingredientActions';

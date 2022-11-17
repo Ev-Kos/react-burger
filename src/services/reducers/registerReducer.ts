@@ -9,7 +9,7 @@ type TInitialState = {
     registrationSuccess: boolean;
     registrationRequest: boolean;
     registrationFailed: boolean;
-    newUserProfile: null | TUserProfile;
+    newUserProfile: TUserProfile | null;
 }
 
 const initialState: TInitialState = {

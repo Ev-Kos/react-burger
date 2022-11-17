@@ -3,10 +3,9 @@ import {
     DELETE_INGREDIENT_DATA,
     TIngredientActions
   } from '../actions/ingredientActions';
-import {TIngredient} from '../types/data';
 
 type TInitialState = {
-  detailsIngredient: any;
+  detailsIngredient: object;
 }
 
 const initialState: TInitialState = {

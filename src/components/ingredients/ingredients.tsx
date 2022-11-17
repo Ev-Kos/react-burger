@@ -16,8 +16,8 @@ export const Ingredients = forwardRef<Ref, Props>(({ type, name, onClick }, ref)
       <div className={ ingredientStyles.container }>
       {filteredIngredients.map((element) => (
           <Ingredient element={ element } 
-          onClick={() => onClick(element)}
-                      key={ element._id } 
+            onClick={() => onClick(element)}
+            key={ element._id } 
           />))}              
       </div>
     </li>

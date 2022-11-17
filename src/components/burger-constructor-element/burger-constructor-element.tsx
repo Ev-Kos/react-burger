@@ -1,9 +1,8 @@
-import React from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { memo, useRef } from 'react';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import constructorElementStyles from './burger-constructor-element.module.css';
-import {TSelectedIngredient} from '../../services/types/data';
+import { TSelectedIngredient } from '../../services/types/data';
 
 type TElem = {
   element: TSelectedIngredient; 

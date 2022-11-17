@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from './hooks';
 
 interface IProvideAuth {
     children: ReactNode;
-  }
+}
 
 export const ProvideAuth: FC<IProvideAuth> = ({ children }) => {
     const auth = useProvideAuth();
