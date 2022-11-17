@@ -25,12 +25,15 @@ import { getAllIngredients } from '../../services/actions/ingredientsActions';
 import { DELETE_INGREDIENT_DATA } from '../../services/actions/ingredientActions';
 import { CLOSE_INGREDIENT_MODAL } from '../../services/actions/modalActions';
 
-type TLocationState = {
-  background?: any;
-}
-
 export default function App() {
-  const location = useLocation<TLocationState>();
+  const location = useLocation<{
+    background: {
+      state: Object,
+      pathname: string,
+      search: string,
+      hash: string,
+    }
+  }>();
   const background = location.state?.background;
   const history = useHistory();
   const dispatch = useDispatch();

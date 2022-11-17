@@ -1,6 +1,6 @@
 import { getForgotPassword } from '../../utils/api';
 import { AppDispatch, AppThunk } from '../types/index';
-import { TUserForgotPassword } from '../types/data'
+import { TPassword } from '../types/data'
 
 export const USER_FORGOT_PASSWORD_SUCCESS: 'USER_FORGOT_PASSWORD_SUCCESS' = 'USER_FORGOT_PASSWORD_SUCCESS';
 export const USER_FORGOT_PASSWORD_REQUEST: 'USER_FORGOT_PASSWORD_REQUEST' = 'USER_FORGOT_PASSWORD_REQUEST';
@@ -12,7 +12,7 @@ export interface IUserForgotRequest {
 
 export interface IUserForgotSuccess {
     readonly type: typeof USER_FORGOT_PASSWORD_SUCCESS;
-    readonly data: TUserForgotPassword;
+    readonly data: TPassword;
 }
 
 export interface IUserForgotFailed {
@@ -28,7 +28,7 @@ export const UserForgotRequest = (): IUserForgotRequest => ({
     type: USER_FORGOT_PASSWORD_REQUEST,
 })
 
-export const UserForgotSuccess = (data: TUserForgotPassword): IUserForgotSuccess => ({
+export const UserForgotSuccess = (data: TPassword): IUserForgotSuccess => ({
     type: USER_FORGOT_PASSWORD_SUCCESS,
     data
 })

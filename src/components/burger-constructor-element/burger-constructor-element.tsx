@@ -24,14 +24,12 @@ export const BurgerConstructorElement = memo<TElem>(({ element, id, index, onDel
     })
   });
 
-  const [{ handlerId }, dropRef] = useDrop({
+  const [{ handlerId } , dropRef] = useDrop({
     accept: 'constructorElement',
-    collect(monitor) {
-      return {
-        handlerId: monitor.getHandlerId(),
-      };
-    },
-    hover(item: any) {
+    collect: (monitor) => ({
+      handlerId: monitor.getHandlerId(),
+    }),
+    hover: (item: TSelectedIngredient) => {
       if (!ref.current) {
         return;
       }

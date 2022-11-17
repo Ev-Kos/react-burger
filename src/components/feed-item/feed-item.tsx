@@ -14,16 +14,16 @@ type TFeedItems = {
 }
 
 type TOrder = {
-  time: string | number,
-  id: string,
-  profile?: string,
-  url: string
+  time: string | number;
+  id: string;
+  profile?: string;
+  url: string;
 }
 
 export const FeedItem: FC<TFeedItems> = (item) => {
   const location = useLocation();
   const ingredientsData = useSelector((store) => store.ingredientsReducer.ingredients);
-  const ingredients: any[] | undefined = item.item.ingredients;
+  const ingredients: string[] = item.item.ingredients;
   const ingredientsArray: TIngredient[] = [];
 
   const order: TOrder = {
@@ -38,9 +38,10 @@ export const FeedItem: FC<TFeedItems> = (item) => {
   let elemCount: { [x: string]: number };
 
   const date = getDate(order.time);
+
   const result = ingredientsData.map((elem) => {
     const data = ingredients.find((item) => elem._id === item);
-    elemCount = ingredients.reduce(function (total, elem) {
+    elemCount = ingredients.reduce(function (total: any, elem: any) {
       total[elem] = (total[elem] || 0) + 1;
       return total;
     }, []);
@@ -76,7 +77,7 @@ export const FeedItem: FC<TFeedItems> = (item) => {
               {orderReverse.reverse().map((item) => {
                 price += elemCount[item._id] * item.price;
                 if (orderReverse.length <= 6) {
-                  return <FeedItemImage data={item} key={item._id} />;
+                  return <FeedItemImage data={item} key={item._id} number={(countImage += 1)}/>;
                 } else {
                   return (
                     <FeedItemImage

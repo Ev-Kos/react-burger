@@ -1,8 +1,13 @@
 import { getCookie } from './utils';
+import {TGetIngredients,
+  TGetOrderNumber,
+  TPassword,
+  TUserRegister,
+  TUserLogout} from '../services/types/data'
 
 const baseUrl = 'https://norma.nomoreparties.space/api/';
 
-const checkResponse = (res: Response) => {
+const checkResponse = <T> (res: Response): Promise<T> => {
     if (res.ok) {
         return res.json();
     }
@@ -11,7 +16,7 @@ const checkResponse = (res: Response) => {
 
 export const getIngredients = () => {
     return fetch(`${baseUrl}ingredients`)
-    .then((res) => checkResponse(res))
+    .then((res) => checkResponse<TGetIngredients>(res))
 }
 
 export const getOrderNumber = (order: number) => {
@@ -23,7 +28,7 @@ export const getOrderNumber = (order: number) => {
     },
     body: JSON.stringify({ ingredients: order }),
     })
-  .then(checkResponse)
+    .then((res) => checkResponse<TGetOrderNumber>(res))
 }
 
 export const getForgotPassword = (forgotEmail: string) => {
@@ -33,7 +38,7 @@ export const getForgotPassword = (forgotEmail: string) => {
         'Content-Type': 'application/json'},
       body: JSON.stringify({ 'email': forgotEmail })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TPassword>(res))
 }
 
 export const getResetPassword = (resetToken: string, resetPass: string) => {
@@ -44,7 +49,7 @@ export const getResetPassword = (resetToken: string, resetPass: string) => {
       },
       body: JSON.stringify({ 'password': resetPass, 'token': resetToken })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TPassword>(res))
 }
 
 export const getUserRegister = (userName: string, userEmail: string, userPassword: string) => {
@@ -58,7 +63,7 @@ export const getUserRegister = (userName: string, userEmail: string, userPasswor
           name: userName
       })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserRegister>(res))
 }
 
 export const getUserLogin = (userEmail: string, userPassword: string) => {
@@ -71,7 +76,7 @@ export const getUserLogin = (userEmail: string, userPassword: string) => {
           'password': userPassword
       })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserRegister>(res))
 }
 
 export const logoutApi = (token: string) => {
@@ -83,7 +88,7 @@ export const logoutApi = (token: string) => {
         'token': token
       })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserLogout>(res))
 }
 
 export const updateToken = () => {
@@ -95,7 +100,7 @@ export const updateToken = () => {
         'token': localStorage.getItem('refreshToken')
       })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserRegister>(res))
 }
 
 export const getUser = () => {
@@ -111,7 +116,7 @@ export const getUser = () => {
     redirect: 'follow',
     referrerPolicy: 'no-referrer'
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserRegister>(res))
 }
 
 export const updateUser = (email: string, password: string, name: string) => {
@@ -126,7 +131,7 @@ export const updateUser = (email: string, password: string, name: string) => {
         name: name
     })
   })
-  .then((res) => checkResponse(res))
+  .then((res) => checkResponse<TUserRegister>(res))
 }
 
 

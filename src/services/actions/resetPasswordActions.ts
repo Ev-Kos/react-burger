@@ -1,6 +1,6 @@
 import { getResetPassword} from '../../utils/api';
 import { AppThunk } from '../types/index';
-import { TUserResetPassword } from '../types/data';
+import { TPassword } from '../types/data';
 
 export const USER_RESET_PASSWORD_SUCCESS: 'USER_RESET_PASSWORD_SUCCESS' = 'USER_RESET_PASSWORD_SUCCESS';
 export const USER_RESET_PASSWORD_REQUEST: 'USER_RESET_PASSWORD_REQUEST' = 'USER_RESET_PASSWORD_REQUEST';
@@ -12,7 +12,7 @@ export interface IUserResetPasswordRequest {
 
 export interface IUserResetPasswordSuccess {
     readonly type: typeof USER_RESET_PASSWORD_SUCCESS;
-    readonly data: TUserResetPassword;
+    readonly data: TPassword;
 }
 
 export interface IUserResetPasswordFailed {
@@ -28,7 +28,7 @@ export const UserResetPasswordRequest = (): IUserResetPasswordRequest => ({
     type: USER_RESET_PASSWORD_REQUEST,
 })
 
-export const UserResetPasswordSuccess = (data: TUserResetPassword): IUserResetPasswordSuccess => ({
+export const UserResetPasswordSuccess = (data: TPassword): IUserResetPasswordSuccess => ({
     type: USER_RESET_PASSWORD_SUCCESS,
     data
 })

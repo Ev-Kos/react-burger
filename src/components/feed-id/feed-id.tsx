@@ -15,7 +15,7 @@ type TInfo = {
   orderModal: TFeedItem | null;
   orderModalStatus: string | undefined;
   orderModalCreatedAt: string | any;
-  orderModalIngredients: any[] | undefined;
+  orderModalIngredients: string[] | undefined;
   ingredientsArray: TIngredient[] | never;
 }
 
@@ -55,7 +55,7 @@ export default function FeedId() {
 
   let price = 0;
 
-  const elemCount = order.orderModalIngredients?.reduce((total, elem) => {
+  const elemCount = order.orderModalIngredients?.reduce((total: any, elem: any) => {
     total[elem] = (total[elem] || 0) + 1;
     return total;
   }, []);

@@ -16,7 +16,7 @@ export interface IUserAuthorizationRequest {
 
 export interface IUserAuthorizationSuccess {
     readonly type: typeof USER_AUTHORIZATION_SUCCESS;
-    readonly payload: { email: string; password: string; name: string };
+    readonly payload: { email: string; password: string, name: string };
 }
 
 export interface IUserAuthorizationFailed {
@@ -108,7 +108,7 @@ export const getUserData: AppThunk = (user) => {
                 if (data.success) {
                     dispatch({
                         type: USER_AUTHORIZATION_SUCCESS,
-                        payload: { password: localStorage.getItem('password'), ...data.user }
+                        payload: { ...data.user }
                     })
                 }
                 return data.success;

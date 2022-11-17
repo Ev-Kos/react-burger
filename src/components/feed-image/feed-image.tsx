@@ -2,8 +2,8 @@ import feedImageStyle from './feed-image.module.css';
 import {TFeedItemImage} from '../../services/types/data';
 import {FC} from 'react';
 
-export const FeedItemImage: FC<TFeedItemImage> = ({ data, number, lengthArray = 0 }) => {
-  let count: number = lengthArray - number;
+export const FeedItemImage: FC<TFeedItemImage> = ({ data, number = 0, lengthArray = 0 }) => {
+  let count = lengthArray - number;
   
   return (
     <>

@@ -4,7 +4,7 @@ import modalStyles from './modal.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ModalOverlay } from '../modal-overlay/modal-overlay';
 
-const modalRoot: any = document.getElementById('react-modals');
+const modalRoot = document.getElementById('react-modals') as HTMLDivElement;
 
 export const Modal: FC<{children: ReactNode, title: string, closeModal: () => void}> = ({children, title, closeModal}) => {
   useEffect(() => {

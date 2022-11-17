@@ -2,8 +2,9 @@ import ingredientStyles from './ingredients.module.css';
 import { forwardRef } from 'react';
 import { useSelector } from '../../services/hooks';
 import { Ingredient } from '../ingredient/ingredient';
+import { TIngredient } from '../../services/types/data';
 
-type Props = { type: string, name: string, onClick: any}
+type Props = { type: string, name: string, onClick: (element: TIngredient) => void}
 type Ref = HTMLLIElement
 
 export const Ingredients = forwardRef<Ref, Props>(({ type, name, onClick }, ref) => {

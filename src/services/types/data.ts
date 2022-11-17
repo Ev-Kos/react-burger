@@ -1,6 +1,6 @@
 export type TUserRegister = {
-    accesToken: string;
-    refreshTokn: string;
+    accessToken: string;
+    refreshToken: string;
     success: boolean;
     user: { email: string; name: string; password: string };
 }
@@ -11,15 +11,16 @@ export type TUserProfile = {
     password: string;
 }
 
-export type TUserForgotPassword = {
+export type TPassword = {
     success: boolean;
     message: string;
 }
 
-export type TUserResetPassword = {
-    success: boolean;
+export type TUserLogout = {
     message: string;
-}
+    success: boolean;
+    refreshToken: string;
+  };
 
 export type TIngredient = {
     _id: string;
@@ -43,7 +44,7 @@ export type TSelectedIngredient = {
     name: string;
     type: string;
     count: number;
-    index: string;
+    index: string | number;
     key: string;
     price: number;
     image_mobile: string; 
@@ -63,11 +64,26 @@ export type TFeedItem = {
     updateAt: string;
     _id: string;
     find: Function;
+    owner?: {createdAt: string;
+        email: string;
+        name: string;
+        updateAt: string};
 }
 
 export type TFeedItemImage = {
     data: TIngredient;
-    number?: any;
+    number: number;
     lengthArray?: number;
     key: string;
 }
+
+export type TGetIngredients = {
+    data: TIngredient[];
+    success: boolean;
+};
+
+export type TGetOrderNumber = {
+    name: string;
+    order: TFeedItem;
+    success: boolean;
+};
