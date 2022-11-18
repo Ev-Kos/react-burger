@@ -3,14 +3,13 @@
     background-color: #1c1c21;
     display: flex;
     justify-content: center;
-    max-width: 1920px;
     width: 100%;
   }
   
   .header__nav {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    min-width: 1280px;
+    min-width: 1355px;
   }
   
   .header__linkBox {
