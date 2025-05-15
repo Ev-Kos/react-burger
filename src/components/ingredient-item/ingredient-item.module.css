@@ -1,3 +1,12 @@
+.price,
+.name {
+	color: var(--text-primary-light);
+}
+
+.name {
+	text-align: center;
+}
+
 .list_item {
 	box-sizing: border-box;
 	width: 272px;
@@ -5,6 +14,14 @@
 
 	&:hover {
 		scale: 1.1;
+
+		.name,
+		.price {
+			text-shadow:
+				0 0 16px var(--colors-interface-accent),
+				0 0 8px var(--colors-interface-accent),
+				0 4px 32px var(--colors-interface-accent);
+		}
 	}
 }
 
@@ -29,13 +46,4 @@
 .price_wrap {
 	display: flex;
 	gap: 8px;
-}
-
-.price,
-.name {
-	color: var(--text-primary-light);
-}
-
-.name {
-	text-align: center;
 }

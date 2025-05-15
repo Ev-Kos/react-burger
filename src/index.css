@@ -7,16 +7,19 @@ body {
 	padding: 0;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	color: var(--text-primary-light);
 }
 
 @supports (scrollbar-color: auto) {
 	.custom-scroll {
 		scrollbar-color: #8585ad #2f2f37;
 		scrollbar-width: thin;
+		scroll-behavior: smooth;
 	}
 
 	body {
 		scrollbar-color: #8585ad #2f2f37;
 		scrollbar-width: thin;
+		scroll-behavior: smooth;
 	}
 }
