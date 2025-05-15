@@ -6,9 +6,13 @@ import {
 	CurrencyIcon,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import { Modal } from '../modal/modal';
+import { OrderDetails } from '../order-details/order-details';
 
 export const BurgerConstructor = ({ ingredients }) => {
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 	const selectedElements = useMemo(
 		() =>
 			ingredients
@@ -32,6 +36,14 @@ export const BurgerConstructor = ({ ingredients }) => {
 				)
 			: 0;
 	}, [ingredients]);
+
+	const closeModal = () => {
+		setIsModalOpen(false);
+	};
+
+	const createOrder = () => {
+		setIsModalOpen(true);
+	};
 
 	return (
 		<section className={styles.burger_constructor}>
@@ -71,10 +83,15 @@ export const BurgerConstructor = ({ ingredients }) => {
 					htmlType='submit'
 					type='primary'
 					size='large'
-					onClick={() => {}}>
+					onClick={createOrder}>
 					Оформить заказ
 				</Button>
 			</div>
+			{isModalOpen && (
+				<Modal title='' closeModal={closeModal}>
+					<OrderDetails />
+				</Modal>
+			)}
 		</section>
 	);
 };

@@ -1,23 +1,30 @@
-.burger_constructor {
+.burger_constructor,
+.selected_elements,
+.selected_elements_scroll {
 	display: flex;
 	flex-direction: column;
+}
+
+.burger_constructor {
 	width: 600px;
 }
 
 .selected_elements {
-	display: flex;
-	flex-direction: column;
 	gap: 16px;
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
 }
 
-.selected_element {
+.selected_element,
+.order_container {
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	column-gap: 8px;
+}
+
+.selected_element {
+	gap: 8px;
 }
 
 .selected_element_hover:hover {
@@ -29,8 +36,6 @@
 }
 
 .selected_elements_scroll {
-	display: flex;
-	flex-direction: column;
 	gap: 16px;
 	max-height: calc(100vh - 534px);
 	padding: 0;
@@ -38,9 +43,6 @@
 }
 
 .order_container {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
 	gap: 40px;
 }
 
