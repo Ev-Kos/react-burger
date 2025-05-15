@@ -1,6 +1,10 @@
-.burger_ingredients {
+.burger_ingredients,
+.ingredients_list {
 	display: flex;
 	flex-direction: column;
+}
+
+.burger_ingredients {
 	max-width: 600px;
 	color: var(--text-primary-color);
 	font-family: 'Jet Brains Mono', serif;
@@ -11,5 +15,14 @@
 	margin: 0;
 	padding: 0;
 	text-align: center;
+	list-style-type: none;
+}
+
+.ingredients_list {
+	gap: 40px;
+	margin: 0;
+	padding: 0;
+	overflow: auto;
+	overflow-x: hidden;
 	list-style-type: none;
 }

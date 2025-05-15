@@ -1,8 +1,13 @@
-body {
-	margin: 0;
+:root {
+	--text-primary-light: #f2f2f3;
 }
 
-/* Fix for scrollbar */
+body {
+	margin: 0;
+	padding: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
 
 @supports (scrollbar-color: auto) {
 	.custom-scroll {
