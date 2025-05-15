@@ -3,16 +3,21 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientList } from '../ingredients-list/ingredients-list';
 import { BASE_HEIGHT, INGREDIENT_TYPES } from '@/utils/constants';
 import { useState, useRef } from 'react';
+import { Modal } from '../modal/modal';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
+import { ingredientType } from '@/utils/types';
+import { arrayOf } from 'prop-types';
 
 export const BurgerIngredients = ({ ingredients }) => {
-	const [current, setCurrent] = useState(INGREDIENT_TYPES.BUN);
+	const [currentType, setCurrentType] = useState(INGREDIENT_TYPES.BUN);
+	const [ingredient, setIngredient] = useState(null);
 
 	const buns = useRef(null);
 	const sauces = useRef(null);
 	const mains = useRef(null);
 
 	const selectTabs = (value) => {
-		setCurrent(value);
+		setCurrentType(value);
 		switch (value) {
 			case INGREDIENT_TYPES.BUN: {
 				buns.current.scrollIntoView({ behavior: 'smooth' });
@@ -37,14 +42,18 @@ export const BurgerIngredients = ({ ingredients }) => {
 		const saucesCoords = Number(sauces.current.getBoundingClientRect().top);
 		const mainsCoords = Number(mains.current.getBoundingClientRect().top);
 		if (bunsCoords <= BASE_HEIGHT) {
-			setCurrent(INGREDIENT_TYPES.BUN);
+			setCurrentType(INGREDIENT_TYPES.BUN);
 		}
 		if (saucesCoords <= BASE_HEIGHT) {
-			setCurrent(INGREDIENT_TYPES.SAUCE);
+			setCurrentType(INGREDIENT_TYPES.SAUCE);
 		}
 		if (mainsCoords <= BASE_HEIGHT) {
-			setCurrent(INGREDIENT_TYPES.MAIN);
+			setCurrentType(INGREDIENT_TYPES.MAIN);
 		}
+	};
+
+	const closeModal = () => {
+		setIngredient(null);
 	};
 
 	return (
@@ -53,19 +62,19 @@ export const BurgerIngredients = ({ ingredients }) => {
 				<ul className={styles.menu}>
 					<Tab
 						value='bun'
-						active={current === INGREDIENT_TYPES.BUN}
+						active={currentType === INGREDIENT_TYPES.BUN}
 						onClick={selectTabs}>
 						Булки
 					</Tab>
 					<Tab
 						value='sauce'
-						active={current === INGREDIENT_TYPES.SAUCE}
+						active={currentType === INGREDIENT_TYPES.SAUCE}
 						onClick={selectTabs}>
 						Соусы
 					</Tab>
 					<Tab
 						value='main'
-						active={current === INGREDIENT_TYPES.MAIN}
+						active={currentType === INGREDIENT_TYPES.MAIN}
 						onClick={selectTabs}>
 						Начинки
 					</Tab>
@@ -79,20 +88,32 @@ export const BurgerIngredients = ({ ingredients }) => {
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.BUN}
 					ref={buns}
+					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Соусы'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.SAUCE}
 					ref={sauces}
+					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Начинки'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.MAIN}
 					ref={mains}
+					setIngredient={setIngredient}
 				/>
 			</ul>
+			{ingredient && (
+				<Modal title='Детали ингредиента' closeModal={closeModal}>
+					<IngredientDetails ingredient={ingredient} />
+				</Modal>
+			)}
 		</section>
 	);
+};
+
+BurgerIngredients.propTypes = {
+	ingredients: arrayOf(ingredientType).isRequired,
 };

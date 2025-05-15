@@ -9,6 +9,8 @@ import {
 import { useMemo, useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
+import { ingredientType } from '@/utils/types';
+import { arrayOf } from 'prop-types';
 
 export const BurgerConstructor = ({ ingredients }) => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -94,4 +96,8 @@ export const BurgerConstructor = ({ ingredients }) => {
 			)}
 		</section>
 	);
+};
+
+BurgerConstructor.propTypes = {
+	ingredients: arrayOf(ingredientType).isRequired,
 };

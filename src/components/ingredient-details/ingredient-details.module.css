@@ -1,0 +1,28 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	border-radius: 32px;
+}
+
+.image {
+	width: 480px;
+	height: 240px;
+	margin: 0 auto 16px;
+}
+
+.title {
+	text-align: center;
+}
+
+.list {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.element:last-child {
+	margin-right: 0;
+}
