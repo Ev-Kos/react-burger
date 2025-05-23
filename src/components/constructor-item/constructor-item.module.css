@@ -1,0 +1,13 @@
+.item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.item_hover:hover {
+	text-shadow:
+		0 0 16px var(--colors-interface-accent),
+		0 0 8px var(--colors-interface-accent),
+		0 0 32px var(--colors-interface-accent);
+	cursor: grab;
+}

@@ -1,26 +1,21 @@
-# Стартер на TypeScript для проекта Stellar Burger
+# Stellar Burger
 
-При попытке создать коммит автоматически запускаются проверки линтера и форматирования.
-Чтобы упростить работу, рекомендуется перед коммитом выполнять команду `npm run check`.
+## Описание проекта
 
-Есть также команды для запуска проверок по отдельности:
+Приложение космической бургерной разработанное на React.
+С макетом проекта можно ознакомиться по [ссылке](https://www.figma.com/design/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0-1&p=f&t=izSfve79Ifwj5Edo-0).
 
-- `npm run lint` - запускает проверку линтера и исправляет проблемы, которые можно исправить автоматически
-- `npm run stylelint:fix` - запускает проверку литера для файлов стилей и исправляет проблемы, которые можно исправить автоматически
-- `npm run format` - исправляет ошибки форматирования кода
+**Используемые технологии**
 
-Можно добавить автозапуск этих команд при сохранении файла в вашей IDE.
+<img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original-wordmark.svg" width="40" height="40" title="HTML5" alt="HTML"/>&nbsp; 
+<img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original-wordmark.svg" width="40" height="40" title="CSS" alt="CSS"/>&nbsp; 
+<img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" width="40" height="40" title="React" alt="React"/>&nbsp;
 
-Для создания коммита рекомендуется запускать команду `npm run commit`. Она позволяет обеспечить соответствие описаний коммитов [общепринятым соглашениям](https://www.conventionalcommits.org/en/v1.0.0/).
+- библиотека UI-компонентов [Яндекс.Практикум](https://yandex-practicum.github.io/react-developer-burger-ui-components/docs/readme)
 
-В проекте настроены алиасы, которые можно использовать при импорте модулей:
+**Запуск проекта**
 
-```
-	alias: {
-		'@': path.resolve(__dirname, './src'),
-		'@components': path.resolve(__dirname, './src/components'),
-		'@services': path.resolve(__dirname, './src/utils'),
-		'@pages': path.resolve(__dirname, './src/pages'),
-		'@utils': path.resolve(__dirname, './src/utils'),
-	},
-```
+- Клонировать репозиторий ```git clone```
+- Установить зависимости ```npm install```
+- Собрать проект ```npm run build```
+- Запустить проект ```npm preview```
