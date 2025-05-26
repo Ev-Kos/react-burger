@@ -7,10 +7,18 @@ import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '@/utils/types';
 import { arrayOf } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	ingredientDetailState,
+	setIngredientForShowDetail,
+} from '@/services/slices/ingredientsSlice';
 
 export const BurgerIngredients = ({ ingredients }) => {
 	const [currentType, setCurrentType] = useState(INGREDIENT_TYPES.BUN);
-	const [ingredient, setIngredient] = useState(null);
+
+	const ingredient = useSelector(ingredientDetailState);
+
+	const dispatch = useDispatch();
 
 	const buns = useRef(null);
 	const sauces = useRef(null);
@@ -53,7 +61,7 @@ export const BurgerIngredients = ({ ingredients }) => {
 	};
 
 	const closeModal = () => {
-		setIngredient(null);
+		dispatch(setIngredientForShowDetail(null));
 	};
 
 	return (
@@ -88,26 +96,23 @@ export const BurgerIngredients = ({ ingredients }) => {
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.BUN}
 					ref={buns}
-					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Соусы'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.SAUCE}
 					ref={sauces}
-					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Начинки'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.MAIN}
 					ref={mains}
-					setIngredient={setIngredient}
 				/>
 			</ul>
 			{ingredient && (
 				<Modal title='Детали ингредиента' closeModal={closeModal}>
-					<IngredientDetails ingredient={ingredient} />
+					<IngredientDetails />
 				</Modal>
 			)}
 		</section>

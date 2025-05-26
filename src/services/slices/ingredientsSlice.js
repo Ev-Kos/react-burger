@@ -5,6 +5,7 @@ const initialState = {
 	ingredients: [],
 	failed: false,
 	isLoading: true,
+	ingredientDetail: null,
 };
 
 export const fetchIngredients = createAsyncThunk(
@@ -22,6 +23,13 @@ const ingredientsSlice = createSlice({
 		setIsLoading(state, action) {
 			state.isLoading = action.payload;
 		},
+		setIngredientForShowDetail(state, action) {
+			typeof action.payload === 'string'
+				? (state.ingredientDetail = state.ingredients.find(
+						(item) => item._id === action.payload
+					))
+				: (state.ingredientDetail = null);
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchIngredients.pending, (state) => {
@@ -38,5 +46,8 @@ const ingredientsSlice = createSlice({
 	},
 });
 
-export const { setIsLoading } = ingredientsSlice.actions;
+export const { setIsLoading, setIngredientForShowDetail } =
+	ingredientsSlice.actions;
+export const ingredientDetailState = (state) =>
+	state.ingredientsSlice.ingredientDetail;
 export default ingredientsSlice.reducer;

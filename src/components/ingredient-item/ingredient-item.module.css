@@ -36,6 +36,10 @@
 	background-color: inherit;
 	border: none;
 	cursor: pointer;
+
+	&:focus {
+		outline: none;
+	}
 }
 
 .image {
