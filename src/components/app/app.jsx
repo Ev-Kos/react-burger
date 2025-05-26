@@ -2,27 +2,33 @@ import styles from './app.module.css';
 import { BurgerIngredients } from '@components/burger-ingredients/burger-ingredients.jsx';
 import { BurgerConstructor } from '@components/burger-contructor/burger-constructor.jsx';
 import { AppHeader } from '@components/app-header/app-header.jsx';
-import { useEffect, useState } from 'react';
-import { getIngredientsApi } from '@/utils/api/get-ingredients';
+import { useEffect } from 'react';
 import { ErrorMessage } from '@components/error-message/error-message';
 import { Loader } from '../loader/loader';
 import { debounce } from '@/utils/debounce';
+import { useDispatch, useSelector } from 'react-redux';
+import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
+import {
+	fetchIngredients,
+	setIsLoading,
+} from '@/services/slices/ingredientsSlice';
 
 export const App = () => {
-	const [isError, setIsError] = useState(false);
-	const [ingredients, setIngredients] = useState([]);
-	const [isLoading, setIsLoading] = useState(true);
+	const dispatch = useDispatch();
+
+	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const { failed, isLoading } = useSelector(
+		ingredientsSelectors.getStatusFlags
+	);
 
 	useEffect(() => {
-		const getIngredients = async () => {
+		const getIngredients = () => {
 			try {
-				const { data } = await getIngredientsApi();
-				setIngredients(data);
+				dispatch(fetchIngredients());
 			} catch (e) {
 				console.error(`Ошибка getIngredientsApi: ${e}`);
-				setIsError(true);
 			} finally {
-				setIsLoading(false);
+				dispatch(setIsLoading(false));
 			}
 		};
 		debounce(getIngredients, 500)();
@@ -32,7 +38,7 @@ export const App = () => {
 		<div className={styles.app}>
 			<AppHeader />
 			{isLoading && <Loader />}
-			{isError && (
+			{failed && (
 				<ErrorMessage
 					text='Произошла ошибка:('
 					actionText='Пожалуйста обновите страницу'
