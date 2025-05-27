@@ -14,13 +14,22 @@ import {
 	addIngredient,
 	deleteIngredient,
 	selectedIngredientsState,
+	setIngredients,
 } from '@/services/slices/selectedIngredients';
 import { useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
+import {
+	createOrderState,
+	fetchCreateOrder,
+	setIsLoading,
+} from '@/services/slices/createOrderSlice';
+import { Loader } from '../loader/loader';
+import { debounce } from '@/utils/debounce';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const selectedIngredients = useSelector(selectedIngredientsState);
+	const { request: orderRequest, isLoading } = useSelector(createOrderState);
 	const dispatch = useDispatch();
 
 	const bun = [...selectedIngredients].find(
@@ -43,8 +52,23 @@ export const BurgerConstructor = () => {
 		setIsModalOpen(false);
 	};
 
-	const createOrder = () => {
-		setIsModalOpen(true);
+	const handleOrder = () => {
+		dispatch(setIsLoading(true));
+		const ids = selectedIngredients.map((item) => item._id);
+
+		const createOrder = async () => {
+			if (ids.length === 0) return;
+			try {
+				await dispatch(fetchCreateOrder({ ingredients: ids })).unwrap();
+				setIsModalOpen(true);
+				dispatch(setIngredients([]));
+			} catch (e) {
+				console.error(`Ошибка создания заказа: ${e}`);
+			} finally {
+				dispatch(setIsLoading(false));
+			}
+		};
+		debounce(createOrder, 400)();
 	};
 
 	const onDropHandler = (ingredient) => {
@@ -96,10 +120,14 @@ export const BurgerConstructor = () => {
 							: styles.selected_elements
 				}
 				ref={dropTarget}>
-				{selectedIngredients.length === 0 && !isHover && (
-					<p className={styles.empty_ingredients_text}>
+				{selectedIngredients.length === 0 && !isHover && !orderRequest && (
+					<p
+						className={`${styles.empty_ingredients_text} text text_type_main-medium`}>
 						Перенесите сюда выбранные ингредиенты
 					</p>
+				)}
+				{isLoading && (
+					<Loader text='Обрабатываем Ваш заказ' isBackground={true} />
 				)}
 				{bun && (
 					<li className={`${styles.selected_element} pr-4`}>
@@ -142,8 +170,8 @@ export const BurgerConstructor = () => {
 					htmlType='submit'
 					type='primary'
 					size='large'
-					onClick={createOrder}
-					disabled={!selectedIngredients.length || !bun}>
+					onClick={handleOrder}
+					disabled={!selectedIngredients.length || !bun || isLoading}>
 					Оформить заказ
 				</Button>
 			</div>

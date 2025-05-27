@@ -8,6 +8,9 @@ const selectedIngredientsSlice = createSlice({
 	name: 'selectedIngredients',
 	initialState,
 	reducers: {
+		setIngredients(state, action) {
+			state.ingredients = action.payload;
+		},
 		addIngredient(state, action) {
 			state.ingredients = [...state.ingredients, action.payload];
 		},
@@ -19,7 +22,7 @@ const selectedIngredientsSlice = createSlice({
 	},
 });
 
-export const { addIngredient, deleteIngredient } =
+export const { addIngredient, deleteIngredient, setIngredients } =
 	selectedIngredientsSlice.actions;
 export const selectedIngredientsState = (state) =>
 	state.selectedIngredientsSlice.ingredients;

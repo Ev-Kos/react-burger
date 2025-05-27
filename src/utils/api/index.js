@@ -4,3 +4,5 @@ export const checkResponse = (res) => {
 	}
 	return Promise.reject(`Ошибка: ${res.status}`);
 };
+
+export const setHeadersWithContentType = { 'Content-Type': 'application/json' };

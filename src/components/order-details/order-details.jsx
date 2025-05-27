@@ -1,11 +1,15 @@
+import { createOrderState } from '@/services/slices/createOrderSlice';
 import doneImage from '../../images/done.svg';
 import styles from './order-details.module.css';
+import { useSelector } from 'react-redux';
 
 export const OrderDetails = () => {
+	const { orderNumber } = useSelector(createOrderState);
+
 	return (
 		<div className={`${styles.container} pt-4 pr-25 pb-30 pl-25`}>
 			<p className={`${styles.order_number} text text_type_digits-large mb-8`}>
-				034536
+				{orderNumber}
 			</p>
 			<p className='text text_type_main-medium'>Идентификатор заказа</p>
 			<img
