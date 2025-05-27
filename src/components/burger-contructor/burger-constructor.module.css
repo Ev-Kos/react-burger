@@ -1,5 +1,7 @@
 .burger_constructor,
 .selected_elements,
+.selected_elements_empty,
+.selected_elements_hover,
 .selected_elements_scroll {
 	display: flex;
 	flex-direction: column;
@@ -10,14 +12,24 @@
 	width: 600px;
 }
 
-.selected_elements {
-	justify-content: center;
-	align-items: center;
+.selected_elements,
+.selected_elements_empty,
+.selected_elements_hover {
+	justify-content: space-between;
+	align-items: end;
 	gap: 16px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	list-style-type: none;
+}
+
+.selected_elements_empty {
+	justify-content: center;
+}
+
+.selected_elements_hover {
+	opacity: 0.7;
 }
 
 .selected_element,
@@ -41,6 +53,10 @@
 
 .selected_element_hover:hover {
 	cursor: pointer;
+}
+
+.selected_element_scroll {
+	width: 100%;
 }
 
 .selected_elements_scroll {

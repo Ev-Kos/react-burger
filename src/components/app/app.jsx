@@ -12,6 +12,8 @@ import {
 	fetchIngredients,
 	setIsLoading,
 } from '@/services/slices/ingredientsSlice';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 export const App = () => {
 	const dispatch = useDispatch();
@@ -51,8 +53,10 @@ export const App = () => {
 						Соберите бургер
 					</h1>
 					<main className={`${styles.main} pl-5 pr-5`}>
-						<BurgerIngredients ingredients={ingredients} />
-						<BurgerConstructor />
+						<DndProvider backend={HTML5Backend}>
+							<BurgerIngredients ingredients={ingredients} />
+							<BurgerConstructor />
+						</DndProvider>
 					</main>
 				</>
 			)}

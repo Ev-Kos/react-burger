@@ -13,7 +13,7 @@ const selectedIngredientsSlice = createSlice({
 		},
 		deleteIngredient(state, action) {
 			state.ingredients = [
-				...state.ingredients.filter((item) => item._id !== action.payload),
+				...state.ingredients.filter((item) => item.key !== action.payload),
 			];
 		},
 	},

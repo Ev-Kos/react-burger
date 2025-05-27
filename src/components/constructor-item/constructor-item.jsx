@@ -4,8 +4,9 @@ import {
 	DragIcon,
 	ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { func } from 'prop-types';
 
-export const ConstructorItem = ({ item }) => {
+export const ConstructorItem = ({ item, onDelete }) => {
 	return (
 		<li className={`${styles.item} pr-2 pl-4`}>
 			<DragIcon type='primary' />
@@ -14,7 +15,7 @@ export const ConstructorItem = ({ item }) => {
 				text={item.name}
 				price={item.price}
 				thumbnail={item.image_mobile}
-				handleClose={() => {}}
+				handleClose={onDelete}
 				extraClass={styles.item_hover}
 			/>
 		</li>
@@ -23,4 +24,5 @@ export const ConstructorItem = ({ item }) => {
 
 ConstructorItem.propTypes = {
 	item: ingredientType.isRequired,
+	onDelete: func.isRequired,
 };

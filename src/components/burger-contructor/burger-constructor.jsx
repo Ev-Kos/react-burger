@@ -6,23 +6,22 @@ import {
 	CurrencyIcon,
 	Button,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { useSelector } from 'react-redux';
-import { selectedIngredientsState } from '@/services/slices/selectedIngredients';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	addIngredient,
+	deleteIngredient,
+	selectedIngredientsState,
+} from '@/services/slices/selectedIngredients';
+import { useDrop } from 'react-dnd';
+import { nanoid } from 'nanoid';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const selectedIngredients = useSelector(selectedIngredientsState);
-
-	const selectedElements = useMemo(
-		() =>
-			selectedIngredients
-				.filter((item) => item.type !== INGREDIENT_TYPES.BUN)
-				.map((elem) => <ConstructorItem item={elem} key={elem._id} />),
-		[selectedIngredients]
-	);
+	const dispatch = useDispatch();
 
 	const bun = [...selectedIngredients].find(
 		(item) => item.type === INGREDIENT_TYPES.BUN
@@ -48,10 +47,56 @@ export const BurgerConstructor = () => {
 		setIsModalOpen(true);
 	};
 
+	const onDropHandler = (ingredient) => {
+		if (bun && ingredient.type === INGREDIENT_TYPES.BUN) {
+			dispatch(deleteIngredient(bun.key));
+		}
+		dispatch(addIngredient({ ...ingredient, key: nanoid() }));
+	};
+
+	const [{ isHover }, dropTarget] = useDrop({
+		accept: 'ingredient',
+		drop(ingredient) {
+			onDropHandler(ingredient);
+		},
+		collect: (monitor) => ({
+			isHover: monitor.isOver(),
+		}),
+	});
+
+	const onDelete = useCallback(
+		(key) => {
+			dispatch(deleteIngredient(key));
+		},
+		[dispatch]
+	);
+
+	const selectedElements = useMemo(
+		() =>
+			selectedIngredients
+				.filter((item) => item.type !== INGREDIENT_TYPES.BUN)
+				.map((elem) => (
+					<ConstructorItem
+						item={elem}
+						key={elem.key}
+						onDelete={() => onDelete(elem.key)}
+					/>
+				)),
+		[selectedIngredients, onDelete]
+	);
+
 	return (
 		<section className={styles.burger_constructor}>
-			<ul className={styles.selected_elements}>
-				{selectedElements.length === 0 && (
+			<ul
+				className={
+					selectedIngredients.length === 0
+						? styles.selected_elements_empty
+						: isHover
+							? styles.selected_elements_hover
+							: styles.selected_elements
+				}
+				ref={dropTarget}>
+				{selectedIngredients.length === 0 && !isHover && (
 					<p className={styles.empty_ingredients_text}>
 						Перенесите сюда выбранные ингредиенты
 					</p>
@@ -68,7 +113,7 @@ export const BurgerConstructor = () => {
 						/>
 					</li>
 				)}
-				<li>
+				<li className={styles.selected_element_scroll}>
 					<ul className={`${styles.selected_elements_scroll} custom-scroll`}>
 						{selectedElements}
 					</ul>
