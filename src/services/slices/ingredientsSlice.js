@@ -3,8 +3,8 @@ import { getIngredientsApi } from '@/utils/api/get-ingredients';
 
 const initialState = {
 	ingredients: [],
+	request: false,
 	failed: false,
-	isLoading: true,
 	ingredientDetail: null,
 };
 
@@ -20,9 +20,6 @@ const ingredientsSlice = createSlice({
 	name: 'ingredients',
 	initialState,
 	reducers: {
-		setIsLoading(state, action) {
-			state.isLoading = action.payload;
-		},
 		setIngredientForShowDetail(state, action) {
 			typeof action.payload === 'string'
 				? (state.ingredientDetail = state.ingredients.find(
@@ -33,21 +30,23 @@ const ingredientsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchIngredients.pending, (state) => {
+			state.request = true;
 			state.failed = false;
 		});
 
 		builder.addCase(fetchIngredients.fulfilled, (state, action) => {
+			state.request = false;
 			state.ingredients = action.payload;
 		});
 
 		builder.addCase(fetchIngredients.rejected, (state) => {
+			state.request = false;
 			state.failed = true;
 		});
 	},
 });
 
-export const { setIsLoading, setIngredientForShowDetail } =
-	ingredientsSlice.actions;
+export const { setIngredientForShowDetail } = ingredientsSlice.actions;
 export const ingredientDetailState = (state) =>
 	state.ingredientsSlice.ingredientDetail;
 export default ingredientsSlice.reducer;

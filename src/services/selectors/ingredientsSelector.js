@@ -8,7 +8,7 @@ export const ingredientsSelectors = {
 		(state) => state.ingredients
 	),
 	getStatusFlags: createSelector(getIngredientsSliceState, (state) => ({
-		failed: state.failed,
-		isLoading: state.isLoading,
+		getIngredientsfailed: state.failed,
+		getIngredientsReguest: state.reguest,
 	})),
 };

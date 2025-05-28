@@ -3,7 +3,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
 	request: false,
-	isLoading: false,
 	failed: false,
 	orderNumber: null,
 };
@@ -19,11 +18,6 @@ export const fetchCreateOrder = createAsyncThunk(
 const createOrderSlice = createSlice({
 	name: 'order',
 	initialState,
-	reducers: {
-		setIsLoading(state, action) {
-			state.isLoading = action.payload;
-		},
-	},
 	extraReducers: (builder) => {
 		builder.addCase(fetchCreateOrder.pending, (state) => {
 			state.request = true;
@@ -43,5 +37,4 @@ const createOrderSlice = createSlice({
 });
 
 export const createOrderState = (state) => state.createOrderSlice;
-export const { setIsLoading } = createOrderSlice.actions;
 export default createOrderSlice.reducer;

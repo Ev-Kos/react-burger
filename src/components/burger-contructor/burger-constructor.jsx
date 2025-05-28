@@ -21,19 +21,33 @@ import { nanoid } from 'nanoid';
 import {
 	createOrderState,
 	fetchCreateOrder,
-	setIsLoading,
 } from '@/services/slices/createOrderSlice';
 import { Loader } from '../loader/loader';
-import { debounce } from '@/utils/debounce';
+import update from 'immutability-helper';
+import { InfoMessage } from '../info-message/info-message';
+import { useMinimumLoading } from '@/services/hooks/useMinimumLoading';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isLocalLoading, executeWithLoading] = useMinimumLoading(400);
 	const selectedIngredients = useSelector(selectedIngredientsState);
-	const { request: orderRequest, isLoading } = useSelector(createOrderState);
+	const { request: orderRequest, failed: orderFailed } =
+		useSelector(createOrderState);
 	const dispatch = useDispatch();
 
-	const bun = [...selectedIngredients].find(
-		(item) => item.type === INGREDIENT_TYPES.BUN
+	const isEmpty = selectedIngredients.length === 0;
+	const isLoading = isLocalLoading || orderRequest;
+
+	const bun = useMemo(
+		() =>
+			selectedIngredients.find((item) => item.type === INGREDIENT_TYPES.BUN),
+		[selectedIngredients]
+	);
+
+	const fillings = useMemo(
+		() =>
+			selectedIngredients.filter((item) => item.type !== INGREDIENT_TYPES.BUN),
+		[selectedIngredients]
 	);
 
 	const totalPrice = useMemo(() => {
@@ -48,40 +62,32 @@ export const BurgerConstructor = () => {
 			: 0;
 	}, [selectedIngredients]);
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-	};
+	const closeModal = useCallback(() => setIsModalOpen(false), []);
 
-	const handleOrder = () => {
-		dispatch(setIsLoading(true));
-		const ids = selectedIngredients.map((item) => item._id);
+	const handleOrder = useCallback(async () => {
+		if (isEmpty || !bun) return;
 
-		const createOrder = async () => {
-			if (ids.length === 0) return;
-			try {
-				await dispatch(fetchCreateOrder({ ingredients: ids })).unwrap();
-				setIsModalOpen(true);
-				dispatch(setIngredients([]));
-			} catch (e) {
-				console.error(`Ошибка создания заказа: ${e}`);
-			} finally {
-				dispatch(setIsLoading(false));
-			}
-		};
-		debounce(createOrder, 400)();
-	};
+		executeWithLoading(async () => {
+			const ids = selectedIngredients.map((item) => item._id);
+			const result = await dispatch(
+				fetchCreateOrder({ ingredients: ids })
+			).unwrap();
 
-	const onDropHandler = (ingredient) => {
-		if (bun && ingredient.type === INGREDIENT_TYPES.BUN) {
-			dispatch(deleteIngredient(bun.key));
-		}
-		dispatch(addIngredient({ ...ingredient, key: nanoid() }));
-	};
+			setIsModalOpen(true);
+			dispatch(setIngredients([]));
+			return result;
+		}).catch((e) => {
+			console.error(`Ошибка создания заказа: ${e}`);
+		});
+	}, [selectedIngredients, bun, isEmpty, executeWithLoading, dispatch]);
 
 	const [{ isHover }, dropTarget] = useDrop({
 		accept: 'ingredient',
 		drop(ingredient) {
-			onDropHandler(ingredient);
+			if (bun && ingredient.type === INGREDIENT_TYPES.BUN) {
+				dispatch(deleteIngredient(bun.key));
+			}
+			dispatch(addIngredient({ ...ingredient, key: nanoid() }));
 		},
 		collect: (monitor) => ({
 			isHover: monitor.isOver(),
@@ -95,42 +101,51 @@ export const BurgerConstructor = () => {
 		[dispatch]
 	);
 
+	const movedIngredient = useCallback(
+		(dragIndex, hoverIndex) => {
+			const dragElement = fillings[dragIndex];
+			const newFillings = update(fillings, {
+				$splice: [
+					[dragIndex, 1],
+					[hoverIndex, 0, dragElement],
+				],
+			});
+
+			const newIngredients = bun ? [bun, ...newFillings] : newFillings;
+
+			dispatch(setIngredients(newIngredients));
+		},
+		[fillings, bun, dispatch]
+	);
+
 	const selectedElements = useMemo(
 		() =>
-			selectedIngredients
-				.filter((item) => item.type !== INGREDIENT_TYPES.BUN)
-				.map((elem) => (
-					<ConstructorItem
-						item={elem}
-						key={elem.key}
-						onDelete={() => onDelete(elem.key)}
-					/>
-				)),
-		[selectedIngredients, onDelete]
+			fillings.map((elem, index) => (
+				<ConstructorItem
+					item={elem}
+					key={elem.key}
+					onDelete={() => onDelete(elem.key)}
+					onMove={movedIngredient}
+					index={index}
+				/>
+			)),
+		[fillings, onDelete, movedIngredient]
 	);
+
+	const containerClass = useMemo(() => {
+		if (isEmpty) return styles.selected_elements_empty;
+		return isHover ? styles.selected_elements_hover : styles.selected_elements;
+	}, [isEmpty, isHover]);
+
+	const clearOrder = () => {
+		dispatch(setIngredients([]));
+	};
 
 	return (
 		<section className={styles.burger_constructor}>
-			<ul
-				className={
-					selectedIngredients.length === 0
-						? styles.selected_elements_empty
-						: isHover
-							? styles.selected_elements_hover
-							: styles.selected_elements
-				}
-				ref={dropTarget}>
-				{selectedIngredients.length === 0 && !isHover && !orderRequest && (
-					<p
-						className={`${styles.empty_ingredients_text} text text_type_main-medium`}>
-						Перенесите сюда выбранные ингредиенты
-					</p>
-				)}
-				{isLoading && (
-					<Loader text='Обрабатываем Ваш заказ' isBackground={true} />
-				)}
-				{bun && (
-					<li className={`${styles.selected_element} pr-4`}>
+			<ul className={containerClass} ref={dropTarget}>
+				<li className={`${styles.selected_element} pr-4`}>
+					{bun ? (
 						<ConstructorElement
 							type='top'
 							isLocked={true}
@@ -139,15 +154,37 @@ export const BurgerConstructor = () => {
 							thumbnail={bun.image_mobile}
 							extraClass={styles.selected_element_hover}
 						/>
-					</li>
-				)}
+					) : (
+						<>
+							{fillings.length !== 0 && (
+								<p
+									className={`${styles.selected_element_bun} text text_type_main-medium`}>
+									{' '}
+									Добавте булочку
+								</p>
+							)}
+						</>
+					)}
+				</li>
 				<li className={styles.selected_element_scroll}>
 					<ul className={`${styles.selected_elements_scroll} custom-scroll`}>
 						{selectedElements}
 					</ul>
 				</li>
-				{bun && (
-					<li className={`${styles.selected_element} pr-4`}>
+				{isEmpty && !isHover && !orderRequest && !orderFailed && (
+					<InfoMessage text='Перенесите сюда выбранные ингредиенты' />
+				)}
+				{orderFailed && (
+					<InfoMessage
+						text='Произошла ошибка'
+						actionText='Попробуйте повторить создание заказа'
+					/>
+				)}
+				{isLoading && (
+					<Loader text='Обрабатываем Ваш заказ' isBackground={true} />
+				)}
+				<li className={`${styles.selected_element} pr-4`}>
+					{bun && (
 						<ConstructorElement
 							type='bottom'
 							isLocked={true}
@@ -156,11 +193,21 @@ export const BurgerConstructor = () => {
 							thumbnail={bun.image_mobile}
 							extraClass={styles.selected_element_hover}
 						/>
-					</li>
-				)}
+					)}
+				</li>
 			</ul>
-			<div className={`${styles.order_container} mt-10 mr-4`}>
-				{selectedIngredients.length !== 0 && (
+			<div
+				className={`${isEmpty ? styles.order_container_empty : styles.order_container} mt-10 mr-4 ml-4`}>
+				{!isEmpty && (
+					<Button
+						htmlType='button'
+						size='medium'
+						extraClass={styles.clear_button}
+						onClick={clearOrder}>
+						Очистить
+					</Button>
+				)}
+				{!isEmpty && (
 					<div className={styles.price_container}>
 						<span className='text text_type_digits-medium'>{totalPrice}</span>
 						<CurrencyIcon type='primary' />
@@ -171,7 +218,7 @@ export const BurgerConstructor = () => {
 					type='primary'
 					size='large'
 					onClick={handleOrder}
-					disabled={!selectedIngredients.length || !bun || isLoading}>
+					disabled={isEmpty || !bun || isLoading}>
 					Оформить заказ
 				</Button>
 			</div>

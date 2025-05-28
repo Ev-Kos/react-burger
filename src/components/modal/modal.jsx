@@ -19,7 +19,7 @@ export const Modal = ({ closeModal, title, children }) => {
 		return () => {
 			document.removeEventListener('keydown', closeEsc);
 		};
-	}, []);
+	}, [closeModal]);
 
 	return createPortal(
 		<>

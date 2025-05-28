@@ -4,5 +4,5 @@ export const INGREDIENT_TYPES = {
 	MAIN: 'main',
 };
 
-export const BASE_HEIGHT = 250;
+export const INGREDIENTS_SCROLL_DELAY = 1000;
 export const BASE_URL = 'https://norma.nomoreparties.space/api/';
