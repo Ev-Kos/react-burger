@@ -1,60 +1,84 @@
 import styles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientList } from '../ingredients-list/ingredients-list';
-import { BASE_HEIGHT, INGREDIENT_TYPES } from '@/utils/constants';
-import { useState, useRef } from 'react';
+import { INGREDIENTS_SCROLL_DELAY, INGREDIENT_TYPES } from '@/utils/constants';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '@/utils/types';
 import { arrayOf } from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	ingredientDetailState,
+	setIngredientForShowDetail,
+} from '@/services/slices/ingredientsSlice';
 
 export const BurgerIngredients = ({ ingredients }) => {
 	const [currentType, setCurrentType] = useState(INGREDIENT_TYPES.BUN);
-	const [ingredient, setIngredient] = useState(null);
 
+	const ingredient = useSelector(ingredientDetailState);
+
+	const isScroll = useRef(false);
+
+	const dispatch = useDispatch();
+
+	const listContainerRef = useRef(null);
 	const buns = useRef(null);
 	const sauces = useRef(null);
 	const mains = useRef(null);
 
 	const selectTabs = (value) => {
+		isScroll.current = true;
 		setCurrentType(value);
 		switch (value) {
-			case INGREDIENT_TYPES.BUN: {
+			case INGREDIENT_TYPES.BUN:
 				buns.current.scrollIntoView({ behavior: 'smooth' });
 				break;
-			}
-			case INGREDIENT_TYPES.SAUCE: {
+			case INGREDIENT_TYPES.SAUCE:
 				sauces.current.scrollIntoView({ behavior: 'smooth' });
 				break;
-			}
-			case INGREDIENT_TYPES.MAIN: {
+			case INGREDIENT_TYPES.MAIN:
 				mains.current.scrollIntoView({ behavior: 'smooth' });
 				break;
-			}
-			default: {
+			default:
 				buns.current.scrollIntoView({ behavior: 'smooth' });
-			}
 		}
+		setTimeout(() => {
+			isScroll.current = false;
+		}, INGREDIENTS_SCROLL_DELAY);
 	};
 
-	const scrollTab = () => {
-		const bunsCoords = Number(buns.current.getBoundingClientRect().top);
-		const saucesCoords = Number(sauces.current.getBoundingClientRect().top);
-		const mainsCoords = Number(mains.current.getBoundingClientRect().top);
-		if (bunsCoords <= BASE_HEIGHT) {
-			setCurrentType(INGREDIENT_TYPES.BUN);
-		}
-		if (saucesCoords <= BASE_HEIGHT) {
-			setCurrentType(INGREDIENT_TYPES.SAUCE);
-		}
-		if (mainsCoords <= BASE_HEIGHT) {
-			setCurrentType(INGREDIENT_TYPES.MAIN);
-		}
-	};
+	const scrollTab = useCallback(() => {
+		if (isScroll.current || !listContainerRef.current) return;
 
-	const closeModal = () => {
-		setIngredient(null);
-	};
+		const containerTop = listContainerRef.current.getBoundingClientRect().top;
+		const bunsCoords = buns.current.getBoundingClientRect().top - containerTop;
+		const saucesCoords =
+			sauces.current.getBoundingClientRect().top - containerTop;
+		const mainsCoords =
+			mains.current.getBoundingClientRect().top - containerTop;
+
+		const coords = [
+			{ type: INGREDIENT_TYPES.BUN, value: Math.abs(bunsCoords) },
+			{ type: INGREDIENT_TYPES.SAUCE, value: Math.abs(saucesCoords) },
+			{ type: INGREDIENT_TYPES.MAIN, value: Math.abs(mainsCoords) },
+		];
+
+		coords.sort((a, b) => a.value - b.value);
+		setCurrentType(coords[0].type);
+	}, []);
+
+	const closeModal = useCallback(() => {
+		dispatch(setIngredientForShowDetail(null));
+	}, [dispatch]);
+
+	useEffect(() => {
+		const container = listContainerRef.current;
+		if (!container) return;
+
+		container.addEventListener('scroll', scrollTab);
+		return () => container.removeEventListener('scroll', scrollTab);
+	}, [scrollTab]);
 
 	return (
 		<section className={styles.burger_ingredients}>
@@ -82,32 +106,29 @@ export const BurgerIngredients = ({ ingredients }) => {
 			</nav>
 			<ul
 				className={`${styles.ingredients_list} custom-scroll mt-10`}
-				onScroll={scrollTab}>
+				ref={listContainerRef}>
 				<IngredientList
 					name='Булки'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.BUN}
 					ref={buns}
-					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Соусы'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.SAUCE}
 					ref={sauces}
-					setIngredient={setIngredient}
 				/>
 				<IngredientList
 					name='Начинки'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.MAIN}
 					ref={mains}
-					setIngredient={setIngredient}
 				/>
 			</ul>
 			{ingredient && (
 				<Modal title='Детали ингредиента' closeModal={closeModal}>
-					<IngredientDetails ingredient={ingredient} />
+					<IngredientDetails />
 				</Modal>
 			)}
 		</section>
