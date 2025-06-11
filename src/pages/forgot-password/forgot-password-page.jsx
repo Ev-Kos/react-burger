@@ -4,44 +4,31 @@ import { Form } from '@/components/form/form';
 import {
 	Button,
 	Input,
-	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FormLink } from '@/components/form-link/form-link';
 import { ROUTEPATHS } from '@/utils/routes';
 
-export const ResetPassword = () => {
-	const [form, setForm] = useState({
-		password: '',
-		code: '',
-	});
+export const ForgotPassword = () => {
+	const [value, setValue] = useState('');
 
 	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setForm((prev) => ({
-			...prev,
-			[name]: value,
-		}));
+		setValue(e.target.value);
 	};
+
 	return (
-		<main className={styles.page}>
+		<main className={`${styles.page} ${styles.page_margin_lg}`}>
 			<Form
 				title='Восстановление пароля'
 				formFields={[
-					<PasswordInput
-						name='password'
-						value={form.password}
-						onChange={handleChange}
-						placeholder='Введите новый пароль'
-					/>,
 					<Input
-						type='text'
-						name='code'
-						value={form.code}
+						type='email'
+						name='email'
+						value={value}
 						onChange={handleChange}
-						placeholder='Введите код из письма'
+						placeholder='Укажите E-mail'
 					/>,
 					<Button htmlType='submit' type='primary' size='medium'>
-						Сохранить
+						Восстановить
 					</Button>,
 				]}
 				linkBlocks={[

@@ -4,8 +4,9 @@ import { HomePage } from '../home/home-page';
 import { LoginPage } from '../login/login-page';
 import { createBrowserRouter } from 'react-router';
 import { RegistrationPage } from '../registration/registration-page';
-import { ForgotPassword } from '../forgot-password/forgot-password';
-import { ResetPassword } from '../reset-password/reset-password';
+import { ForgotPassword } from '../forgot-password/forgot-password-page';
+import { ResetPassword } from '../reset-password/reset-password-page';
+import { ProfilePage } from '../profile/profile-page';
 
 const routes = [
 	{
@@ -17,6 +18,7 @@ const routes = [
 			{ path: ROUTEPATHS.registr, element: <RegistrationPage /> },
 			{ path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
 			{ path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
+			{ path: ROUTEPATHS.profile, element: <ProfilePage /> },
 		],
 	},
 ];

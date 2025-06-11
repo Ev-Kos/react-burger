@@ -12,9 +12,10 @@ export const Form = ({ title, formFields, linkBlocks }) => {
 				))}
 			</form>
 			<div className={styles.links}>
-				{linkBlocks.map((block, index) => (
-					<Fragment key={index}>{block}</Fragment>
-				))}
+				{linkBlocks &&
+					linkBlocks.map((block, index) => (
+						<Fragment key={index}>{block}</Fragment>
+					))}
 			</div>
 		</div>
 	);
@@ -23,5 +24,5 @@ export const Form = ({ title, formFields, linkBlocks }) => {
 Form.propTypes = {
 	title: string,
 	formFields: arrayOf(element).isRequired,
-	linkBlocks: arrayOf(element).isRequired,
+	linkBlocks: arrayOf(element),
 };

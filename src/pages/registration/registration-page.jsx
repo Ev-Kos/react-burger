@@ -25,7 +25,7 @@ export const RegistrationPage = () => {
 	};
 
 	return (
-		<main className={styles.page}>
+		<main className={`${styles.page} ${styles.page_margin_lg}`}>
 			<Form
 				title='Регистрация'
 				formFields={[

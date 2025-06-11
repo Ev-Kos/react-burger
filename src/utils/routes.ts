@@ -4,4 +4,5 @@ export const ROUTEPATHS = {
 	registr: '/register',
 	forgotPass: '/forgot-password',
 	resetPass: '/reset-password',
+	profile: '/profile',
 };
