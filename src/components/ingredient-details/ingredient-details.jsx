@@ -4,7 +4,6 @@ import { ingredientDetailState } from '@/services/slices/ingredientsSlice';
 
 export const IngredientDetails = () => {
 	const ingredient = useSelector(ingredientDetailState);
-
 	return (
 		<>
 			{ingredient && (

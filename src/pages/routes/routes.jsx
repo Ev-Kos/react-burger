@@ -7,6 +7,7 @@ import { RegistrationPage } from '../registration/registration-page';
 import { ForgotPassword } from '../forgot-password/forgot-password-page';
 import { ResetPassword } from '../reset-password/reset-password-page';
 import { ProfilePage } from '../profile/profile-page';
+import { IngredientPage } from '../ingredient/ingredient-page';
 
 const routes = [
 	{
@@ -19,6 +20,7 @@ const routes = [
 			{ path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
 			{ path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
 			{ path: ROUTEPATHS.profile, element: <ProfilePage /> },
+			{ path: '/ingredients/:id', element: <IngredientPage /> },
 		],
 	},
 ];
