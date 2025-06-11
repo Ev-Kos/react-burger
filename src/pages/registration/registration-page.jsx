@@ -1,16 +1,17 @@
+import { Form } from '@/components/form/form';
+import styles from '../pages.module.css';
+import { useState } from 'react';
 import {
 	Button,
 	Input,
 	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import styles from '../pages.module.css';
-import { useState } from 'react';
-import { ROUTEPATHS } from '@/utils/routes';
-import { Form } from '@/components/form/form';
 import { FormLink } from '@/components/form-link/form-link';
+import { ROUTEPATHS } from '@/utils/routes';
 
-export const LoginPage = () => {
+export const RegistrationPage = () => {
 	const [form, setForm] = useState({
+		name: '',
 		email: '',
 		password: '',
 	});
@@ -26,8 +27,15 @@ export const LoginPage = () => {
 	return (
 		<main className={styles.page}>
 			<Form
-				title='Вход'
+				title='Регистрация'
 				formFields={[
+					<Input
+						type='text'
+						name='name'
+						value={form.name}
+						onChange={handleChange}
+						placeholder='Имя'
+					/>,
 					<Input
 						type='email'
 						name='email'
@@ -41,19 +49,14 @@ export const LoginPage = () => {
 						onChange={handleChange}
 					/>,
 					<Button htmlType='submit' type='primary' size='medium'>
-						Войти
+						Зарегистрироваться
 					</Button>,
 				]}
 				linkBlocks={[
 					<FormLink
-						text='Вы &mdash; новый пользователь?'
-						link={ROUTEPATHS.registr}
-						textLink='Зарегистрироваться'
-					/>,
-					<FormLink
-						text='Забыли пароль?'
-						link={ROUTEPATHS.forgotPass}
-						textLink='Восстановить пароль'
+						text='Уже зарегистрированы?'
+						link={ROUTEPATHS.login}
+						textLink='Войти'
 					/>,
 				]}
 			/>
