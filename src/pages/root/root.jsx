@@ -1,4 +1,4 @@
-import { Outlet, Route, Routes, useLocation, useNavigate } from 'react-router';
+import { Outlet, useNavigate, useLocation, useMatch } from 'react-router';
 import styles from './root.module.css';
 import AppHeader from '@/components/app-header/app-header';
 import { Modal } from '@/components/modal/modal';
@@ -8,24 +8,17 @@ export const Root = () => {
 	const location = useLocation();
 	const background = location.state?.background;
 	const navigate = useNavigate();
-
-	console.log(background, 'root');
+	const isIngredientsModal = useMatch('/ingredients/:id');
 
 	return (
 		<div className={styles.app}>
 			<AppHeader />
-			<Outlet context={{ background }} />
-			{background && (
-				<Routes>
-					<Route
-						path='/ingredients/:id'
-						element={
-							<Modal title={''} closeModal={() => navigate(-1)}>
-								<IngredientDetails />
-							</Modal>
-						}
-					/>
-				</Routes>
+			<Outlet />
+
+			{background && isIngredientsModal && (
+				<Modal title='' closeModal={() => navigate(-1)}>
+					<IngredientDetails />
+				</Modal>
 			)}
 		</div>
 	);

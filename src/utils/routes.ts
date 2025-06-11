@@ -5,4 +5,5 @@ export const ROUTEPATHS = {
 	forgotPass: '/forgot-password',
 	resetPass: '/reset-password',
 	profile: '/profile',
+	notFound: '*',
 };

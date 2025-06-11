@@ -8,6 +8,7 @@ import { ForgotPassword } from '../forgot-password/forgot-password-page';
 import { ResetPassword } from '../reset-password/reset-password-page';
 import { ProfilePage } from '../profile/profile-page';
 import { IngredientPage } from '../ingredient/ingredient-page';
+import { NotFoundPage } from '../not-found/not-found-page';
 
 const routes = [
 	{
@@ -21,8 +22,32 @@ const routes = [
 			{ path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
 			{ path: ROUTEPATHS.profile, element: <ProfilePage /> },
 			{ path: '/ingredients/:id', element: <IngredientPage /> },
+			{ path: ROUTEPATHS.notFound, element: <NotFoundPage /> },
 		],
 	},
 ];
 
 export const router = createBrowserRouter(routes);
+
+// const router = createBrowserRouter([
+//   {
+//     path: ROUTEPATHS.home,
+//     element: <Root />,
+//     children: [
+//       { index: true, element: <HomePage /> },
+//       { path: ROUTEPATHS.login, element: <LoginPage /> },
+//       { path: ROUTEPATHS.registr, element: <RegistrationPage /> },
+//       { path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
+//       { path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
+//       { path: ROUTEPATHS.profile, element: <ProfilePage /> },
+
+//       // Добавляем отдельный маршрут для модалки
+//       {
+//         path: "/ingredients/:id",
+//         element: <IngredientPage />,
+//       },
+//     ],
+//   },
+// ]);
+
+// export default router;

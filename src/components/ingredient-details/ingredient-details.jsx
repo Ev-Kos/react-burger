@@ -1,9 +1,15 @@
 import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
 import { ingredientDetailState } from '@/services/slices/ingredientsSlice';
+import { arrayOf } from 'prop-types';
+import { ingredientType } from '@/utils/types';
+import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
 
 export const IngredientDetails = () => {
 	const ingredient = useSelector(ingredientDetailState);
+	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+
+	console.log(ingredients);
 	return (
 		<>
 			{ingredient && (
@@ -59,4 +65,8 @@ export const IngredientDetails = () => {
 			)}
 		</>
 	);
+};
+
+IngredientDetails.propsType = {
+	ingredient: arrayOf(ingredientType),
 };

@@ -38,7 +38,6 @@ export const IngredientItem = ({ ingredient, onClick }) => {
 			className={isBunSelected ? styles.list_item_exist : styles.list_item}
 			style={{ opacity }}>
 			<Link
-				key={ingredient._id}
 				to={`/ingredients/${ingredient._id}`}
 				state={{ background: location }}>
 				<button

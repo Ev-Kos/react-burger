@@ -35,7 +35,9 @@ export const HomePage = () => {
 			}
 		};
 
-		loadIngredients();
+		if (ingredients.length === 0) {
+			loadIngredients();
+		}
 
 		return () => {
 			isMounted.current = false;

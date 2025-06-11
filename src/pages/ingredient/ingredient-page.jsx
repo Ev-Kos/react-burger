@@ -2,25 +2,61 @@ import { IngredientDetails } from '@/components/ingredient-details/ingredient-de
 import styles from '../pages.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-	ingredientDetailState,
+	fetchIngredients,
 	setIngredientForShowDetail,
 } from '@/services/slices/ingredientsSlice';
-import { useParams } from 'react-router';
-import { useEffect } from 'react';
+import { useLocation, useParams } from 'react-router';
+import { useEffect, useRef } from 'react';
+import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
+import { useMinimumLoading } from '@/services/hooks/useMinimumLoading';
+import { Loader } from '@/components/loader/loader';
 
 export const IngredientPage = () => {
 	const { id } = useParams();
 	const dispatch = useDispatch();
-	const ingredient = useSelector(ingredientDetailState);
+	const location = useLocation();
+	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+
+	const [isLocalLoading, executeWithLoading] = useMinimumLoading(1000);
+	const isMounted = useRef(true);
 
 	useEffect(() => {
-		dispatch(setIngredientForShowDetail(id));
-	}, [id]);
+		isMounted.current = true;
 
-	console.log('page');
+		const loadIngredients = async () => {
+			try {
+				await executeWithLoading(() => dispatch(fetchIngredients()).unwrap());
+				dispatch(setIngredientForShowDetail(id));
+			} catch (e) {
+				if (isMounted.current) {
+					console.error(`Ошибка getIngredientsApi: ${e}`);
+				}
+			}
+		};
+
+		if (ingredients.length === 0) {
+			loadIngredients();
+		} else {
+			dispatch(setIngredientForShowDetail(id));
+		}
+
+		return () => {
+			isMounted.current = false;
+		};
+	}, [dispatch, executeWithLoading]);
+
+	if (location.state?.background) {
+		return null;
+	}
 	return (
-		<main className={`${styles.page} ${styles.page_margin_base}`}>
-			{ingredient && <IngredientDetails />}
-		</main>
+		<>
+			{isLocalLoading ? (
+				<Loader />
+			) : (
+				<main className={`${styles.page} ${styles.page_margin_base}`}>
+					<IngredientDetails />
+				</main>
+			)}
+		</>
 	);
 };
