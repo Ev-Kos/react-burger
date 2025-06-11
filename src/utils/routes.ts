@@ -3,4 +3,5 @@ export const ROUTEPATHS = {
 	login: '/login',
 	registr: '/register',
 	forgotPass: '/forgot-password',
+	resetPass: '/reset-password',
 };

@@ -5,6 +5,7 @@ import { LoginPage } from '../login/login-page';
 import { createBrowserRouter } from 'react-router';
 import { RegistrationPage } from '../registration/registration-page';
 import { ForgotPassword } from '../forgot-password/forgot-password';
+import { ResetPassword } from '../reset-password/reset-password';
 
 const routes = [
 	{
@@ -15,6 +16,7 @@ const routes = [
 			{ path: ROUTEPATHS.login, element: <LoginPage /> },
 			{ path: ROUTEPATHS.registr, element: <RegistrationPage /> },
 			{ path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
+			{ path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
 		],
 	},
 ];
