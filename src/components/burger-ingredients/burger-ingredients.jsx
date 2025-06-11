@@ -105,7 +105,7 @@ export const BurgerIngredients = ({ ingredients }) => {
 				</ul>
 			</nav>
 			<ul
-				className={`${styles.ingredients_list} custom-scroll mt-10`}
+				className={`${styles.ingredients_list} custom-scroll`}
 				ref={listContainerRef}>
 				<IngredientList
 					name='Булки'

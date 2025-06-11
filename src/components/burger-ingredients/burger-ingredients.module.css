@@ -18,7 +18,7 @@
 
 .ingredients_list {
 	gap: 40px;
-	margin: 0;
+	margin: 40px 0 0;
 	padding: 0;
 	overflow: auto;
 	overflow-x: hidden;
