@@ -8,10 +8,21 @@ import {
 	Input,
 	PasswordInput,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { logoutApi } from '@/utils/api/logout';
 
 const baseLinkClass = `text text_type_main-medium ${profileStyles.link}`;
 
 export const ProfilePage = () => {
+	const logout = async () => {
+		try {
+			await logoutApi(localStorage.getItem('refreshToken'));
+			localStorage.removeItem('refreshToken');
+			localStorage.removeItem('accessToken');
+		} catch (e) {
+			console.error(`Ошибка: ${e}`);
+		}
+	};
+
 	return (
 		<main className={`${styles.page_profile} ${styles.page_margin_base}`}>
 			<nav className={profileStyles.nav_container}>
@@ -38,9 +49,11 @@ export const ProfilePage = () => {
 							История заказов
 						</NavLink>
 					</li>
-					<li className={`${baseLinkClass} ${profileStyles.link_wrap}`}>
+					<button
+						className={`${baseLinkClass} ${profileStyles.link_wrap}`}
+						onClick={logout}>
 						Выход
-					</li>
+					</button>
 				</ul>
 				<p className='text text_type_main-small text_color_inactive'>
 					В этом разделе вы можете <br /> изменить свои персональные данные

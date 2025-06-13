@@ -35,6 +35,8 @@
 
 .link {
 	color: var(--text-inactive-color);
+	background-color: inherit;
+	border: none;
 }
 
 .link_active {

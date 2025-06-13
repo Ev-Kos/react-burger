@@ -1,8 +1,5 @@
 export const checkResponse = (res) => {
-	if (res.ok) {
-		return res.json();
-	}
-	return Promise.reject(`Ошибка: ${res.status}`);
+	return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 };
 
 export const setHeadersWithContentType = { 'Content-Type': 'application/json' };

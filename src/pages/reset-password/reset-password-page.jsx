@@ -30,6 +30,7 @@ export const ResetPassword = () => {
 
 	const [isValid, setIsValid] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const [errorApi, setErrorApi] = useState('');
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -83,14 +84,12 @@ export const ResetPassword = () => {
 		}
 
 		try {
+			setErrorApi('');
 			setIsLoading(true);
 			await changePassword(form.password, form.code);
 			navigate(ROUTEPATHS.login);
 		} catch (e) {
-			setErrors({
-				password: '',
-				code: 'Ошибка, возможно введен неверный код',
-			});
+			setErrorApi('Ошибка, возможно введен неверный код');
 		} finally {
 			setIsLoading(false);
 		}
@@ -101,6 +100,7 @@ export const ResetPassword = () => {
 			<Form
 				title='Восстановление пароля'
 				onSubmit={handleSubmit}
+				error={errorApi}
 				formFields={[
 					<PasswordInput
 						name='password'
@@ -126,7 +126,7 @@ export const ResetPassword = () => {
 						type='primary'
 						size='medium'
 						disabled={!isValid}>
-						{isLoading ? 'Отправка...' : 'Сохранить'}
+						{isLoading ? 'Отправка' : 'Сохранить'}
 					</Button>,
 				]}
 				linkBlocks={[
