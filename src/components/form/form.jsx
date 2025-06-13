@@ -1,11 +1,11 @@
-import { arrayOf, element, string } from 'prop-types';
+import { arrayOf, element, func, string } from 'prop-types';
 import styles from './form.module.css';
 import { Fragment } from 'react';
 
-export const Form = ({ title, formFields, linkBlocks }) => {
+export const Form = ({ title, formFields, linkBlocks, onSubmit }) => {
 	return (
 		<div className={styles.content}>
-			<form className={styles.form}>
+			<form className={styles.form} onSubmit={onSubmit}>
 				{title && <h1 className='text text_type_main-medium'>{title}</h1>}
 				{formFields.map((field, index) => (
 					<Fragment key={index}>{field}</Fragment>
@@ -25,4 +25,5 @@ Form.propTypes = {
 	title: string,
 	formFields: arrayOf(element).isRequired,
 	linkBlocks: arrayOf(element),
+	onSubmit: func.isRequired,
 };
