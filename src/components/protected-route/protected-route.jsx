@@ -29,13 +29,14 @@ export const ProtectedRoute = ({
 				setIsUserChecked(true);
 			}
 		};
-		if (!user.email) getUser();
-	}, [dispatch, user.email]);
+		if (!user) getUser();
+		else setIsUserChecked(true);
+	}, [dispatch, user]);
 
 	if (!isUserChecked) return null; //loader
 
 	if (forResetPassword) {
-		if (user.email) return <Navigate to={ROUTEPATHS.home} replace />;
+		if (user) return <Navigate to={ROUTEPATHS.home} replace />;
 
 		return location.state?.fromForgotPassword ? (
 			component
@@ -45,7 +46,7 @@ export const ProtectedRoute = ({
 	}
 
 	if (isAuth) {
-		return user.email ? (
+		return user ? (
 			component
 		) : (
 			<Navigate to={ROUTEPATHS.login} state={{ from: location }} replace />
@@ -53,7 +54,7 @@ export const ProtectedRoute = ({
 	}
 
 	if (isUnauth) {
-		return user.email ? (
+		return user ? (
 			<Navigate to={location.state?.from || ROUTEPATHS.home} replace />
 		) : (
 			component

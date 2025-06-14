@@ -11,19 +11,11 @@ export const fetchGetUser = createAsyncThunk(
 	'getUser/fetchGetUser',
 	async () => {
 		try {
-			const response = await getUserApi();
-			return response;
+			return await getUserApi();
 		} catch (error) {
-			console.log(error);
-			if (error === 'Ошибка: 403') {
-				updateToken()
-					.then((res) => {
-						localStorage.setItem('refreshToken', res.refreshToken);
-						localStorage.setItem('accessToken', res.accessToken);
-					})
-					.catch((e) => {
-						console.error(`Ошибка: ${e}`);
-					});
+			if (error.message === 'jwt expired') {
+				await updateToken();
+				return await getUserApi();
 			}
 		}
 	}

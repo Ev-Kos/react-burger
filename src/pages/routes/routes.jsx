@@ -46,26 +46,3 @@ const routes = [
 ];
 
 export const router = createBrowserRouter(routes);
-
-// const router = createBrowserRouter([
-//   {
-//     path: ROUTEPATHS.home,
-//     element: <Root />,
-//     children: [
-//       { index: true, element: <HomePage /> },
-//       { path: ROUTEPATHS.login, element: <LoginPage /> },
-//       { path: ROUTEPATHS.registr, element: <RegistrationPage /> },
-//       { path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
-//       { path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
-//       { path: ROUTEPATHS.profile, element: <ProfilePage /> },
-
-//       // Добавляем отдельный маршрут для модалки
-//       {
-//         path: "/ingredients/:id",
-//         element: <IngredientPage />,
-//       },
-//     ],
-//   },
-// ]);
-
-// export default router;

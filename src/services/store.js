@@ -7,6 +7,7 @@ import userSlice from './slices/userSlice';
 import registrationSlice from './slices/registrationSlice';
 import loginSlice from './slices/loginSlice';
 import getUserSlice from './slices/getUserSlice';
+import updateUserSlice from './slices/updateUserSlice';
 
 const reducer = combineReducers({
 	ingredientsSlice,
@@ -16,6 +17,7 @@ const reducer = combineReducers({
 	registrationSlice,
 	loginSlice,
 	getUserSlice,
+	updateUserSlice,
 });
 
 export const store = configureStore({

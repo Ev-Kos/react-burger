@@ -6,4 +6,5 @@ export const ROUTEPATHS = {
 	resetPass: '/reset-password',
 	profile: '/profile',
 	notFound: '*',
+	feed: '/feed',
 };
