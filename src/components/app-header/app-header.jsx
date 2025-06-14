@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import styles from './app-header.module.css';
 import {
 	BurgerIcon,
@@ -5,8 +6,11 @@ import {
 	ProfileIcon,
 	Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { userSelector } from '@/services/selectors/userSelector';
 
 export const AppHeader = () => {
+	const user = useSelector(userSelector.user);
+	console.log(user);
 	return (
 		<header className={styles.header}>
 			<nav className={`${styles.menu} p-4`}>

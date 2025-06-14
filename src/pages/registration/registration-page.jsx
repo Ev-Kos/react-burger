@@ -15,6 +15,7 @@ import {
 	registrationSliceState,
 } from '@/services/slices/registrationSlice';
 import { useNavigate } from 'react-router';
+import { setUser } from '@/services/slices/userSlice';
 
 export const RegistrationPage = () => {
 	const [form, setForm] = useState({
@@ -97,7 +98,8 @@ export const RegistrationPage = () => {
 			return;
 		}
 		try {
-			await dispatch(fetchRegistrUser(form)).unwrap();
+			const res = await dispatch(fetchRegistrUser(form)).unwrap();
+			dispatch(setUser(res.user));
 			navigate(ROUTEPATHS.home);
 		} catch (e) {
 			console.error(`Ошибка fetchRegistrUser: ${e}`);

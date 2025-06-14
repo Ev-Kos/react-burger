@@ -56,7 +56,9 @@ export const ForgotPassword = () => {
 		try {
 			setIsLoading(true);
 			await resetPasswordApi(value);
-			navigate(ROUTEPATHS.resetPass);
+			navigate(ROUTEPATHS.resetPass, {
+				state: { fromForgotPassword: true },
+			});
 		} catch (e) {
 			setError('Ошибка, попробуйте еще раз или перезагрузите страницу');
 		} finally {

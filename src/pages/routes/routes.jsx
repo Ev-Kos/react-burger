@@ -9,6 +9,7 @@ import { ResetPassword } from '../reset-password/reset-password-page';
 import { ProfilePage } from '../profile/profile-page';
 import { IngredientPage } from '../ingredient/ingredient-page';
 import { NotFoundPage } from '../not-found/not-found-page';
+import { ProtectedRoute } from '@/components/protected-route/protected-route';
 
 const routes = [
 	{
@@ -16,11 +17,28 @@ const routes = [
 		element: <Root />,
 		children: [
 			{ index: true, element: <HomePage /> },
-			{ path: ROUTEPATHS.login, element: <LoginPage /> },
-			{ path: ROUTEPATHS.registr, element: <RegistrationPage /> },
-			{ path: ROUTEPATHS.forgotPass, element: <ForgotPassword /> },
-			{ path: ROUTEPATHS.resetPass, element: <ResetPassword /> },
-			{ path: ROUTEPATHS.profile, element: <ProfilePage /> },
+			{
+				path: ROUTEPATHS.login,
+				element: <ProtectedRoute component={<LoginPage />} isUnauth />,
+			},
+			{
+				path: ROUTEPATHS.registr,
+				element: <ProtectedRoute component={<RegistrationPage />} isUnauth />,
+			},
+			{
+				path: ROUTEPATHS.forgotPass,
+				element: <ProtectedRoute component={<ForgotPassword />} isUnauth />,
+			},
+			{
+				path: ROUTEPATHS.resetPass,
+				element: (
+					<ProtectedRoute component={<ResetPassword />} forResetPassword />
+				),
+			},
+			{
+				path: ROUTEPATHS.profile,
+				element: <ProtectedRoute component={<ProfilePage />} isAuth />,
+			},
 			{ path: '/ingredients/:id', element: <IngredientPage /> },
 			{ path: ROUTEPATHS.notFound, element: <NotFoundPage /> },
 		],

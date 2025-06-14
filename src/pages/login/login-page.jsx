@@ -12,6 +12,7 @@ import { validateEmail, validateEmptyField } from '@/utils/validate';
 import { fetchLogin, loginSliceState } from '@/services/slices/loginSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { setUser } from '@/services/slices/userSlice';
 
 export const LoginPage = () => {
 	const [form, setForm] = useState({
@@ -82,8 +83,11 @@ export const LoginPage = () => {
 			return;
 		}
 		try {
-			await dispatch(fetchLogin(form)).unwrap();
-			navigate(ROUTEPATHS.home);
+			const res = await dispatch(fetchLogin(form)).unwrap();
+			dispatch(setUser(res.user));
+			navigate(location.state?.from?.pathname || ROUTEPATHS.home, {
+				replace: true,
+			});
 		} catch (e) {
 			console.error(`Ошибка fetchLogin: ${e}`);
 		}

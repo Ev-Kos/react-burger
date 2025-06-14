@@ -3,3 +3,7 @@ export const checkResponse = (res) => {
 };
 
 export const setHeadersWithContentType = { 'Content-Type': 'application/json' };
+export const setHeadersWithAuth = {
+	'Content-Type': 'application/json',
+	Authorization: localStorage.getItem('accessToken'),
+};
