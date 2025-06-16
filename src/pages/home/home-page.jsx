@@ -10,6 +10,7 @@ import { Loader } from '@/components/loader/loader';
 import { InfoMessage } from '@/components/info-message/info-message';
 import { BurgerIngredients } from '@/components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@/components/burger-contructor/burger-constructor';
+import { LOADING_DELAY } from '@/utils/constants';
 
 export const HomePage = () => {
 	const dispatch = useDispatch();
@@ -18,7 +19,7 @@ export const HomePage = () => {
 	const { getIngredientsfailed } = useSelector(
 		ingredientsSelectors.getStatusFlags
 	);
-	const [isLocalLoading, executeWithLoading] = useMinimumLoading(1000);
+	const [isLocalLoading, executeWithLoading] = useMinimumLoading(LOADING_DELAY);
 
 	const isMounted = useRef(true);
 
@@ -42,7 +43,7 @@ export const HomePage = () => {
 		return () => {
 			isMounted.current = false;
 		};
-	}, [dispatch, executeWithLoading]);
+	}, [dispatch, executeWithLoading, ingredients.length]);
 
 	return (
 		<>

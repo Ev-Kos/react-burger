@@ -29,7 +29,6 @@ import { useMinimumLoading } from '@/services/hooks/useMinimumLoading';
 import { userSelector } from '@/services/selectors/userSelector';
 import { useNavigate } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
-import { ingredients } from '@/utils/ingredients';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -68,8 +67,6 @@ export const BurgerConstructor = () => {
 			: 0;
 	}, [selectedIngredients]);
 
-	console.log(ingredients, selectedIngredients);
-
 	const closeModal = useCallback(() => setIsModalOpen(false), []);
 
 	const handleOrder = useCallback(async () => {
@@ -90,7 +87,15 @@ export const BurgerConstructor = () => {
 				console.error(`Ошибка создания заказа: ${e}`);
 			});
 		}
-	}, [selectedIngredients, bun, isEmpty, executeWithLoading, dispatch, user]);
+	}, [
+		selectedIngredients,
+		bun,
+		isEmpty,
+		executeWithLoading,
+		dispatch,
+		user,
+		navigate,
+	]);
 
 	const [{ isHover }, dropTarget] = useDrop({
 		accept: 'ingredient',

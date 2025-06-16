@@ -1,15 +1,8 @@
-.page,
-.page_profile {
+.page {
 	display: flex;
 	justify-content: center;
 	width: 100%;
 	height: 100%;
-}
-
-.page_profile {
-	align-self: center;
-	gap: 40px;
-	max-width: 1240px;
 }
 
 .page_margin_base {

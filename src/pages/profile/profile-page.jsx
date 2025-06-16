@@ -110,7 +110,8 @@ export const ProfilePage = () => {
 		!isChanged || Object.values(errors).some((error) => error);
 
 	return (
-		<main className={`${styles.page_profile} ${styles.page_margin_base}`}>
+		<main
+			className={`${profileStyles.page_profile} ${styles.page_margin_base}`}>
 			<nav className={profileStyles.nav_container}>
 				<ul className={profileStyles.nav_list}>
 					<li className={profileStyles.link_wrap}>

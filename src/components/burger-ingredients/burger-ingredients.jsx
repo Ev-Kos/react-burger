@@ -11,8 +11,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 
 	const isScroll = useRef(false);
 
-	//const dispatch = useDispatch();
-
 	const listContainerRef = useRef(null);
 	const buns = useRef(null);
 	const sauces = useRef(null);
@@ -58,10 +56,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 		coords.sort((a, b) => a.value - b.value);
 		setCurrentType(coords[0].type);
 	}, []);
-
-	// const closeModal = useCallback(() => {
-	// 	dispatch(setIngredientForShowDetail(null));
-	// }, [dispatch]);
 
 	useEffect(() => {
 		const container = listContainerRef.current;
@@ -117,11 +111,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 					ref={mains}
 				/>
 			</ul>
-			{/* {ingredient && (
-				<Modal title='Детали ингредиента' closeModal={closeModal}>
-					<IngredientDetails />
-				</Modal>
-			)} */}
 		</section>
 	);
 };

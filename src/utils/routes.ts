@@ -7,4 +7,5 @@ export const ROUTEPATHS = {
 	profile: '/profile',
 	notFound: '*',
 	feed: '/feed',
+	ingredientId: '/ingredients/:id',
 };

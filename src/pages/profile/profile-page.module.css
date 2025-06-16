@@ -1,3 +1,12 @@
+.page_profile {
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	gap: 40px;
+	max-width: 1240px;
+	height: 100%;
+}
+
 .nav_container,
 .nav_list {
 	display: flex;

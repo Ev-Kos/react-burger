@@ -5,6 +5,10 @@
 	border-radius: 32px;
 }
 
+.loader {
+	padding-top: 20%;
+}
+
 .image {
 	width: 480px;
 	height: 240px;
