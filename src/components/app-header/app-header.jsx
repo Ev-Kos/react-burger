@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import styles from './app-header.module.css';
 import {
 	BurgerIcon,
@@ -5,34 +6,65 @@ import {
 	ProfileIcon,
 	Logo,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { userSelector } from '@/services/selectors/userSelector';
+import { Link, NavLink, useLocation } from 'react-router';
+import { ROUTEPATHS } from '@/utils/routes';
 
 export const AppHeader = () => {
+	const user = useSelector(userSelector.user);
+	const { pathname } = useLocation();
+
 	return (
 		<header className={styles.header}>
 			<nav className={`${styles.menu} p-4`}>
 				<div className={styles.menu_part_left}>
-					{/*пока тут должны быть ссылки, а не например кнопки или абзацы*/}
-					<a href='/' className={`${styles.link} ${styles.link_active}`}>
-						<BurgerIcon type='primary' />
+					<NavLink
+						to={ROUTEPATHS.home}
+						className={({ isActive }) =>
+							isActive ? `${styles.link} ${styles.link_active}` : styles.link
+						}>
+						<BurgerIcon
+							type={pathname === ROUTEPATHS.home ? 'primary' : 'secondary'}
+						/>
 						<p className='text text_type_main-default ml-2'>Конструктор</p>
-					</a>
-					<a href='/feed' className={`${styles.link} ml-10`}>
-						<ListIcon type='secondary' />
+					</NavLink>
+					<NavLink
+						to={ROUTEPATHS.feed}
+						className={({ isActive }) =>
+							isActive
+								? `${styles.link} ${styles.link_active} ml-10`
+								: `${styles.link} ml-10`
+						}>
+						<ListIcon
+							type={pathname === ROUTEPATHS.feed ? 'primary' : 'secondary'}
+						/>
 						<p className='text text_type_main-default ml-2'>Лента заказов</p>
-					</a>
+					</NavLink>
 				</div>
-				<div className={styles.logo}>
+				<Link className={styles.logo} to={ROUTEPATHS.home}>
 					<Logo />
-				</div>
-				<a
-					href='/profile'
-					className={`${styles.link} ${styles.link_position_last}`}>
-					<ProfileIcon type='secondary' />
-					<p className='text text_type_main-default ml-2'>Личный кабинет</p>
-				</a>
+				</Link>
+				<NavLink
+					to={ROUTEPATHS.profile}
+					className={({ isActive }) =>
+						isActive
+							? `${styles.link} ${styles.link_active} ${styles.link_position_last}`
+							: `${styles.link} ${styles.link_position_last}`
+					}>
+					<ProfileIcon
+						type={
+							pathname.startsWith(ROUTEPATHS.profile) ? 'primary' : 'secondary'
+						}
+					/>
+					<p className='text text_type_main-default ml-2'>
+						{user?.name
+							? user?.name
+							: user?.email
+								? user.email
+								: 'Личный кабинет'}
+					</p>
+				</NavLink>
 			</nav>
 		</header>
 	);
 };
-
-export default AppHeader;

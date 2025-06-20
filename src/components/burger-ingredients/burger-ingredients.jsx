@@ -3,24 +3,13 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientList } from '../ingredients-list/ingredients-list';
 import { INGREDIENTS_SCROLL_DELAY, INGREDIENT_TYPES } from '@/utils/constants';
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { ingredientType } from '@/utils/types';
 import { arrayOf } from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-	ingredientDetailState,
-	setIngredientForShowDetail,
-} from '@/services/slices/ingredientsSlice';
 
 export const BurgerIngredients = ({ ingredients }) => {
 	const [currentType, setCurrentType] = useState(INGREDIENT_TYPES.BUN);
 
-	const ingredient = useSelector(ingredientDetailState);
-
 	const isScroll = useRef(false);
-
-	const dispatch = useDispatch();
 
 	const listContainerRef = useRef(null);
 	const buns = useRef(null);
@@ -68,10 +57,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 		setCurrentType(coords[0].type);
 	}, []);
 
-	const closeModal = useCallback(() => {
-		dispatch(setIngredientForShowDetail(null));
-	}, [dispatch]);
-
 	useEffect(() => {
 		const container = listContainerRef.current;
 		if (!container) return;
@@ -105,7 +90,7 @@ export const BurgerIngredients = ({ ingredients }) => {
 				</ul>
 			</nav>
 			<ul
-				className={`${styles.ingredients_list} custom-scroll mt-10`}
+				className={`${styles.ingredients_list} custom-scroll`}
 				ref={listContainerRef}>
 				<IngredientList
 					name='Булки'
@@ -126,11 +111,6 @@ export const BurgerIngredients = ({ ingredients }) => {
 					ref={mains}
 				/>
 			</ul>
-			{ingredient && (
-				<Modal title='Детали ингредиента' closeModal={closeModal}>
-					<IngredientDetails />
-				</Modal>
-			)}
 		</section>
 	);
 };

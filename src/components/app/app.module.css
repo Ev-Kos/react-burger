@@ -4,19 +4,3 @@
 	height: 100vh;
 	background-color: var(--background-alt);
 }
-
-.title {
-	align-self: center;
-	width: 100%;
-	max-width: 1260px;
-}
-
-.main {
-	display: flex;
-	justify-content: space-between;
-	width: 1240px;
-	height: 100%;
-	margin: 0 auto;
-	padding-bottom: 40px;
-	overflow: hidden;
-}

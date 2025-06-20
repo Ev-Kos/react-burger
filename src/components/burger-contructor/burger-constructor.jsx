@@ -26,14 +26,19 @@ import { Loader } from '../loader/loader';
 import update from 'immutability-helper';
 import { InfoMessage } from '../info-message/info-message';
 import { useMinimumLoading } from '@/services/hooks/useMinimumLoading';
+import { userSelector } from '@/services/selectors/userSelector';
+import { useNavigate } from 'react-router';
+import { ROUTEPATHS } from '@/utils/routes';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLocalLoading, executeWithLoading] = useMinimumLoading(400);
 	const selectedIngredients = useSelector(selectedIngredientsState);
+	const user = useSelector(userSelector.user);
 	const { request: orderRequest, failed: orderFailed } =
 		useSelector(createOrderState);
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	const isEmpty = selectedIngredients.length === 0;
 	const isLoading = isLocalLoading || orderRequest;
@@ -66,20 +71,31 @@ export const BurgerConstructor = () => {
 
 	const handleOrder = useCallback(async () => {
 		if (isEmpty || !bun) return;
+		if (!user) {
+			navigate(ROUTEPATHS.login);
+		} else {
+			executeWithLoading(async () => {
+				const ids = selectedIngredients.map((item) => item._id);
+				const result = await dispatch(
+					fetchCreateOrder({ ingredients: ids })
+				).unwrap();
 
-		executeWithLoading(async () => {
-			const ids = selectedIngredients.map((item) => item._id);
-			const result = await dispatch(
-				fetchCreateOrder({ ingredients: ids })
-			).unwrap();
-
-			setIsModalOpen(true);
-			dispatch(setIngredients([]));
-			return result;
-		}).catch((e) => {
-			console.error(`Ошибка создания заказа: ${e}`);
-		});
-	}, [selectedIngredients, bun, isEmpty, executeWithLoading, dispatch]);
+				setIsModalOpen(true);
+				dispatch(setIngredients([]));
+				return result;
+			}).catch((e) => {
+				console.error(`Ошибка создания заказа: ${e}`);
+			});
+		}
+	}, [
+		selectedIngredients,
+		bun,
+		isEmpty,
+		executeWithLoading,
+		dispatch,
+		user,
+		navigate,
+	]);
 
 	const [{ isHover }, dropTarget] = useDrop({
 		accept: 'ingredient',

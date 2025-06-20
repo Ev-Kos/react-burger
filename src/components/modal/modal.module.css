@@ -5,9 +5,10 @@
 	z-index: 3;
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: start;
 	box-sizing: border-box;
-	max-width: 720px;
+	width: 720px;
+	min-height: 554px;
 	background-color: var(--background);
 	border: none;
 	border-radius: 32px;

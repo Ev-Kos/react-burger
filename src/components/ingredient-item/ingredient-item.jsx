@@ -9,8 +9,10 @@ import { useDrag } from 'react-dnd';
 import { useSelector } from 'react-redux';
 import { selectedIngredientsState } from '@/services/slices/selectedIngredients';
 import { INGREDIENT_TYPES } from '@/utils/constants';
+import { Link, useLocation } from 'react-router';
 
 export const IngredientItem = ({ ingredient, onClick }) => {
+	const location = useLocation();
 	const selectedIngredients = useSelector(selectedIngredientsState);
 
 	const bun = [...selectedIngredients].find(
@@ -35,34 +37,38 @@ export const IngredientItem = ({ ingredient, onClick }) => {
 		<li
 			className={isBunSelected ? styles.list_item_exist : styles.list_item}
 			style={{ opacity }}>
-			<button
-				className={styles.button}
-				onClick={onClick}
-				draggable
-				ref={dragRef}>
-				{counter !== 0 && <Counter count={counter} size='default' />}
-				<div
-					className={
-						isBunSelected
-							? styles.ingredient_info_exist
-							: styles.ingredient_info
-					}>
-					<img
-						className={styles.image}
-						src={ingredient.image}
-						alt={ingredient.name}
-					/>
-					<div className={styles.price_wrap}>
-						<p className={`${styles.price} text text_type_digits-default`}>
-							{ingredient.price}
+			<Link
+				to={`/ingredients/${ingredient._id}`}
+				state={{ background: location }}>
+				<button
+					className={styles.button}
+					onClick={onClick}
+					draggable
+					ref={dragRef}>
+					{counter !== 0 && <Counter count={counter} size='default' />}
+					<div
+						className={
+							isBunSelected
+								? styles.ingredient_info_exist
+								: styles.ingredient_info
+						}>
+						<img
+							className={styles.image}
+							src={ingredient.image}
+							alt={ingredient.name}
+						/>
+						<div className={styles.price_wrap}>
+							<p className={`${styles.price} text text_type_digits-default`}>
+								{ingredient.price}
+							</p>
+							<CurrencyIcon type='primary' />
+						</div>
+						<p className={`${styles.name} text text_type_main-default`}>
+							{ingredient.name}
 						</p>
-						<CurrencyIcon type='primary' />
 					</div>
-					<p className={`${styles.name} text text_type_main-default`}>
-						{ingredient.name}
-					</p>
-				</div>
-			</button>
+				</button>
+			</Link>
 		</li>
 	);
 };
