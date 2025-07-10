@@ -12,3 +12,14 @@
 .page_margin_lg {
 	margin-top: 180px;
 }
+
+.input {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+.input_error {
+	border: 2px solid var(--colors-interface-error);
+	border-radius: 40px;
+}
