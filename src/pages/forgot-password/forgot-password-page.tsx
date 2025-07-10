@@ -42,7 +42,7 @@ export const ForgotPassword = () => {
 		setIsValid(!validationError);
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		if (!isTouched) setIsTouched(true);
 

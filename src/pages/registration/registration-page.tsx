@@ -78,7 +78,7 @@ export const RegistrationPage = () => {
 		}
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setTouched({

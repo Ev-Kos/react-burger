@@ -97,7 +97,7 @@ export const ProfilePage = () => {
 		}
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const updatedFields: Partial<TUserData> = {};
 		Object.keys(form).forEach((key) => {

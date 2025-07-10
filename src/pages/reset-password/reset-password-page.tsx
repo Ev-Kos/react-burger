@@ -69,7 +69,7 @@ export const ResetPassword = () => {
 		setErrors((prev) => ({ ...prev, [name]: error }));
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setTouched({ password: true, code: true });

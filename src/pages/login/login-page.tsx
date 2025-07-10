@@ -70,7 +70,7 @@ export const LoginPage = () => {
 		}
 	};
 
-	const handleSubmit = async (e: FormEvent) => {
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		setTouched({ email: true, password: true });
