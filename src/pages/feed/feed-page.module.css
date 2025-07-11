@@ -1,0 +1,14 @@
+.feed_page {
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	width: 100%;
+	max-width: 1240px;
+}
+
+.feed {
+	gap: 60px;
+	max-width: 1240px;
+}

@@ -13,6 +13,7 @@ import styles from './app.module.css';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { AppHeader } from '../app-header/app-header';
+import { FeedPage } from '@/pages/feed/feed-page';
 
 export const App = () => {
 	const location = useLocation();
@@ -46,6 +47,7 @@ export const App = () => {
 					element={<ProtectedRoute component={<ProfilePage />} isAuth />}
 				/>
 				<Route path={ROUTEPATHS.ingredientId} element={<IngredientPage />} />
+				<Route path={ROUTEPATHS.feed} element={<FeedPage />} />
 				<Route path={ROUTEPATHS.notFound} element={<NotFoundPage />} />
 			</Routes>
 			{background && (

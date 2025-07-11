@@ -1,0 +1,24 @@
+.item {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	padding: 24px;
+	background-color: var(--background);
+	border-radius: 40px;
+}
+
+.item_order_info {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.item_order_number,
+.item_order_time {
+	margin: 0;
+}
+
+.images_and_price {
+	display: flex;
+	justify-content: space-between;
+}

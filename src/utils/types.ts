@@ -58,3 +58,20 @@ export type TGetIngredients = {
 };
 
 export type FormField = 'name' | 'email' | 'password';
+
+export type TOrder = {
+	createdAt: string;
+	ingredients: string[];
+	name: string;
+	number: number;
+	status: string;
+	updatedAt: string;
+	_id: string;
+};
+
+export type TFeed = {
+	success: boolean;
+	orders: TOrder[];
+	total: number;
+	totalToday: number;
+};
