@@ -30,11 +30,11 @@ export const FeedInfo = () => {
 	}, [feed]);
 
 	const numberDoneSize = useMemo(
-		() => (ordersNumbers.done.length > 8 ? 'small' : 'default'),
+		() => (ordersNumbers.done.length > 8 ? `${styles.number}` : ''),
 		[ordersNumbers]
 	);
 	const numberAtWorkSize = useMemo(
-		() => (ordersNumbers.atWork.length > 8 ? 'small' : 'default'),
+		() => (ordersNumbers.atWork.length > 8 ? `${styles.number}` : ''),
 		[ordersNumbers]
 	);
 
@@ -48,7 +48,7 @@ export const FeedInfo = () => {
 						{ordersNumbers.done.length !== 0 &&
 							ordersNumbers.done.map((item) => (
 								<li
-									className={`text text_type_digits-${numberDoneSize}`}
+									className={`${numberDoneSize} text text_type_digits-default`}
 									key={item}>
 									{item}
 								</li>
@@ -61,7 +61,7 @@ export const FeedInfo = () => {
 						{ordersNumbers.atWork.length !== 0 &&
 							ordersNumbers.atWork.map((item) => (
 								<li
-									className={`text text_type_digits-${numberAtWorkSize}`}
+									className={`${numberAtWorkSize} text text_type_digits-default`}
 									key={item}>
 									{item}
 								</li>

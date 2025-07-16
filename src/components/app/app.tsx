@@ -21,6 +21,7 @@ import { LOADING_DELAY } from '@/utils/constants';
 import { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@/services/store';
 import { fetchIngredients } from '@/services/slices/ingredientsSlice';
+import { FeedDetail } from '@/pages/feed-detail/feed-detail';
 
 export const App = () => {
 	const location = useLocation();
@@ -92,6 +93,7 @@ export const App = () => {
 				/>
 				<Route path={ROUTEPATHS.feed} element={<FeedPage />} />
 				<Route path={ROUTEPATHS.notFound} element={<NotFoundPage />} />
+				<Route path={ROUTEPATHS.feedId} element={<FeedDetail />} />
 			</Routes>
 			{background && (
 				<Routes>

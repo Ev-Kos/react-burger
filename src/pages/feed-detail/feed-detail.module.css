@@ -1,0 +1,13 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 640px;
+}
+
+.number {
+	text-align: center;
+}
+
+.done {
+	color: var(--colors-interface-success);
+}

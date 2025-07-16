@@ -7,6 +7,9 @@ import { TooltipText } from '../tooltip-text/tooltip-text';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { parseTime } from '@/utils/parse-time';
 import { FeedImage } from '../feed-image/feed-image';
+import { Link } from 'react-router';
+import { ROUTEPATHS } from '@/utils/routes';
+import { INGREDIENT_TYPES } from '@/utils/constants';
 
 type TFeedItemProps = {
 	item: TOrder;
@@ -20,14 +23,19 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 		item.ingredients.forEach((el) => {
 			const ingredient = ingredients.find((i) => i._id === el);
 			if (ingredient) {
-				res = [...res, ingredient];
+				ingredient.type === INGREDIENT_TYPES.BUN
+					? (res = [...res, { ...ingredient, price: 2 * ingredient.price }])
+					: (res = [...res, ingredient]);
 			}
 		});
 		return res;
 	}, [item, ingredients]);
 
 	const images = useMemo(() => {
-		return ingrediensOfOrder.map((el) => el.image_mobile).slice(0, 6);
+		return ingrediensOfOrder
+			.map((el) => el.image_mobile)
+			.slice(0, 6)
+			.reverse();
 	}, [ingrediensOfOrder]);
 
 	const price = useMemo(() => {
@@ -35,7 +43,7 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 	}, [ingrediensOfOrder]);
 
 	return (
-		<div className={styles.item}>
+		<Link className={styles.item} to={`${ROUTEPATHS.feed}/${item._id}`}>
 			<div className={styles.item_order_info}>
 				<p
 					className={`${styles.item_order_number} text text_type_digits-medium`}>
@@ -65,6 +73,6 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 					<CurrencyIcon type='primary' />
 				</div>
 			</div>
-		</div>
+		</Link>
 	);
 };
