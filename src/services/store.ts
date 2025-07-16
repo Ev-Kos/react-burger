@@ -9,6 +9,17 @@ import loginSlice from './slices/loginSlice';
 import getUserSlice from './slices/getUserSlice';
 import updateUserSlice from './slices/updateUserSlice';
 import { useDispatch } from 'react-redux';
+import wsSlice from './slices/wsSlice';
+import { wsMiddleware } from './middleware/ws-middleware';
+import {
+	connect,
+	disconnect,
+	onConnecting,
+	onOpen,
+	onClose,
+	onError,
+	onMessage,
+} from './actions/wsActions';
 
 const reducer = combineReducers({
 	ingredientsSlice,
@@ -19,10 +30,26 @@ const reducer = combineReducers({
 	loginSlice,
 	getUserSlice,
 	updateUserSlice,
+	wsSlice,
 });
+
+const wsActions = {
+	connect: connect,
+	disconnect,
+	onConnecting,
+	onOpen,
+	onClose,
+	onError,
+	onMessage,
+};
+
+const getOrdersMiddleware = wsMiddleware(wsActions);
 
 export const store = configureStore({
 	reducer,
+	middleware: (getDefaultMiddleware) => {
+		return getDefaultMiddleware().concat(getOrdersMiddleware);
+	},
 });
 
 export type RootState = ReturnType<typeof reducer>;

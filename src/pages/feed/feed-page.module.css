@@ -1,5 +1,6 @@
 .feed_page {
 	flex-direction: column;
+	justify-content: flex-start;
 	align-items: center;
 }
 
@@ -9,6 +10,20 @@
 }
 
 .feed {
-	gap: 60px;
-	max-width: 1240px;
+	display: flex;
+	gap: 52px;
+	width: 1240px;
+}
+
+.orders,
+.orders_empty {
+	width: 608px;
+}
+
+.orders_empty {
+	height: 200px;
+}
+
+.feed_info {
+	width: 580px;
 }
