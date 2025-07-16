@@ -56,13 +56,14 @@ export const wsMiddleware = <R, S>(
 					dispatch(onError('Unknown webSocket error'));
 				};
 
-				socket.onclose = () => {
-					onClose && dispatch(onClose());
+				socket.onclose = (event) => {
+					if (reconnectId) clearTimeout(reconnectId);
 
-					if (isConnected) {
+					if (event.code !== 1000 && isConnected) {
 						reconnectId = setTimeout(() => {
 							dispatch(connect(url));
 						}, RECONNECT_PERIOD);
+						onClose && dispatch(onClose());
 					}
 				};
 
@@ -89,12 +90,22 @@ export const wsMiddleware = <R, S>(
 			}
 
 			if (disconnect.match(action)) {
-				if (reconnectId) {
-					clearTimeout(reconnectId);
-					reconnectId = null;
+				if (socket) {
+					if (
+						socket.readyState === WebSocket.CONNECTING ||
+						socket.readyState === WebSocket.OPEN
+					) {
+						socket.close(1000, 'Normal closure');
+					}
+					socket = null;
+
+					if (reconnectId) {
+						clearTimeout(reconnectId);
+						reconnectId = null;
+					}
 				}
+
 				isConnected = false;
-				socket?.close();
 				socket = null;
 
 				return;

@@ -75,3 +75,9 @@ export type TFeed = {
 	total: number;
 	totalToday: number;
 };
+
+export enum WsStatus {
+	CONNECTING = 'CONNECTING...',
+	ONLINE = 'ONLINE',
+	OFFLINE = 'OFFLINE',
+}

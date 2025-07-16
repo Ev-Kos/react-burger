@@ -1,4 +1,3 @@
-import { WsStatus } from '@/utils/constants';
 import { createSlice } from '@reduxjs/toolkit';
 import {
 	onClose,
@@ -7,7 +6,7 @@ import {
 	onMessage,
 	onOpen,
 } from '../actions/wsActions';
-import { TFeed } from '@/utils/types';
+import { TFeed, WsStatus } from '@/utils/types';
 
 export type TInitialState = {
 	status: WsStatus;

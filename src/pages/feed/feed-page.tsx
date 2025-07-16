@@ -9,16 +9,21 @@ import { useSelector } from 'react-redux';
 import { wsSelectors } from '@/services/selectors/wsSelector';
 import { InfoMessage } from '@/components/info-message/info-message';
 import { Loader } from '@/components/loader/loader';
+import { FeedInfo } from '@/components/feed-info/feed-info';
+import { WsStatus } from '@/utils/types';
 
 export const FeedPage = () => {
 	const dispatch = useAppDispatch();
 	const feed = useSelector(wsSelectors.getOrders);
+	const status = useSelector(wsSelectors.getWsStatus);
 
 	useEffect(() => {
 		dispatch(connect(`${WS_URL}/all`));
 
 		return () => {
-			dispatch(disconnect());
+			if (status !== WsStatus.OFFLINE) {
+				dispatch(disconnect());
+			}
 		};
 	}, []);
 
@@ -42,7 +47,9 @@ export const FeedPage = () => {
 								<InfoMessage text='Пока нет созданных заказов' />
 							</div>
 						)}
-						<div className={stylesFeedPage.feed_info}></div>
+						<div className={stylesFeedPage.feed_info}>
+							<FeedInfo />
+						</div>
 					</div>
 				</main>
 			)}
