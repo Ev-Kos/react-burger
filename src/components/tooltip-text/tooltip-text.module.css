@@ -1,0 +1,26 @@
+.container {
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+}
+
+.text {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.fool_text {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	z-index: 7;
+	max-width: 500px;
+	padding: 8px;
+	white-space: normal;
+	word-wrap: break-word;
+	background-color: var(--background-element);
+	border: 1px solid var(--text-primary-light);
+	border-radius: 4px;
+}

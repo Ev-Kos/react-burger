@@ -4,8 +4,8 @@ import { FeedItem } from '../feed-item/feed-item';
 
 export const Feed = ({ orders }: { orders: TOrder[] }) => {
 	return (
-		<ul className={styles.feed}>
-			{orders && orders.map((item) => <FeedItem item={item} />)}
+		<ul className={`${styles.feed} custom-scroll`}>
+			{orders && orders.map((item) => <FeedItem item={item} key={item._id} />)}
 		</ul>
 	);
 };

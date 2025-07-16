@@ -14,16 +14,56 @@ import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { AppHeader } from '../app-header/app-header';
 import { FeedPage } from '@/pages/feed/feed-page';
+import { useSelector } from 'react-redux';
+import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
+import { useMinimumLoading } from '@/services/hooks/useMinimumLoading';
+import { LOADING_DELAY } from '@/utils/constants';
+import { useEffect, useRef } from 'react';
+import { useAppDispatch } from '@/services/store';
+import { fetchIngredients } from '@/services/slices/ingredientsSlice';
 
 export const App = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state?.background;
+	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const [isLocalLoading, executeWithLoading] = useMinimumLoading(LOADING_DELAY);
+
+	const isMounted = useRef(true);
+	const dispatch = useAppDispatch();
+
+	useEffect(() => {
+		isMounted.current = true;
+
+		const loadIngredients = async () => {
+			try {
+				if (typeof executeWithLoading === 'function') {
+					await executeWithLoading(() => dispatch(fetchIngredients()).unwrap());
+				}
+			} catch (e) {
+				if (isMounted.current) {
+					console.error(`Ошибка getIngredientsApi: ${e}`);
+				}
+			}
+		};
+
+		if (ingredients.length === 0) {
+			loadIngredients();
+		}
+
+		return () => {
+			isMounted.current = false;
+		};
+	}, [dispatch, executeWithLoading, ingredients.length]);
+
 	return (
 		<div className={styles.app}>
 			<AppHeader />
 			<Routes location={background || location}>
-				<Route path={ROUTEPATHS.home} element={<HomePage />} />
+				<Route
+					path={ROUTEPATHS.home}
+					element={<HomePage isLocalLoading={Boolean(isLocalLoading)} />}
+				/>
 				<Route
 					path={ROUTEPATHS.login}
 					element={<ProtectedRoute component={<LoginPage />} isUnauth />}
@@ -46,7 +86,10 @@ export const App = () => {
 					path={ROUTEPATHS.profile}
 					element={<ProtectedRoute component={<ProfilePage />} isAuth />}
 				/>
-				<Route path={ROUTEPATHS.ingredientId} element={<IngredientPage />} />
+				<Route
+					path={ROUTEPATHS.ingredientId}
+					element={<IngredientPage isLocalLoading={Boolean(isLocalLoading)} />}
+				/>
 				<Route path={ROUTEPATHS.feed} element={<FeedPage />} />
 				<Route path={ROUTEPATHS.notFound} element={<NotFoundPage />} />
 			</Routes>
