@@ -3,7 +3,7 @@ import styles from './profile-page.module.css';
 import { ROUTEPATHS } from '@/utils/routes';
 import { logoutApi } from '@/utils/api/logout';
 import { setUser } from '@/services/slices/userSlice';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { ProfileForm } from '@/components/profile-form/profile-form';
 import { Feed } from '@/components/feed/feed';
 import { useEffect, useMemo } from 'react';
@@ -13,7 +13,6 @@ import {
 } from '@/services/slices/historyOrdersSlice';
 import { WS_URL } from '@/utils/constants';
 import { WsStatus } from '@/utils/types';
-import { useSelector } from 'react-redux';
 import { historyOrdersWsSelectors } from '@/services/selectors/historyOrderWsSelector';
 import { InfoMessage } from '@/components/info-message/info-message';
 
@@ -24,8 +23,8 @@ export const ProfilePage = () => {
 	const { pathname } = useLocation();
 	const dispatch = useAppDispatch();
 	const accessToken = localStorage.getItem('accessToken')?.slice(7);
-	const feed = useSelector(historyOrdersWsSelectors.getOrders);
-	const status = useSelector(historyOrdersWsSelectors.getWsStatus);
+	const feed = useAppSelector(historyOrdersWsSelectors.getOrders);
+	const status = useAppSelector(historyOrdersWsSelectors.getWsStatus);
 
 	const orders = useMemo(
 		() => (feed && feed.orders ? [...feed.orders].reverse() : null),
@@ -45,7 +44,7 @@ export const ProfilePage = () => {
 	};
 
 	useEffect(() => {
-		if (!feed) {
+		if (pathname === ROUTEPATHS.profileOrders) {
 			dispatch(historyOrdersConnect(`${WS_URL}?token=${accessToken}`));
 		}
 
@@ -54,7 +53,7 @@ export const ProfilePage = () => {
 				dispatch(historyOrdersDisconnect());
 			}
 		};
-	}, []);
+	}, [pathname]);
 
 	return (
 		<main className={styles.page_profile}>

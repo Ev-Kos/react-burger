@@ -1,7 +1,6 @@
 import { TIngredient, TOrder } from '@/utils/types';
 import styles from './feed-item.module.css';
 import { useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
 import { TooltipText } from '../tooltip-text/tooltip-text';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,6 +9,7 @@ import { FeedImage } from '../feed-image/feed-image';
 import { Link, useLocation } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
 import { ORDER_STATUS } from '@/utils/constants';
+import { useAppSelector } from '@/services/store';
 
 type TFeedItemProps = {
 	item: TOrder;
@@ -17,7 +17,7 @@ type TFeedItemProps = {
 
 export const FeedItem = ({ item }: TFeedItemProps) => {
 	const location = useLocation();
-	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
 
 	const ingrediensOfOrder = useMemo(() => {
 		let res: TIngredient[] = [];

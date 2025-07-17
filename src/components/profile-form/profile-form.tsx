@@ -5,7 +5,6 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Form } from '../form/form';
 import styles from './profile-form.module.css';
-import { useSelector } from 'react-redux';
 import {
 	fetchUpdateUser,
 	updateUserSliceState,
@@ -13,14 +12,14 @@ import {
 import { userSelector } from '@/services/selectors/userSelector';
 import { FormField, TUserData } from '@/utils/types';
 import { ChangeEvent, FormEvent, useMemo, useRef, useState } from 'react';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { validateEmail, validateEmptyField } from '@/utils/validate';
 import { setUser } from '@/services/slices/userSlice';
 
 export const ProfileForm = () => {
-	const { request } = useSelector(updateUserSliceState);
+	const { request } = useAppSelector(updateUserSliceState);
 
-	const user = useSelector(userSelector.user);
+	const user = useAppSelector(userSelector.user);
 
 	const initData: Partial<TUserData> = user
 		? { ...user, password: '' }

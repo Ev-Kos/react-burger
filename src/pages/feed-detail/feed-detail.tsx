@@ -1,10 +1,9 @@
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import styles from './feed-detail.module.css';
 import stylesPage from '../pages.module.css';
-import { useSelector } from 'react-redux';
 import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
 import { useEffect, useMemo } from 'react';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { ORDER_STATUS, WS_URL } from '@/utils/constants';
 import { TIngredientWithCount, WsStatus } from '@/utils/types';
 import { Loader } from '@/components/loader/loader';
@@ -17,14 +16,26 @@ import {
 	allOrdersDisconnect,
 } from '@/services/slices/allOrdersWsSlice';
 import { alOrdersWsSelectors } from '@/services/selectors/allOrdersWsSelector';
+import { ROUTEPATHS } from '@/utils/routes';
+import { historyOrdersWsSelectors } from '@/services/selectors/historyOrderWsSelector';
+import {
+	historyOrdersConnect,
+	historyOrdersDisconnect,
+} from '@/services/slices/historyOrdersSlice';
 
 export const FeedDetail = ({ isModal }: { isModal?: boolean }) => {
 	const { id } = useParams();
-
+	const { pathname } = useLocation();
+	const isFeed = pathname.includes(ROUTEPATHS.feed);
+	const accessToken = localStorage.getItem('accessToken')?.slice(7);
 	const dispatch = useAppDispatch();
-	const ingredients = useSelector(ingredientsSelectors.getIngredients);
-	const feed = useSelector(alOrdersWsSelectors.getOrders);
-	const status = useSelector(alOrdersWsSelectors.getWsStatus);
+	const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
+	const feed = useAppSelector((state) =>
+		isFeed
+			? alOrdersWsSelectors.getOrders(state)
+			: historyOrdersWsSelectors.getOrders(state)
+	);
+	const status = useAppSelector(alOrdersWsSelectors.getWsStatus);
 
 	const order = useMemo(() => {
 		return feed ? feed.orders.find((item) => item._id === id) || null : null;
@@ -81,11 +92,15 @@ export const FeedDetail = ({ isModal }: { isModal?: boolean }) => {
 
 	useEffect(() => {
 		if (!feed && !isModal) {
-			dispatch(allOrdersConnect(`${WS_URL}/all`));
+			isFeed
+				? dispatch(allOrdersConnect(`${WS_URL}/all`))
+				: dispatch(historyOrdersConnect(`${WS_URL}?token=${accessToken}`));
 		}
 		return () => {
 			if (status !== WsStatus.OFFLINE) {
-				dispatch(allOrdersDisconnect());
+				isFeed
+					? dispatch(allOrdersDisconnect())
+					: dispatch(historyOrdersDisconnect());
 			}
 		};
 	}, []);

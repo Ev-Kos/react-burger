@@ -1,8 +1,8 @@
 import styles from './feed-info.module.css';
 import { useMemo } from 'react';
 import { ORDER_STATUS } from '@/utils/constants';
-import { useSelector } from 'react-redux';
 import { alOrdersWsSelectors } from '@/services/selectors/allOrdersWsSelector';
+import { useAppSelector } from '@/services/store';
 
 type TOrderNumbers = {
 	atWork: number[];
@@ -10,7 +10,7 @@ type TOrderNumbers = {
 };
 
 export const FeedInfo = () => {
-	const feed = useSelector(alOrdersWsSelectors.getOrders);
+	const feed = useAppSelector(alOrdersWsSelectors.getOrders);
 
 	const ordersNumbers: TOrderNumbers = useMemo(() => {
 		const result: TOrderNumbers = {

@@ -10,10 +10,9 @@ import { Form } from '@/components/form/form';
 import { FormLink } from '@/components/form-link/form-link';
 import { validateEmail, validateEmptyField } from '@/utils/validate';
 import { fetchLogin, loginSliceState } from '@/services/slices/loginSlice';
-import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router';
 import { setUser } from '@/services/slices/userSlice';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { ErrorMessage } from '@/components/error-message/error-message';
 
 type FormField = 'email' | 'password';
@@ -38,7 +37,7 @@ export const LoginPage = () => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const location = useLocation();
-	const { request, failed } = useSelector(loginSliceState);
+	const { request, failed } = useAppSelector(loginSliceState);
 
 	useMemo(() => {
 		const emailError = validateEmail(form.email);

@@ -1,10 +1,9 @@
 import { Feed } from '@/components/feed/feed';
 import styles from '../pages.module.css';
 import stylesFeedPage from './feed-page.module.css';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { useEffect } from 'react';
 import { WS_URL } from '@/utils/constants';
-import { useSelector } from 'react-redux';
 import { InfoMessage } from '@/components/info-message/info-message';
 import { Loader } from '@/components/loader/loader';
 import { FeedInfo } from '@/components/feed-info/feed-info';
@@ -17,8 +16,8 @@ import { alOrdersWsSelectors } from '@/services/selectors/allOrdersWsSelector';
 
 export const FeedPage = () => {
 	const dispatch = useAppDispatch();
-	const feed = useSelector(alOrdersWsSelectors.getOrders);
-	const status = useSelector(alOrdersWsSelectors.getWsStatus);
+	const feed = useAppSelector(alOrdersWsSelectors.getOrders);
+	const status = useAppSelector(alOrdersWsSelectors.getWsStatus);
 
 	useEffect(() => {
 		if (!feed) {

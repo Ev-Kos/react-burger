@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import styles from './home-page.module.css';
 import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
 import { DndProvider } from 'react-dnd';
@@ -7,10 +6,11 @@ import { Loader } from '@/components/loader/loader';
 import { InfoMessage } from '@/components/info-message/info-message';
 import { BurgerIngredients } from '@/components/burger-ingredients/burger-ingredients';
 import { BurgerConstructor } from '@/components/burger-contructor/burger-constructor';
+import { useAppSelector } from '@/services/store';
 
 export const HomePage = ({ isLocalLoading }: { isLocalLoading: boolean }) => {
-	const ingredients = useSelector(ingredientsSelectors.getIngredients);
-	const { getIngredientsfailed } = useSelector(
+	const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
+	const { getIngredientsfailed } = useAppSelector(
 		ingredientsSelectors.getStatusFlags
 	);
 

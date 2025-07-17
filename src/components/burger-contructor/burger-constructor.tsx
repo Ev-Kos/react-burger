@@ -9,7 +9,6 @@ import {
 import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { useSelector } from 'react-redux';
 import {
 	addIngredient,
 	deleteIngredient,
@@ -30,15 +29,15 @@ import { userSelector } from '@/services/selectors/userSelector';
 import { useNavigate } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
 import { TIngredient } from '@/utils/types';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLocalLoading, executeWithLoading] = useMinimumLoading(400);
-	const selectedIngredients = useSelector(selectedIngredientsState);
-	const user = useSelector(userSelector.user);
+	const selectedIngredients = useAppSelector(selectedIngredientsState);
+	const user = useAppSelector(userSelector.user);
 	const { request: orderRequest, failed: orderFailed } =
-		useSelector(createOrderState);
+		useAppSelector(createOrderState);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 

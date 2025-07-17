@@ -8,7 +8,7 @@ import registrationSlice from './slices/registrationSlice';
 import loginSlice from './slices/loginSlice';
 import getUserSlice from './slices/getUserSlice';
 import updateUserSlice from './slices/updateUserSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import alOrdersWsSlice, {
 	allOrdersConnect,
 	allOrdersDisconnect,
@@ -82,3 +82,4 @@ export type RootState = ReturnType<typeof reducer>;
 export type AppDispatch = typeof store.dispatch;
 
 export const useAppDispatch = useDispatch.withTypes<AppDispatch>();
+export const useAppSelector = useSelector.withTypes<RootState>();

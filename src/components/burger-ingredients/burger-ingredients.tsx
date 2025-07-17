@@ -3,12 +3,12 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientList } from '../ingredients-list/ingredients-list';
 import { INGREDIENTS_SCROLL_DELAY, INGREDIENT_TYPES } from '@/utils/constants';
 import { useState, useRef, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
+import { useAppSelector } from '@/services/store';
 
 export const BurgerIngredients = () => {
 	const [currentType, setCurrentType] = useState(INGREDIENT_TYPES.BUN);
-	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
 	const isScroll = useRef(false);
 
 	const listContainerRef = useRef<HTMLUListElement>(null);

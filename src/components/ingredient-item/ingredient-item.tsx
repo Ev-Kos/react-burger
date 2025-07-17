@@ -5,10 +5,10 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-import { useSelector } from 'react-redux';
 import { selectedIngredientsState } from '@/services/slices/selectedIngredients';
 import { INGREDIENT_TYPES } from '@/utils/constants';
 import { Link, useLocation } from 'react-router';
+import { useAppSelector } from '@/services/store';
 
 type TIngredientItem = {
 	ingredient: TIngredient;
@@ -17,7 +17,7 @@ type TIngredientItem = {
 
 export const IngredientItem = ({ ingredient, onClick }: TIngredientItem) => {
 	const location = useLocation();
-	const selectedIngredients = useSelector(selectedIngredientsState);
+	const selectedIngredients = useAppSelector(selectedIngredientsState);
 
 	const bun = [...selectedIngredients].find(
 		(item) => item.type === INGREDIENT_TYPES.BUN

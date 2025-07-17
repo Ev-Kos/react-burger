@@ -1,10 +1,9 @@
 import { userSelector } from '@/services/selectors/userSelector';
 import { fetchGetUser } from '@/services/slices/getUserSlice';
 import { setUser } from '@/services/slices/userSlice';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { ROUTEPATHS } from '@/utils/routes';
 import { ReactElement, useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router';
 import { Loader } from '../loader/loader';
 
@@ -21,7 +20,7 @@ export const ProtectedRoute = ({
 	isUnauth = false,
 	forResetPassword = false,
 }: TProtectedRoute) => {
-	const user = useSelector(userSelector.user);
+	const user = useAppSelector(userSelector.user);
 	const dispatch = useAppDispatch();
 	const location = useLocation();
 	const [isUserChecked, setIsUserChecked] = useState(false);

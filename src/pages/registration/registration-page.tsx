@@ -9,7 +9,6 @@ import {
 import { FormLink } from '@/components/form-link/form-link';
 import { ROUTEPATHS } from '@/utils/routes';
 import { validateEmail, validateEmptyField } from '@/utils/validate';
-import { useSelector } from 'react-redux';
 import {
 	fetchRegistrUser,
 	registrationSliceState,
@@ -17,7 +16,7 @@ import {
 import { useNavigate } from 'react-router';
 import { setUser } from '@/services/slices/userSlice';
 import { FormField } from '@/utils/types';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 import { ErrorMessage } from '@/components/error-message/error-message';
 
 export const RegistrationPage = () => {
@@ -43,7 +42,7 @@ export const RegistrationPage = () => {
 
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-	const { request, error } = useSelector(registrationSliceState);
+	const { request, error } = useAppSelector(registrationSliceState);
 
 	useEffect(() => {
 		const nameError = validateEmptyField(form.name);
