@@ -1,6 +1,10 @@
-.container {
+.container,
+.list {
 	display: flex;
 	flex-direction: column;
+}
+
+.container {
 	width: 640px;
 }
 
@@ -10,4 +14,25 @@
 
 .done {
 	color: var(--colors-interface-success);
+}
+
+.list {
+	gap: 16px;
+	height: 312px;
+	margin: 0;
+	margin-bottom: 40px;
+	padding: 0;
+	overflow: auto;
+	list-style-type: none;
+}
+
+.time_and_price {
+	display: flex;
+	justify-content: space-between;
+}
+
+.price_wrap {
+	display: flex;
+	align-items: center;
+	gap: 8px;
 }

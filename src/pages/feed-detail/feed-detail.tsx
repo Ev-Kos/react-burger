@@ -7,14 +7,12 @@ import { wsSelectors } from '@/services/selectors/wsSelector';
 import { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@/services/store';
 import { INGREDIENT_TYPES, ORDER_STATUS, WS_URL } from '@/utils/constants';
-import { TIngredient, WsStatus } from '@/utils/types';
+import { TIngredientWithCount, WsStatus } from '@/utils/types';
 import { connect, disconnect } from '@/services/actions/wsActions';
 import { Loader } from '@/components/loader/loader';
-import { TooltipText } from '@/components/tooltip-text/tooltip-text';
-
-type TIngredientWithCount = {
-	count: number;
-} & TIngredient;
+import { FeedDetailItem } from '@/components/feed-detail-item/feed-detail-item';
+import { parseTime } from '@/utils/parse-time';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export const FeedDetail = () => {
 	const { id } = useParams();
@@ -86,8 +84,6 @@ export const FeedDetail = () => {
 		};
 	}, []);
 
-	console.log(price);
-
 	return (
 		<>
 			{!feed && !order ? (
@@ -97,16 +93,27 @@ export const FeedDetail = () => {
 					<div className={styles.container}>
 						<p
 							className={`${styles.number} text text_type_digits-default mb-10`}>{`#${order?.number}`}</p>
-						<TooltipText
-							text={String(order?.name)}
-							className='text text_type_main-medium mb-3'
-						/>
+						<p className='text text_type_main-medium mb-3'>{order?.name}</p>
 						<p
 							className={`${orderStatus.class} text text_type_main-default mb-15`}>
 							{orderStatus.text}
 						</p>
 						<p className='text text_type_main-medium mb-6'>Состав:</p>
-						<ul></ul>
+						<ul className={`${styles.list} custom-scroll`}>
+							{ingrediensOfOrder.length !== 0 &&
+								ingrediensOfOrder.map((item) => (
+									<FeedDetailItem item={item} key={item._id} />
+								))}
+						</ul>
+						<div className={styles.time_and_price}>
+							<p className='text text_type_main-default text_color_inactive'>
+								{parseTime(String(order?.createdAt))}
+							</p>
+							<div className={styles.price_wrap}>
+								<p className='text text_type_digits-default'>{price}</p>
+								<CurrencyIcon type='primary' />
+							</div>
+						</div>
 					</div>
 				</main>
 			)}

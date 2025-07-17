@@ -81,3 +81,7 @@ export enum WsStatus {
 	ONLINE = 'ONLINE',
 	OFFLINE = 'OFFLINE',
 }
+
+export type TIngredientWithCount = {
+	count: number;
+} & TIngredient;
