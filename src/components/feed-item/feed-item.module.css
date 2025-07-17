@@ -41,3 +41,11 @@
 	align-items: center;
 	gap: 8px;
 }
+
+.done {
+	color: var(--colors-interface-success);
+}
+
+.item_name_status {
+	height: fit-content;
+}

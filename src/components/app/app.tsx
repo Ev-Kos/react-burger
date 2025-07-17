@@ -22,12 +22,14 @@ import { useEffect, useRef } from 'react';
 import { useAppDispatch } from '@/services/store';
 import { fetchIngredients } from '@/services/slices/ingredientsSlice';
 import { FeedDetail } from '@/pages/feed-detail/feed-detail';
+import { feedDetailSliceState } from '@/services/slices/feedDetailSlice';
 
 export const App = () => {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const background = location.state?.background;
 	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const orderNumber = useSelector(feedDetailSliceState);
 	const [isLocalLoading, executeWithLoading] = useMinimumLoading(LOADING_DELAY);
 
 	const isMounted = useRef(true);
@@ -88,6 +90,10 @@ export const App = () => {
 					element={<ProtectedRoute component={<ProfilePage />} isAuth />}
 				/>
 				<Route
+					path={ROUTEPATHS.profileOrders}
+					element={<ProtectedRoute component={<ProfilePage />} isAuth />}
+				/>
+				<Route
 					path={ROUTEPATHS.ingredientId}
 					element={<IngredientPage isLocalLoading={Boolean(isLocalLoading)} />}
 				/>
@@ -102,6 +108,16 @@ export const App = () => {
 						element={
 							<Modal title='' closeModal={() => navigate(-1)}>
 								<IngredientDetails isModal />
+							</Modal>
+						}
+					/>
+					<Route
+						path={ROUTEPATHS.feedId}
+						element={
+							<Modal
+								title={orderNumber ? `#${orderNumber}` : ''}
+								closeModal={() => navigate(-1)}>
+								<FeedDetail isModal />
 							</Modal>
 						}
 					/>

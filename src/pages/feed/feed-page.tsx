@@ -4,25 +4,30 @@ import stylesFeedPage from './feed-page.module.css';
 import { useAppDispatch } from '@/services/store';
 import { useEffect } from 'react';
 import { WS_URL } from '@/utils/constants';
-import { connect, disconnect } from '@/services/actions/wsActions';
 import { useSelector } from 'react-redux';
-import { wsSelectors } from '@/services/selectors/wsSelector';
 import { InfoMessage } from '@/components/info-message/info-message';
 import { Loader } from '@/components/loader/loader';
 import { FeedInfo } from '@/components/feed-info/feed-info';
 import { WsStatus } from '@/utils/types';
+import {
+	allOrdersConnect,
+	allOrdersDisconnect,
+} from '@/services/slices/allOrdersWsSlice';
+import { alOrdersWsSelectors } from '@/services/selectors/allOrdersWsSelector';
 
 export const FeedPage = () => {
 	const dispatch = useAppDispatch();
-	const feed = useSelector(wsSelectors.getOrders);
-	const status = useSelector(wsSelectors.getWsStatus);
+	const feed = useSelector(alOrdersWsSelectors.getOrders);
+	const status = useSelector(alOrdersWsSelectors.getWsStatus);
 
 	useEffect(() => {
-		dispatch(connect(`${WS_URL}/all`));
+		if (!feed) {
+			dispatch(allOrdersConnect(`${WS_URL}/all`));
+		}
 
 		return () => {
 			if (status !== WsStatus.OFFLINE) {
-				dispatch(disconnect());
+				dispatch(allOrdersDisconnect());
 			}
 		};
 	}, []);

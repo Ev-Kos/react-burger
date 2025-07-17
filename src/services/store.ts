@@ -9,17 +9,27 @@ import loginSlice from './slices/loginSlice';
 import getUserSlice from './slices/getUserSlice';
 import updateUserSlice from './slices/updateUserSlice';
 import { useDispatch } from 'react-redux';
-import wsSlice from './slices/wsSlice';
+import alOrdersWsSlice, {
+	allOrdersConnect,
+	allOrdersDisconnect,
+	allOrdersOnClose,
+	allOrdersOnConnecting,
+	allOrdersOnError,
+	allOrdersOnMessage,
+	allOrdersOnOpen,
+} from './slices/allOrdersWsSlice';
 import { wsMiddleware } from './middleware/ws-middleware';
-import {
-	connect,
-	disconnect,
-	onConnecting,
-	onOpen,
-	onClose,
-	onError,
-	onMessage,
-} from './actions/wsActions';
+
+import feedDetailSlice from './slices/feedDetailSlice';
+import historyOrdersWsSlice, {
+	historyOrdersConnect,
+	historyOrdersDisconnect,
+	historyOrdersOnClose,
+	historyOrdersOnConnecting,
+	historyOrdersOnError,
+	historyOrdersOnMessage,
+	historyOrdersOnOpen,
+} from './slices/historyOrdersSlice';
 
 const reducer = combineReducers({
 	ingredientsSlice,
@@ -30,25 +40,41 @@ const reducer = combineReducers({
 	loginSlice,
 	getUserSlice,
 	updateUserSlice,
-	wsSlice,
+	alOrdersWsSlice,
+	feedDetailSlice,
+	historyOrdersWsSlice,
 });
 
-const wsActions = {
-	connect: connect,
-	disconnect,
-	onConnecting,
-	onOpen,
-	onClose,
-	onError,
-	onMessage,
+const allOrdersWsActions = {
+	connect: allOrdersConnect,
+	disconnect: allOrdersDisconnect,
+	onConnecting: allOrdersOnConnecting,
+	onOpen: allOrdersOnOpen,
+	onClose: allOrdersOnClose,
+	onError: allOrdersOnError,
+	onMessage: allOrdersOnMessage,
 };
 
-const getOrdersMiddleware = wsMiddleware(wsActions);
+const historyOrdersWsActions = {
+	connect: historyOrdersConnect,
+	disconnect: historyOrdersDisconnect,
+	onConnecting: historyOrdersOnConnecting,
+	onOpen: historyOrdersOnOpen,
+	onClose: historyOrdersOnClose,
+	onError: historyOrdersOnError,
+	onMessage: historyOrdersOnMessage,
+};
+
+const getAllOrdersMiddleware = wsMiddleware(allOrdersWsActions);
+const getHistoryOrdersMiddleware = wsMiddleware(historyOrdersWsActions);
 
 export const store = configureStore({
 	reducer,
 	middleware: (getDefaultMiddleware) => {
-		return getDefaultMiddleware().concat(getOrdersMiddleware);
+		return getDefaultMiddleware().concat(
+			getAllOrdersMiddleware,
+			getHistoryOrdersMiddleware
+		);
 	},
 });
 

@@ -30,7 +30,7 @@ export const ProtectedRoute = ({
 		const getUser = async () => {
 			try {
 				const res = await dispatch(fetchGetUser()).unwrap();
-				dispatch(setUser(res.user));
+				dispatch(setUser(res?.user));
 			} catch (error) {
 				console.error(`Ошибка getUser: ${error}`);
 			} finally {

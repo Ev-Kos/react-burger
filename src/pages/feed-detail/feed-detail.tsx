@@ -3,29 +3,38 @@ import styles from './feed-detail.module.css';
 import stylesPage from '../pages.module.css';
 import { useSelector } from 'react-redux';
 import { ingredientsSelectors } from '@/services/selectors/ingredientsSelector';
-import { wsSelectors } from '@/services/selectors/wsSelector';
 import { useEffect, useMemo } from 'react';
 import { useAppDispatch } from '@/services/store';
-import { INGREDIENT_TYPES, ORDER_STATUS, WS_URL } from '@/utils/constants';
+import { ORDER_STATUS, WS_URL } from '@/utils/constants';
 import { TIngredientWithCount, WsStatus } from '@/utils/types';
-import { connect, disconnect } from '@/services/actions/wsActions';
 import { Loader } from '@/components/loader/loader';
 import { FeedDetailItem } from '@/components/feed-detail-item/feed-detail-item';
 import { parseTime } from '@/utils/parse-time';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { setOrderNumber } from '@/services/slices/feedDetailSlice';
+import {
+	allOrdersConnect,
+	allOrdersDisconnect,
+} from '@/services/slices/allOrdersWsSlice';
+import { alOrdersWsSelectors } from '@/services/selectors/allOrdersWsSelector';
 
-export const FeedDetail = () => {
+export const FeedDetail = ({ isModal }: { isModal?: boolean }) => {
 	const { id } = useParams();
 
 	const dispatch = useAppDispatch();
 	const ingredients = useSelector(ingredientsSelectors.getIngredients);
-	const feed = useSelector(wsSelectors.getOrders);
-	const status = useSelector(wsSelectors.getWsStatus);
+	const feed = useSelector(alOrdersWsSelectors.getOrders);
+	const status = useSelector(alOrdersWsSelectors.getWsStatus);
 
-	const order = useMemo(
-		() => (feed ? feed.orders.find((item) => item._id === id) : null),
-		[feed]
-	);
+	const order = useMemo(() => {
+		return feed ? feed.orders.find((item) => item._id === id) || null : null;
+	}, [feed, id]);
+
+	useEffect(() => {
+		if (order) {
+			dispatch(setOrderNumber(order.number));
+		}
+	}, [order, dispatch]);
 
 	const orderStatus = useMemo(
 		() =>
@@ -51,35 +60,32 @@ export const FeedDetail = () => {
 		for (const key in map) {
 			const ingredient = ingredients.find((item) => item._id === key);
 			if (ingredient) {
-				ingredient.type === INGREDIENT_TYPES.BUN
-					? (res = [
-							...res,
-							{ ...ingredient, count: 2, price: 2 * ingredient.price },
-						])
-					: (res = [
-							...res,
-							{
-								...ingredient,
-								count: map[key],
-								price: map[key] * ingredient.price,
-							},
-						]);
+				res = [
+					...res,
+					{
+						...ingredient,
+						count: map[key],
+					},
+				];
 			}
 		}
 		return res;
 	}, [order, ingredients]);
 
 	const price = useMemo(() => {
-		return ingrediensOfOrder.reduce((acc, cur) => acc + cur.price, 0);
+		return ingrediensOfOrder.reduce(
+			(acc, cur) => acc + cur.price * cur.count,
+			0
+		);
 	}, [ingrediensOfOrder]);
 
 	useEffect(() => {
-		if (!feed) {
-			dispatch(connect(`${WS_URL}/all`));
+		if (!feed && !isModal) {
+			dispatch(allOrdersConnect(`${WS_URL}/all`));
 		}
 		return () => {
 			if (status !== WsStatus.OFFLINE) {
-				dispatch(disconnect());
+				dispatch(allOrdersDisconnect());
 			}
 		};
 	}, []);
@@ -87,13 +93,21 @@ export const FeedDetail = () => {
 	return (
 		<>
 			{!feed && !order ? (
-				<Loader />
+				<div className={isModal ? styles.loader_modal : styles.loader}>
+					<Loader />
+				</div>
 			) : (
-				<main className={`${stylesPage.page} ${stylesPage.page_margin_base}`}>
+				<main
+					className={`${stylesPage.page} ${!isModal && stylesPage.page_margin_base}`}>
 					<div className={styles.container}>
+						{!isModal && (
+							<p
+								className={`${styles.number} text text_type_digits-default mb-10`}>{`#${order?.number}`}</p>
+						)}
 						<p
-							className={`${styles.number} text text_type_digits-default mb-10`}>{`#${order?.number}`}</p>
-						<p className='text text_type_main-medium mb-3'>{order?.name}</p>
+							className={`${isModal && 'mt-5'} text text_type_main-medium mb-3`}>
+							{order?.name}
+						</p>
 						<p
 							className={`${orderStatus.class} text text_type_main-default mb-15`}>
 							{orderStatus.text}
@@ -109,7 +123,7 @@ export const FeedDetail = () => {
 							<p className='text text_type_main-default text_color_inactive'>
 								{parseTime(String(order?.createdAt))}
 							</p>
-							<div className={styles.price_wrap}>
+							<div className={`${styles.price_wrap} pb-10`}>
 								<p className='text text_type_digits-default'>{price}</p>
 								<CurrencyIcon type='primary' />
 							</div>

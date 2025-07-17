@@ -1,0 +1,12 @@
+.buttons {
+	display: flex;
+	justify-content: flex-end;
+	gap: 25px;
+	width: 100%;
+}
+
+.cancel_button {
+	color: var(--text-primary-light);
+	background: none;
+	border: 1px solid var(--text-inactive-color);
+}

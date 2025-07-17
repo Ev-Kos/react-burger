@@ -78,8 +78,11 @@ export const BurgerConstructor = () => {
 		} else {
 			if (typeof executeWithLoading === 'function') {
 				executeWithLoading(async () => {
-					const ids = selectedIngredients.map((item) => item._id);
-					await dispatch(fetchCreateOrder(ids)).unwrap();
+					const arr = selectedIngredients.filter(
+						(item) => item.type !== INGREDIENT_TYPES.BUN
+					);
+					const ids = arr.map((item) => item._id);
+					await dispatch(fetchCreateOrder([bun._id, ...ids, bun._id])).unwrap();
 
 					setIsModalOpen(true);
 					dispatch(setIngredients([]));
@@ -214,8 +217,8 @@ export const BurgerConstructor = () => {
 				</li>
 			</ul>
 			<div
-				className={`${isEmpty ? styles.order_container_empty : styles.order_container} mt-10 mr-4 ml-4`}>
-				{!isEmpty && (
+				className={`${isEmpty || isLoading ? styles.order_container_empty : styles.order_container} mt-10 mr-4 ml-4`}>
+				{!isEmpty && !isLoading && (
 					<Button
 						htmlType='button'
 						size='medium'
@@ -224,7 +227,7 @@ export const BurgerConstructor = () => {
 						Очистить
 					</Button>
 				)}
-				{!isEmpty && (
+				{!isEmpty && !isLoading && (
 					<div className={styles.price_container}>
 						<span className='text text_type_digits-medium'>{totalPrice}</span>
 						<CurrencyIcon type='primary' />

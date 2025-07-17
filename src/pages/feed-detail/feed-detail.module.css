@@ -8,6 +8,16 @@
 	width: 640px;
 }
 
+.loader_modal {
+	position: relative;
+	top: -50px;
+	height: 612px;
+}
+
+.loader {
+	height: 100%;
+}
+
 .number {
 	text-align: center;
 }

@@ -1,6 +1,7 @@
 import { createOrderApi } from '@/utils/api/create-order';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
+import { updateToken } from '@/utils/api/update-token';
 
 type TInitialState = {
 	request: boolean;
@@ -17,8 +18,18 @@ const initialState: TInitialState = {
 export const fetchCreateOrder = createAsyncThunk(
 	'order/fetchCreateOrder',
 	async (data: string[]) => {
-		const response = await createOrderApi(data);
-		return response.order.number;
+		try {
+			const response = await createOrderApi(data);
+			return response.order.number;
+		} catch (error) {
+			if (typeof error === 'object' && error !== null && 'message' in error) {
+				if (error.message === 'jwt expired') {
+					await updateToken();
+					const response = await createOrderApi(data);
+					return response.order.number;
+				}
+			}
+		}
 	}
 );
 
@@ -34,7 +45,7 @@ const createOrderSlice = createSlice({
 
 		builder.addCase(fetchCreateOrder.fulfilled, (state, action) => {
 			state.request = false;
-			state.orderNumber = action.payload;
+			state.orderNumber = action.payload ? action.payload : null;
 		});
 
 		builder.addCase(fetchCreateOrder.rejected, (state) => {

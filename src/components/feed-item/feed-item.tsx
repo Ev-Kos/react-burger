@@ -7,15 +7,16 @@ import { TooltipText } from '../tooltip-text/tooltip-text';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { parseTime } from '@/utils/parse-time';
 import { FeedImage } from '../feed-image/feed-image';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
-import { INGREDIENT_TYPES } from '@/utils/constants';
+import { ORDER_STATUS } from '@/utils/constants';
 
 type TFeedItemProps = {
 	item: TOrder;
 };
 
 export const FeedItem = ({ item }: TFeedItemProps) => {
+	const location = useLocation();
 	const ingredients = useSelector(ingredientsSelectors.getIngredients);
 
 	const ingrediensOfOrder = useMemo(() => {
@@ -23,9 +24,7 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 		item.ingredients.forEach((el) => {
 			const ingredient = ingredients.find((i) => i._id === el);
 			if (ingredient) {
-				ingredient.type === INGREDIENT_TYPES.BUN
-					? (res = [...res, { ...ingredient, price: 2 * ingredient.price }])
-					: (res = [...res, ingredient]);
+				res = [...res, ingredient];
 			}
 		});
 		return res;
@@ -42,8 +41,28 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 		return ingrediensOfOrder.reduce((acc, cur) => acc + cur.price, 0);
 	}, [ingrediensOfOrder]);
 
+	const isProfile = location.pathname.includes(ROUTEPATHS.profile);
+
+	const url = useMemo(
+		() =>
+			isProfile
+				? `${ROUTEPATHS.profileOrders}/${item._id}`
+				: `${ROUTEPATHS.feed}/${item._id}`,
+		[location.pathname]
+	);
+
+	const orderStatus = useMemo(
+		() =>
+			item.status === ORDER_STATUS.DONE
+				? { text: 'Выполнен', class: `${styles.done}` }
+				: item && item.status === ORDER_STATUS.CREATED
+					? { text: 'Создан', class: '' }
+					: { text: 'Готовится', class: '' },
+		[item]
+	);
+
 	return (
-		<Link className={styles.item} to={`${ROUTEPATHS.feed}/${item._id}`}>
+		<Link className={styles.item} to={url} state={{ background: location }}>
 			<div className={styles.item_order_info}>
 				<p
 					className={`${styles.item_order_number} text text_type_digits-medium`}>
@@ -54,9 +73,20 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 					{parseTime(item.createdAt)}
 				</p>
 			</div>
-			<div className={styles.item_name}>
-				<TooltipText text={item.name} className='text text_type_main-medium' />
+			<div className={styles.item_name_status}>
+				<div className={styles.item_name}>
+					<TooltipText
+						text={item.name}
+						className={`text text_type_main-medium ${isProfile && 'mb-2'}`}
+					/>
+				</div>
+				{isProfile && (
+					<p className={`${orderStatus.class} text text_type_main-default`}>
+						{orderStatus.text}
+					</p>
+				)}
 			</div>
+
 			<div className={styles.images_and_price}>
 				<ul className={styles.images}>
 					{images.map((item, index) => (
