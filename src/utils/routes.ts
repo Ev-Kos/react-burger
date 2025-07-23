@@ -8,4 +8,7 @@ export const ROUTEPATHS = {
 	notFound: '*',
 	feed: '/feed',
 	ingredientId: '/ingredients/:id',
+	feedId: '/feed/:id',
+	profileOrders: '/profile/orders',
+	profileOrdersId: '/profile/orders/:id',
 };

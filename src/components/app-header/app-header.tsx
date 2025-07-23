@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import styles from './app-header.module.css';
 import {
 	BurgerIcon,
@@ -9,9 +8,10 @@ import {
 import { userSelector } from '@/services/selectors/userSelector';
 import { Link, NavLink, useLocation } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
+import { useAppSelector } from '@/services/store';
 
 export const AppHeader = () => {
-	const user = useSelector(userSelector.user);
+	const user = useAppSelector(userSelector.user);
 	const { pathname } = useLocation();
 
 	return (

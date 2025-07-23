@@ -8,11 +8,12 @@ type TModal = {
 	closeModal: VoidFunction;
 	title?: string;
 	children: ReactNode;
+	isNumber?: boolean;
 };
 
 const modalRoot = document.getElementById('modal') as HTMLElement;
 
-export const Modal = ({ closeModal, title, children }: TModal) => {
+export const Modal = ({ closeModal, title, children, isNumber }: TModal) => {
 	useEffect(() => {
 		const closeEsc = (e: KeyboardEvent) => {
 			if (e.key === 'Escape') {
@@ -31,7 +32,14 @@ export const Modal = ({ closeModal, title, children }: TModal) => {
 			<ModalOverlay onClick={closeModal} />
 			<div className={styles.container}>
 				<div className={`${styles.text} pt-10 pr-10 pl-10`}>
-					<h1 className='text text_type_main-large'>{title}</h1>
+					<h1
+						className={
+							isNumber
+								? 'text text_type_digits-default'
+								: 'text text_type_main-large'
+						}>
+						{title}
+					</h1>
 					<button className={styles.button} onClick={closeModal}>
 						<CloseIcon type='primary' />
 					</button>

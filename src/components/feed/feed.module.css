@@ -1,0 +1,10 @@
+.feed {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	max-height: calc(100vh - 210px);
+	padding: 0;
+	overflow: auto;
+	overflow-x: hidden;
+	list-style-type: none;
+}

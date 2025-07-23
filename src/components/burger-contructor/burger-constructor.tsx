@@ -9,7 +9,6 @@ import {
 import { useCallback, useMemo, useState } from 'react';
 import { Modal } from '../modal/modal';
 import { OrderDetails } from '../order-details/order-details';
-import { useSelector } from 'react-redux';
 import {
 	addIngredient,
 	deleteIngredient,
@@ -30,15 +29,15 @@ import { userSelector } from '@/services/selectors/userSelector';
 import { useNavigate } from 'react-router';
 import { ROUTEPATHS } from '@/utils/routes';
 import { TIngredient } from '@/utils/types';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 
 export const BurgerConstructor = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isLocalLoading, executeWithLoading] = useMinimumLoading(400);
-	const selectedIngredients = useSelector(selectedIngredientsState);
-	const user = useSelector(userSelector.user);
+	const selectedIngredients = useAppSelector(selectedIngredientsState);
+	const user = useAppSelector(userSelector.user);
 	const { request: orderRequest, failed: orderFailed } =
-		useSelector(createOrderState);
+		useAppSelector(createOrderState);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 
@@ -78,8 +77,11 @@ export const BurgerConstructor = () => {
 		} else {
 			if (typeof executeWithLoading === 'function') {
 				executeWithLoading(async () => {
-					const ids = selectedIngredients.map((item) => item._id);
-					await dispatch(fetchCreateOrder(ids)).unwrap();
+					const arr = selectedIngredients.filter(
+						(item) => item.type !== INGREDIENT_TYPES.BUN
+					);
+					const ids = arr.map((item) => item._id);
+					await dispatch(fetchCreateOrder([bun._id, ...ids, bun._id])).unwrap();
 
 					setIsModalOpen(true);
 					dispatch(setIngredients([]));
@@ -177,7 +179,7 @@ export const BurgerConstructor = () => {
 								<p
 									className={`${styles.selected_element_bun} text text_type_main-medium`}>
 									{' '}
-									Добавте булочку
+									Добавьте булочку
 								</p>
 							)}
 						</>
@@ -214,8 +216,8 @@ export const BurgerConstructor = () => {
 				</li>
 			</ul>
 			<div
-				className={`${isEmpty ? styles.order_container_empty : styles.order_container} mt-10 mr-4 ml-4`}>
-				{!isEmpty && (
+				className={`${isEmpty || isLoading ? styles.order_container_empty : styles.order_container} mt-10 mr-4 ml-4`}>
+				{!isEmpty && !isLoading && (
 					<Button
 						htmlType='button'
 						size='medium'
@@ -224,7 +226,7 @@ export const BurgerConstructor = () => {
 						Очистить
 					</Button>
 				)}
-				{!isEmpty && (
+				{!isEmpty && !isLoading && (
 					<div className={styles.price_container}>
 						<span className='text text_type_digits-medium'>{totalPrice}</span>
 						<CurrencyIcon type='primary' />

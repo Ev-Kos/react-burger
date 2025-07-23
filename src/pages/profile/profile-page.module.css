@@ -1,9 +1,8 @@
 .page_profile {
 	display: flex;
-	justify-content: center;
 	align-self: center;
-	gap: 40px;
-	max-width: 1240px;
+	gap: 60px;
+	width: 1240px;
 	height: 100%;
 }
 
@@ -16,6 +15,7 @@
 .nav_container {
 	gap: 80px;
 	width: 320px;
+	margin-top: 120px;
 }
 
 .nav_list {
@@ -59,8 +59,16 @@
 	width: 100%;
 }
 
-.cancel_button {
-	color: var(--text-primary-light);
-	background: none;
-	border: 1px solid var(--text-inactive-color);
+.form {
+	margin-top: 120px;
+}
+
+.orders,
+.orders_empty {
+	width: 844px;
+	margin-top: 40px;
+}
+
+.orders_empty {
+	height: 200px;
 }

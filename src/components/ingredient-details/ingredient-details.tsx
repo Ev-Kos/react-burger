@@ -1,5 +1,4 @@
 import styles from './ingredient-details.module.css';
-import { useSelector } from 'react-redux';
 import {
 	ingredientDetailState,
 	setIngredientForShowDetail,
@@ -11,11 +10,11 @@ import { useParams } from 'react-router';
 import { useEffect } from 'react';
 import { Loader } from '@/components/loader/loader';
 import { LOADING_DELAY } from '@/utils/constants';
-import { useAppDispatch } from '@/services/store';
+import { useAppDispatch, useAppSelector } from '@/services/store';
 
 export const IngredientDetails = ({ isModal }: { isModal?: boolean }) => {
-	const ingredient = useSelector(ingredientDetailState);
-	const ingredients = useSelector(ingredientsSelectors.getIngredients);
+	const ingredient = useAppSelector(ingredientDetailState);
+	const ingredients = useAppSelector(ingredientsSelectors.getIngredients);
 	const { id } = useParams();
 	const dispatch = useAppDispatch();
 	const [isLocalLoading, executeWithLoading] = useMinimumLoading(LOADING_DELAY);

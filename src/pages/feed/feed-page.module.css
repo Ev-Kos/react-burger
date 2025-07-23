@@ -1,0 +1,30 @@
+.feed_page {
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	overflow: hidden;
+}
+
+.title {
+	width: 100%;
+	max-width: 1240px;
+}
+
+.feed {
+	display: flex;
+	gap: 52px;
+	width: 1240px;
+}
+
+.orders,
+.orders_empty {
+	width: 608px;
+}
+
+.orders_empty {
+	height: 200px;
+}
+
+.feed_info {
+	width: 580px;
+}

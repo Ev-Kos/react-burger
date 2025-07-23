@@ -1,6 +1,7 @@
 :root {
 	--text-primary-light: #f2f2f3;
 	--color-black-transperent: rgb(0 0 0 / 60%);
+	--color-violet: #801ab3;
 }
 
 body {

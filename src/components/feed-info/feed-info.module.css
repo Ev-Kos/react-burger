@@ -1,0 +1,39 @@
+.info_wrap,
+.info_orders,
+.info_total {
+	display: flex;
+	flex-direction: column;
+}
+
+.info_wrap {
+	gap: 60px;
+	width: 100%;
+}
+
+.info_orders_statuses {
+	display: flex;
+	gap: 36px;
+}
+
+.info_orders {
+	gap: 24px;
+	width: 272px;
+}
+
+.info_orders_numbers {
+	display: flex;
+	flex-flow: column wrap;
+	gap: 8px;
+	max-height: 250px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+}
+
+.info_orders_ready {
+	color: var(--colors-interface-success);
+}
+
+.number {
+	font-size: 20px;
+}

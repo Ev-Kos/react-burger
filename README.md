@@ -14,6 +14,8 @@
 - Drag'n' drop ингредиентов
 - Обновление профиля пользователя
 - Просмотр состава ингредиентов
+- Просмотр обновляющейся онлайн ленты заказов
+- Просмотр обновляющейся онлайн ленты истории заказов
 
 **Используемые технологии**
 
@@ -21,6 +23,8 @@
 <img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original-wordmark.svg" width="40" height="40" title="CSS" alt="CSS"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" width="40" height="40" title="React" alt="React"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" width="40" height="40" title="Redux toolkit" alt="Redux"/>&nbsp;
+<img src="https://resources.whatwg.org/logo-websockets.svg" width="40" height="40" title="WebSocket" alt="WebSocket"/>&nbsp;
+<img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" width="40" height="40" title="TypeScript" alt="TypeScript"/>&nbsp;
 
 - библиотека UI-компонентов [Яндекс.Практикум](https://yandex-practicum.github.io/react-developer-burger-ui-components/docs/readme)
 

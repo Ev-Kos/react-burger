@@ -1,10 +1,10 @@
 import { createOrderState } from '@/services/slices/createOrderSlice';
 import doneImage from '../../images/done.svg';
 import styles from './order-details.module.css';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '@/services/store';
 
 export const OrderDetails = () => {
-	const { orderNumber } = useSelector(createOrderState);
+	const { orderNumber } = useAppSelector(createOrderState);
 
 	return (
 		<div className={`${styles.container} pt-4 pr-25 pb-30 pl-25`}>
