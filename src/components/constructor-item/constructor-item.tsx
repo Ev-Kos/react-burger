@@ -28,7 +28,7 @@ export const ConstructorItem = memo(
 		});
 
 		const [{ handlerId }, dropRef] = useDrop({
-			accept: 'constructorElement',
+			accept: 'constructorItem',
 			collect: (monitor) => ({
 				handlerId: monitor.getHandlerId(),
 			}),

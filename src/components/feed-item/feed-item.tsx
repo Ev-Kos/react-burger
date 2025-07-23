@@ -62,47 +62,52 @@ export const FeedItem = ({ item }: TFeedItemProps) => {
 	);
 
 	return (
-		<Link className={styles.item} to={url} state={{ background: location }}>
-			<div className={styles.item_order_info}>
-				<p
-					className={`${styles.item_order_number} text text_type_digits-medium`}>
-					{`#${item.number}`}
-				</p>
-				<p
-					className={`${styles.item_order_time} text text_type_main-default text_color_inactive`}>
-					{parseTime(item.createdAt)}
-				</p>
-			</div>
-			<div className={styles.item_name_status}>
-				<div className={styles.item_name}>
-					<TooltipText
-						text={item.name}
-						className={`text text_type_main-medium ${isProfile && 'mb-2'}`}
-					/>
-				</div>
-				{isProfile && (
-					<p className={`${orderStatus.class} text text_type_main-default`}>
-						{orderStatus.text}
+		<li className={styles.item}>
+			<Link
+				className={styles.item_link}
+				to={url}
+				state={{ background: location }}>
+				<div className={styles.item_order_info}>
+					<p
+						className={`${styles.item_order_number} text text_type_digits-medium`}>
+						{`#${item.number}`}
 					</p>
-				)}
-			</div>
-
-			<div className={styles.images_and_price}>
-				<ul className={styles.images}>
-					{images.map((item, index) => (
-						<FeedImage
-							image={item}
-							length={ingrediensOfOrder.length}
-							index={index}
-							key={index}
-						/>
-					))}
-				</ul>
-				<div className={styles.price}>
-					<span className='text text_type_digits-default'>{price}</span>
-					<CurrencyIcon type='primary' />
+					<p
+						className={`${styles.item_order_time} text text_type_main-default text_color_inactive`}>
+						{parseTime(item.createdAt)}
+					</p>
 				</div>
-			</div>
-		</Link>
+				<div className={styles.item_name_status}>
+					<div className={styles.item_name}>
+						<TooltipText
+							text={item.name}
+							className={`text text_type_main-medium ${isProfile && 'mb-2'}`}
+						/>
+					</div>
+					{isProfile && (
+						<p className={`${orderStatus.class} text text_type_main-default`}>
+							{orderStatus.text}
+						</p>
+					)}
+				</div>
+
+				<div className={styles.images_and_price}>
+					<ul className={styles.images}>
+						{images.map((item, index) => (
+							<FeedImage
+								image={item}
+								length={ingrediensOfOrder.length}
+								index={index}
+								key={index}
+							/>
+						))}
+					</ul>
+					<div className={styles.price}>
+						<span className='text text_type_digits-default'>{price}</span>
+						<CurrencyIcon type='primary' />
+					</div>
+				</div>
+			</Link>
+		</li>
 	);
 };

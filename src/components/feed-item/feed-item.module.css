@@ -1,14 +1,17 @@
 .item {
-	display: flex;
-	flex-direction: column;
-	gap: 24px;
 	margin-right: 8px;
 	padding: 24px;
-	color: var(--text-primary-light);
-	text-decoration: none;
 	background-color: var(--background);
 	border-radius: 40px;
 	cursor: pointer;
+}
+
+.item_link {
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	color: var(--text-primary-light);
+	text-decoration: none;
 }
 
 .item_order_info {

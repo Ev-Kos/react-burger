@@ -179,7 +179,7 @@ export const BurgerConstructor = () => {
 								<p
 									className={`${styles.selected_element_bun} text text_type_main-medium`}>
 									{' '}
-									Добавте булочку
+									Добавьте булочку
 								</p>
 							)}
 						</>
