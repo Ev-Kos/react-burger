@@ -3,7 +3,7 @@ import selectedIngredientsSlice, {
 	deleteIngredient,
 	initialState,
 	setIngredients,
-} from './selectedIngredientsSlice';
+} from '../selectedIngredientsSlice';
 
 const ingredient = {
 	_id: '60666c42cc7b410027a1a9b2',

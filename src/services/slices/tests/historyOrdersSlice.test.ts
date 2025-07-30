@@ -5,7 +5,7 @@ import historyOrdersWsSlice, {
 	historyOrdersOnError,
 	historyOrdersOnMessage,
 	initialState,
-} from './historyOrdersSlice';
+} from '../historyOrdersSlice';
 import { WsStatus } from '@/utils/types';
 
 const mockData = {

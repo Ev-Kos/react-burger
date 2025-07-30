@@ -5,7 +5,7 @@ import alOrdersWsSlice, {
 	allOrdersOnError,
 	allOrdersOnMessage,
 	initialState,
-} from './allOrdersWsSlice';
+} from '../allOrdersWsSlice';
 import { WsStatus } from '@/utils/types';
 
 const mockData = {

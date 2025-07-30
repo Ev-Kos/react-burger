@@ -3,7 +3,7 @@ import { updateUserApi } from '@/utils/api/update-user';
 import updateUserSlice, {
 	fetchUpdateUser,
 	initialState,
-} from './updateUserSlice';
+} from '../updateUserSlice';
 import { configureStore } from '@reduxjs/toolkit';
 import { vi, type Mock } from 'vitest';
 

@@ -1,4 +1,4 @@
-import userSlice, { initialState, setUser } from './userSlice';
+import userSlice, { initialState, setUser } from '../userSlice';
 
 const user = {
 	email: 'test@test.ru',

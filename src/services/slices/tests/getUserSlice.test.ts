@@ -1,7 +1,7 @@
 import { updateToken } from '@/utils/api/update-token';
 import { configureStore } from '@reduxjs/toolkit';
 import { vi, type Mock } from 'vitest';
-import getUserSlice, { fetchGetUser, initialState } from './getUserSlice';
+import getUserSlice, { fetchGetUser, initialState } from '../getUserSlice';
 import { getUserApi } from '@/utils/api/get-user';
 
 const makeStore = () => configureStore({ reducer: { getUserSlice } });

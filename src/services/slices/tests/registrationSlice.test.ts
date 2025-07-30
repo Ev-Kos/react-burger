@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import registrationSlice, {
 	fetchRegistrUser,
 	initialState,
-} from './registrationSlice';
+} from '../registrationSlice';
 import { type Mock, vi } from 'vitest';
 import { registrationApi } from '@/utils/api/registration';
 

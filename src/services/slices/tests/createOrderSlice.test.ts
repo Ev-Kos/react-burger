@@ -4,7 +4,7 @@ import { vi, type Mock } from 'vitest';
 import createOrderSlice, {
 	fetchCreateOrder,
 	initialState,
-} from './createOrderSlice';
+} from '../createOrderSlice';
 import { createOrderApi } from '@/utils/api/create-order';
 
 const mockData = [

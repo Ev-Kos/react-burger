@@ -4,7 +4,7 @@ import ingredientsSlice, {
 	fetchIngredients,
 	initialState,
 	setIngredientForShowDetail,
-} from './ingredientsSlice';
+} from '../ingredientsSlice';
 import { getIngredientsApi } from '@/utils/api/get-ingredients';
 
 const ingredients = [

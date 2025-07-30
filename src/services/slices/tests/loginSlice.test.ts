@@ -1,7 +1,7 @@
 import { loginApi } from '@/utils/api/login';
 import { configureStore } from '@reduxjs/toolkit';
 import { type Mock, vi } from 'vitest';
-import loginSlice, { fetchLogin, initialState } from './loginSlice';
+import loginSlice, { fetchLogin, initialState } from '../loginSlice';
 
 const mockData = {
 	email: 'test@test.ru',

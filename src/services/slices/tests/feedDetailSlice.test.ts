@@ -1,7 +1,7 @@
 import feedDetailSlice, {
 	initialState,
 	setOrderNumber,
-} from './feedDetailSlice';
+} from '../feedDetailSlice';
 
 describe('feedDetailSlice', () => {
 	it('initializes correctly', () => {
