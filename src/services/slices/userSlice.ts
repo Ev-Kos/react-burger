@@ -5,7 +5,7 @@ type TInitialState = {
 	user: TUserData | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	user: null,
 };
 

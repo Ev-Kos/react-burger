@@ -5,7 +5,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-import { selectedIngredientsState } from '@/services/slices/selectedIngredients';
+import { selectedIngredientsState } from '@/services/slices/selectedIngredientsSlice';
 import { INGREDIENT_TYPES } from '@/utils/constants';
 import { Link, useLocation } from 'react-router';
 import { useAppSelector } from '@/services/store';

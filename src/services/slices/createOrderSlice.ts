@@ -9,7 +9,7 @@ type TInitialState = {
 	orderNumber: null | number;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	request: false,
 	failed: false,
 	orderNumber: null,
@@ -27,6 +27,8 @@ export const fetchCreateOrder = createAsyncThunk(
 					await updateToken();
 					const response = await createOrderApi(data);
 					return response.order.number;
+				} else {
+					throw error;
 				}
 			}
 		}

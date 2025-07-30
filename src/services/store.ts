@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import ingredientsSlice from './slices/ingredientsSlice';
-import selectedIngredientsSlice from './slices/selectedIngredients';
+import selectedIngredientsSlice from './slices/selectedIngredientsSlice';
 import createOrderSlice from './slices/createOrderSlice';
 import userSlice from './slices/userSlice';
 import registrationSlice from './slices/registrationSlice';

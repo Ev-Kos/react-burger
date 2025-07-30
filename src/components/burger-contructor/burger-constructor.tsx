@@ -14,7 +14,7 @@ import {
 	deleteIngredient,
 	selectedIngredientsState,
 	setIngredients,
-} from '@/services/slices/selectedIngredients';
+} from '@/services/slices/selectedIngredientsSlice';
 import { useDrop } from 'react-dnd';
 import { nanoid } from 'nanoid';
 import {

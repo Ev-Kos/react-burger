@@ -9,7 +9,7 @@ type TInitialState = {
 	failed: boolean;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	request: false,
 	failed: false,
 };
@@ -24,6 +24,8 @@ export const fetchUpdateUser = createAsyncThunk(
 				if (error.message === 'jwt expired') {
 					await updateToken();
 					return await updateUserApi(data);
+				} else {
+					throw error;
 				}
 			}
 		}
