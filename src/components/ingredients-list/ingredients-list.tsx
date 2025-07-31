@@ -9,10 +9,11 @@ type TIngredientList = {
 	name: string;
 	type: string;
 	ingredients: TIngredient[];
+	data?: string;
 };
 
 export const IngredientList = forwardRef<HTMLLIElement, TIngredientList>(
-	({ name, type, ingredients }, ref) => {
+	({ name, type, ingredients, data }, ref) => {
 		const dispatch = useAppDispatch();
 
 		const onClickIngredient = (id: string) => {
@@ -22,7 +23,7 @@ export const IngredientList = forwardRef<HTMLLIElement, TIngredientList>(
 		return (
 			<li ref={ref}>
 				<h2 className='text text_type_main-medium mb-6'>{name}</h2>
-				<ul className={`${styles.container} pl-3`}>
+				<ul className={`${styles.container} pl-3`} data-cy={data}>
 					{ingredients.length !== 0 &&
 						ingredients
 							.filter((item) => item.type === type)

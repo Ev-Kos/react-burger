@@ -1,37 +1,53 @@
 /// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+
+Cypress.Commands.add('getElem', (name) => cy.get(`[data-cy="${name}"]`));
+Cypress.Commands.add('mockUser', () => {
+	window.localStorage.setItem('accessToken', 'mocked-access-token');
+	cy.intercept('GET', '**/auth/user', {
+		statusCode: 200,
+		body: {
+			success: true,
+			user: {
+				name: 'Test',
+				email: 'test@test.ru',
+			},
+		},
+	}).as('getUser');
+});
+
+Cypress.Commands.add('mockIngredients', () => {
+	cy.fixture('ingredients').then((ingredients) => {
+		cy.intercept('GET', '**/ingredients', {
+			statusCode: 200,
+			body: {
+				success: true,
+				data: ingredients,
+			},
+		}).as('getIngredients');
+	});
+});
+
+Cypress.Commands.add('createOrder', () => {
+	cy.intercept('POST', '**/orders', {
+		statusCode: 200,
+		body: {
+			success: true,
+			order: {
+				number: 156875,
+			},
+		},
+	}).as('createOrder');
+});
+
+// Cypress.Commands.add('simulateDrag', (sourceSelector, targetSelector) => {
+//   cy.get(sourceSelector)
+//     .trigger('mousedown', { button: 0, force: true })
+//     .trigger('dragstart', { force: true });
+
+//   cy.get(targetSelector)
+//     .trigger('dragenter', { force: true })
+//     .trigger('dragover', { force: true })
+//     .trigger('drop', { force: true });
+
+//   cy.get(sourceSelector).trigger('dragend', { force: true });
+// });

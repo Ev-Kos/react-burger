@@ -7,8 +7,12 @@ export const OrderDetails = () => {
 	const { orderNumber } = useAppSelector(createOrderState);
 
 	return (
-		<div className={`${styles.container} pt-4 pr-25 pb-30 pl-25`}>
-			<p className={`${styles.order_number} text text_type_digits-large mb-8`}>
+		<div
+			className={`${styles.container} pt-4 pr-25 pb-30 pl-25`}
+			data-cy='order-details'>
+			<p
+				className={`${styles.order_number} text text_type_digits-large mb-8`}
+				data-cy='order-number'>
 				{orderNumber}
 			</p>
 			<p className='text text_type_main-medium'>Идентификатор заказа</p>

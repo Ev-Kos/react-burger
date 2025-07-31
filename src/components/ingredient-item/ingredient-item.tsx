@@ -48,7 +48,8 @@ export const IngredientItem = ({ ingredient, onClick }: TIngredientItem) => {
 					className={styles.button}
 					onClick={onClick}
 					draggable
-					ref={dragRef}>
+					ref={dragRef}
+					data-cy={`${ingredient?.type}-${ingredient?._id}`}>
 					{counter !== 0 && <Counter count={counter} size='default' />}
 					<div
 						className={
@@ -67,7 +68,9 @@ export const IngredientItem = ({ ingredient, onClick }: TIngredientItem) => {
 							</p>
 							<CurrencyIcon type='primary' />
 						</div>
-						<p className={`${styles.name} text text_type_main-default`}>
+						<p
+							className={`${styles.name} text text_type_main-default`}
+							data-cy='ingredient-name'>
 							{ingredient.name}
 						</p>
 					</div>

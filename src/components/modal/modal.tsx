@@ -40,7 +40,10 @@ export const Modal = ({ closeModal, title, children, isNumber }: TModal) => {
 						}>
 						{title}
 					</h1>
-					<button className={styles.button} onClick={closeModal}>
+					<button
+						className={styles.button}
+						onClick={closeModal}
+						data-cy='close-modal'>
 						<CloseIcon type='primary' />
 					</button>
 				</div>

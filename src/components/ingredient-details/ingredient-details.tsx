@@ -45,14 +45,17 @@ export const IngredientDetails = ({ isModal }: { isModal?: boolean }) => {
 			) : (
 				<>
 					{ingredient && (
-						<div className={`${styles.container} pr-25 pb-15 pl-25`}>
+						<div
+							className={`${styles.container} pr-25 pb-15 pl-25`}
+							data-cy='ingredient-details'>
 							<img
 								className={styles.image}
 								src={ingredient?.image}
 								alt={ingredient?.name}
 							/>
 							<p
-								className={`${styles.title} text text_type_main-medium mt-4 mb-8`}>
+								className={`${styles.title} text text_type_main-medium mt-4 mb-8`}
+								data-cy='ingredient-name'>
 								{ingredient?.name}
 							</p>
 							<ul

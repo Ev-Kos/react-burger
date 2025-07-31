@@ -162,8 +162,8 @@ export const BurgerConstructor = () => {
 
 	return (
 		<section className={styles.burger_constructor}>
-			<ul className={containerClass} ref={dropTarget}>
-				<li className={`${styles.selected_element} pr-4`}>
+			<ul className={containerClass} ref={dropTarget} data-cy='constructor'>
+				<li className={`${styles.selected_element} pr-4`} data-cy='bun-top'>
 					{bun ? (
 						<ConstructorElement
 							type='top'
@@ -202,7 +202,7 @@ export const BurgerConstructor = () => {
 				{isLoading && (
 					<Loader text='Обрабатываем Ваш заказ' isBackground={true} />
 				)}
-				<li className={`${styles.selected_element} pr-4`}>
+				<li className={`${styles.selected_element} pr-4`} data-cy='bun-bottom'>
 					{bun && (
 						<ConstructorElement
 							type='bottom'
@@ -222,7 +222,8 @@ export const BurgerConstructor = () => {
 						htmlType='button'
 						size='medium'
 						extraClass={styles.clear_button}
-						onClick={clearOrder}>
+						onClick={clearOrder}
+						data-cy='reset'>
 						Очистить
 					</Button>
 				)}
@@ -237,7 +238,8 @@ export const BurgerConstructor = () => {
 					type='primary'
 					size='large'
 					onClick={handleOrder}
-					disabled={isEmpty || !bun || Boolean(isLoading)}>
+					disabled={isEmpty || !bun || Boolean(isLoading)}
+					data-cy='submit'>
 					Оформить заказ
 				</Button>
 			</div>
