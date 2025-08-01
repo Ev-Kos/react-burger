@@ -98,18 +98,21 @@ export const BurgerIngredients = () => {
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.BUN}
 					ref={buns}
+					data='buns'
 				/>
 				<IngredientList
 					name='Соусы'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.SAUCE}
 					ref={sauces}
+					data='sauces'
 				/>
 				<IngredientList
 					name='Начинки'
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.MAIN}
 					ref={mains}
+					data='mains'
 				/>
 			</ul>
 		</section>

@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 import { TLoginData } from '@/utils/types';
 
-const initialState = {
+export const initialState = {
 	request: false,
 	failed: false,
 };

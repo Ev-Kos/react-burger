@@ -5,7 +5,7 @@ import {
 	CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag } from 'react-dnd';
-import { selectedIngredientsState } from '@/services/slices/selectedIngredients';
+import { selectedIngredientsState } from '@/services/slices/selectedIngredientsSlice';
 import { INGREDIENT_TYPES } from '@/utils/constants';
 import { Link, useLocation } from 'react-router';
 import { useAppSelector } from '@/services/store';
@@ -48,7 +48,8 @@ export const IngredientItem = ({ ingredient, onClick }: TIngredientItem) => {
 					className={styles.button}
 					onClick={onClick}
 					draggable
-					ref={dragRef}>
+					ref={dragRef}
+					data-cy={`${ingredient?.type}-${ingredient?._id}`}>
 					{counter !== 0 && <Counter count={counter} size='default' />}
 					<div
 						className={
@@ -67,7 +68,9 @@ export const IngredientItem = ({ ingredient, onClick }: TIngredientItem) => {
 							</p>
 							<CurrencyIcon type='primary' />
 						</div>
-						<p className={`${styles.name} text text_type_main-default`}>
+						<p
+							className={`${styles.name} text text_type_main-default`}
+							data-cy='ingredient-name'>
 							{ingredient.name}
 						</p>
 					</div>

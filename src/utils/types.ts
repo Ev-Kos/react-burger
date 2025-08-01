@@ -28,7 +28,7 @@ export type TGetOrderNumber = {
 
 export type TLoginData = {
 	email: string;
-	password: string;
+	password?: string;
 };
 
 export type TUserData = TLoginData & {

@@ -5,6 +5,8 @@
 Приложение космической бургерной разработанное на React.
 С макетом проекта можно ознакомиться по [ссылке](https://www.figma.com/design/zFGN2O5xktHl9VmoOieq5E/React-_-%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D1%8B%D0%B5-%D0%B7%D0%B0%D0%B4%D0%B0%D1%87%D0%B8_external_link?node-id=0-1&p=f&t=izSfve79Ifwj5Edo-0).
 
+## [Открыть проект](https://ev-kos.github.io/react-burger/)
+
 **Функционал**
 
 - Валидация полей ввода
@@ -25,6 +27,8 @@
 <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" width="40" height="40" title="Redux toolkit" alt="Redux"/>&nbsp;
 <img src="https://resources.whatwg.org/logo-websockets.svg" width="40" height="40" title="WebSocket" alt="WebSocket"/>&nbsp;
 <img src="https://github.com/devicons/devicon/blob/master/icons/typescript/typescript-original.svg" width="40" height="40" title="TypeScript" alt="TypeScript"/>&nbsp;
+<img src="https://avatars.githubusercontent.com/u/8908513?s=48&v=4" width="40" height="40" title="Cypress" alt="Cypress"/>&nbsp;
+<img src="https://avatars.githubusercontent.com/u/95747107?s=48&v=4" width="40" height="40" title="Vitest" alt="Vitest"/>&nbsp;
 
 - библиотека UI-компонентов [Яндекс.Практикум](https://yandex-practicum.github.io/react-developer-burger-ui-components/docs/readme)
 

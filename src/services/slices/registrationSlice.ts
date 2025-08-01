@@ -9,7 +9,7 @@ type TInitialState = {
 	error: TInfoResponse | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	request: false,
 	failed: false,
 	error: null,
@@ -17,7 +17,7 @@ const initialState: TInitialState = {
 
 export const fetchRegistrUser = createAsyncThunk(
 	'registration/fetchRegistrUser',
-	async (data: Partial<TUserData>, { rejectWithValue }) => {
+	async (data: TUserData, { rejectWithValue }) => {
 		try {
 			const response = await registrationApi(data);
 			localStorage.setItem('refreshToken', response.refreshToken);

@@ -5,7 +5,7 @@ type TInitialState = {
 	orderNumber: number | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	orderNumber: null,
 };
 

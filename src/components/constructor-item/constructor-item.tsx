@@ -58,7 +58,8 @@ export const ConstructorItem = memo(
 				ref={ref}
 				draggable
 				data-handler-id={handlerId}
-				style={{ opacity }}>
+				style={{ opacity }}
+				data-cy={`constructor-${item.type}-${item._id}`}>
 				<DragIcon type='primary' />
 				<ConstructorElement
 					isLocked={false}

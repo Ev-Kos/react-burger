@@ -7,7 +7,7 @@ export type TInitialState = {
 	error: string | null;
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	status: WsStatus.OFFLINE,
 	data: null,
 	error: null,

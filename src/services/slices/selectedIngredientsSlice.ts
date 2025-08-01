@@ -6,7 +6,7 @@ type TInitialState = {
 	ingredients: TSelectedIngredient[];
 };
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
 	ingredients: [],
 };
 
