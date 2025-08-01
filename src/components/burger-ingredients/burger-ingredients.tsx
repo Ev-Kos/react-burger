@@ -105,6 +105,7 @@ export const BurgerIngredients = () => {
 					ingredients={ingredients}
 					type={INGREDIENT_TYPES.SAUCE}
 					ref={sauces}
+					data='sauces'
 				/>
 				<IngredientList
 					name='Начинки'
